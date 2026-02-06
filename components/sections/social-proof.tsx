@@ -52,11 +52,15 @@ export function SocialProofSection() {
                   whileHover={{ boxShadow: '0 0 30px rgba(255, 91, 35, 0.2)' }}
                 >
                   <motion.div
-                    className={`w-16 h-16 rounded-full bg-gradient-to-br ${company.color} flex items-center justify-center mb-3 shadow-lg`}
+                    className="w-16 h-16 rounded-full overflow-hidden mb-3 shadow-lg"
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
                   >
-                    <span className="font-bold text-white text-lg">{company.name[0]}</span>
+                    <img
+                      src={`https://source.unsplash.com/160x160/?portrait,${encodeURIComponent(company.name)}`}
+                      alt={company.name}
+                      className="w-full h-full object-cover"
+                    />
                   </motion.div>
                   <p className="text-sm font-semibold text-white">{company.name}</p>
                 </motion.div>
@@ -75,11 +79,15 @@ export function SocialProofSection() {
                   whileHover={{ boxShadow: '0 0 30px rgba(255, 91, 35, 0.2)' }}
                 >
                   <motion.div
-                    className={`w-16 h-16 rounded-full bg-gradient-to-br ${company.color} flex items-center justify-center mb-3 shadow-lg`}
+                    className="w-16 h-16 rounded-full overflow-hidden mb-3 shadow-lg"
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
                   >
-                    <span className="font-bold text-white text-lg">{company.name[0]}</span>
+                    <img
+                      src={`https://source.unsplash.com/160x160/?portrait,${encodeURIComponent(company.name)}`}
+                      alt={company.name}
+                      className="w-full h-full object-cover"
+                    />
                   </motion.div>
                   <p className="text-sm font-semibold text-white">{company.name}</p>
                 </motion.div>

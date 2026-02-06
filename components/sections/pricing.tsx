@@ -107,14 +107,14 @@ export function PricingSection() {
               <div
                 className={`relative h-full p-8 rounded-2xl border transition-all duration-300 ${
                   plan.popular
-                    ? 'glass border-orange-500/50 bg-white/5 ring-1 ring-orange-500/20'
-                    : 'glass border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10'
+                    ? 'glass border-orange-500/50 bg-black/60 ring-1 ring-orange-500/20'
+                    : 'glass border-white/10 bg-black/50 hover:border-white/20 hover:bg-black/60'
                 }`}
               >
                 {/* Popular badge */}
                 {plan.popular && (
                   <motion.div
-                    className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-semibold"
+                    className="absolute -top-6 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-semibold shadow-lg z-20"
                     animate={{ y: [0, -5, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
@@ -166,7 +166,7 @@ export function PricingSection() {
               {/* Glow effect for popular */}
               {plan.popular && (
                 <motion.div
-                  className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 pointer-events-none"
                   animate={{
                     boxShadow: [
                       '0 0 20px rgba(255, 91, 35, 0.1)',

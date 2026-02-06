@@ -5,6 +5,7 @@ import { useAuth } from '@/context/auth-context'
 import { Logo } from '@/components/logo'
 import RoleBasedDashboard from '@/components/dashboard/RoleBasedDashboard'
 import { Footer } from '@/components/sections/footer'
+import SocialHomeButtons from '@/components/social-home-buttons'
 import { useRouter } from 'next/navigation'
 
 export default function DashboardPage() {
@@ -114,9 +115,10 @@ export default function DashboardPage() {
       </div>
       {/* Footer */}
       <Footer />
+
+      {/* Social Home + Social Buttons (shared) */}
+      <SocialHomeButtons />
     </div>
-        {/* Social Home + Social Buttons (shared) */}
-        <SocialHomeButtons />
   )
 }
 
