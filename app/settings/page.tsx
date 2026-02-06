@@ -7,6 +7,8 @@ import { useAuth } from '@/context/auth-context'
 import { useProfile } from '@/context/profile-context'
 import Link from 'next/link'
 import { ArrowLeft, Trash2, Save, Camera } from 'lucide-react'
+import SocialHomeButtons from '@/components/social-home-buttons'
+import { Footer } from '@/components/sections/footer'
 
 export default function SettingsPage() {
   const router = useRouter()
@@ -477,6 +479,11 @@ export default function SettingsPage() {
           </motion.div>
         </motion.div>
       )}
+      {/* Footer */}
+      <Footer />
+
+      {/* Social Home + Social Buttons (shared) */}
+      <SocialHomeButtons />
     </div>
   )
 }

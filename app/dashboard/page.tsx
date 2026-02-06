@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion'
 import { useAuth } from '@/context/auth-context'
 import { Logo } from '@/components/logo'
+import RoleBasedDashboard from '@/components/dashboard/RoleBasedDashboard'
+import { Footer } from '@/components/sections/footer'
 import { useRouter } from 'next/navigation'
 
 export default function DashboardPage() {
@@ -39,13 +41,6 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between">
           <Logo />
             <div className="flex items-center gap-3">
-            <button
-              onClick={() => router.push('/')}
-              className="px-4 py-2 bg-white/5 text-white rounded-full font-light hover:bg-white/10 transition-all"
-              title="Home"
-            >
-              Home
-            </button>
               <button
                 onClick={() => {
                   if (confirm('Delete your account? This is irreversible.')) {
@@ -117,8 +112,11 @@ export default function DashboardPage() {
           </motion.div>
         </motion.div>
       </div>
+      {/* Footer */}
+      <Footer />
     </div>
+        {/* Social Home + Social Buttons (shared) */}
+        <SocialHomeButtons />
   )
 }
 
-import RoleBasedDashboard from '@/components/dashboard/RoleBasedDashboard'
