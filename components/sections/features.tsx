@@ -66,7 +66,7 @@ const itemVariants = {
 
 export function FeaturesSection() {
   return (
-    <section className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#0a0a0a] via-background to-[#0a0a0a]">
+    <section className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <motion.div
@@ -77,7 +77,7 @@ export function FeaturesSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light mb-6">
-            Everything You Need to <span className="gradient-text">Succeed</span>
+            Everything You Need to Succeed
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light">
             Comprehensive tools and community designed for the Gulf startup ecosystem.
@@ -85,8 +85,8 @@ export function FeaturesSection() {
         </motion.div>
 
         {/* Features grid */}
-        <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          <motion.div
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -97,7 +97,7 @@ export function FeaturesSection() {
             return (
               <motion.div
                 key={index}
-                className="group relative overflow-hidden rounded-2xl"
+                className="group relative rounded-2xl overflow-hidden"
                 variants={itemVariants}
                 whileHover={{ y: -8 }}
               >
@@ -109,30 +109,19 @@ export function FeaturesSection() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <motion.div
-                    className="absolute inset-0 border-2 border-orange-500/20"
-                    animate={{ borderColor: ['rgba(255, 91, 35, 0.2)', 'rgba(255, 91, 35, 0.5)', 'rgba(255, 91, 35, 0.2)'] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  />
                 </div>
 
                 {/* Content */}
-                <div className="glass glass-hover p-6 rounded-b-2xl">
+                <div className="bg-black/60 p-6 rounded-b-2xl">
                   <motion.div
-                    className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500/30 to-teal-500/20 flex items-center justify-center mb-4 group-hover:from-orange-500/40 group-hover:to-teal-500/30 transition-all"
-                    whileHover={{ rotate: 15, scale: 1.1 }}
+                    className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-transparent"
+                    whileHover={{ rotate: 0, scale: 1.02 }}
                   >
-                    <Icon className="w-6 h-6 text-orange-400" />
+                    <Icon className="w-6 h-6 text-white" />
                   </motion.div>
 
                   <h3 className="text-lg font-light mb-2 text-white">{feature.title}</h3>
                   <p className="text-muted-foreground leading-relaxed text-sm font-light">{feature.description}</p>
-
-                  {/* Corner accent */}
-                  <div className="absolute top-0 right-0 w-20 h-20 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="absolute top-0 right-0 w-1 h-8 bg-gradient-to-b from-orange-500 to-transparent" />
-                    <div className="absolute top-0 right-0 w-8 h-1 bg-gradient-to-r from-orange-500 to-transparent" />
-                  </div>
                 </div>
               </motion.div>
             )

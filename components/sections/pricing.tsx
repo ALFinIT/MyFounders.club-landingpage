@@ -114,7 +114,7 @@ export function PricingSection() {
                 {/* Popular badge */}
                 {plan.popular && (
                   <motion.div
-                    className="absolute -top-6 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-semibold shadow-lg z-20"
+                      className="absolute -top-6 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-semibold shadow-lg z-30"
                     animate={{ y: [0, -5, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
