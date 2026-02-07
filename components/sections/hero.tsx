@@ -145,23 +145,39 @@ export function HeroSection() {
 
         {/* Social proof */}
         <motion.div
-          className="flex items-center gap-6 text-sm"
-          variants={itemVariants}
-        >
-          <div className="flex -space-x-2">
-            {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 border-2 border-background flex items-center justify-center text-white font-light text-xs"
-              >
-                {i}
-              </div>
-            ))}
-          </div>
-          <p className="text-muted-foreground">
-            Join <span className="text-white font-light">500+</span> founders in the Gulf ecosystem
-          </p>
-        </motion.div>
+  className="flex items-center gap-6 text-sm"
+  variants={itemVariants}
+>
+  <div className="flex -space-x-2">
+    {[
+      "/public/user1.jpg",
+      "/public/user2.jpg",
+      "/public/user3.jpg",
+      "/public/user4.jpg",
+    ].map((src, i) => (
+      <motion.div
+        key={i}
+        className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-background bg-muted"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: i * 0.1, type: "spring", stiffness: 200 }}
+        whileHover={{ scale: 1.1, zIndex: 10 }}
+      >
+        <Image
+          src={src}
+          alt={`Founder ${i + 1}`}
+          fill
+          className="object-cover"
+          sizes="40px"
+        />
+      </motion.div>
+    ))}
+  </div>
+
+  <p className="text-muted-foreground">
+    Join <span className="text-white font-light">500+</span> founders in the Gulf ecosystem
+  </p>
+</motion.div>
       </motion.div>
 
       {/* Scroll indicator */}
