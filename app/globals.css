@@ -15,7 +15,7 @@ html::-webkit-scrollbar {
 body {
   font-family: 'Inter', sans-serif;
   /* Matte black overlay to improve text contrast over the MFC theme background */
-  background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.55) 25%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.15) 100%), url('/MFC%20theme.png');
+  background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('/MFC%20theme.png');
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
@@ -211,6 +211,8 @@ body::-webkit-scrollbar {
 
 @layer base {
   :root {
+    /* Global background overlay color (adjust to change dimming across the site) */
+    --bg-overlay: rgba(0,0,0,0.9);
     --background: 0 0% 1.5%;
     --foreground: 0 0% 92%;
     --card: 0 0% 8%;

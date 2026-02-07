@@ -43,7 +43,7 @@ export function WhatsAppCTASection() {
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-1/2 left-1/4 w-96 h-96 bg-teal-500/5 rounded-full blur-3xl"
+          className="absolute top-1/2 left-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.3, 1],
             opacity: [0.2, 0.4, 0.2],
@@ -70,11 +70,11 @@ export function WhatsAppCTASection() {
         >
           {/* Header */}
           <motion.div
-            className="flex items-center justify-center w-16 h-16 mx-auto mb-8 rounded-full bg-gradient-to-br from-teal-500/20 to-teal-600/10 border border-teal-500/30"
+            className="flex items-center justify-center w-16 h-16 mx-auto mb-8 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/30"
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 3, repeat: Infinity }}
           >
-            <MessageCircle className="w-8 h-8 text-teal-400" />
+            <MessageCircle className="w-8 h-8 text-orange-400" />
           </motion.div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-4 text-white">
@@ -102,7 +102,7 @@ export function WhatsAppCTASection() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 + index * 0.1 }}
               >
-                <Check className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" />
+                <Check className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
                 <span className="text-sm text-muted-foreground">{benefit}</span>
               </motion.div>
             ))}
@@ -117,7 +117,7 @@ export function WhatsAppCTASection() {
                   name="firstName"
                   placeholder="First Name"
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-muted-foreground focus:outline-none focus:border-teal-500/50 focus:bg-white/10 transition-all"
+                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500/50 focus:bg-white/10 transition-all"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -128,7 +128,7 @@ export function WhatsAppCTASection() {
                   name="phone"
                   placeholder="+971 50 000 0000"
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-muted-foreground focus:outline-none focus:border-teal-500/50 focus:bg-white/10 transition-all"
+                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500/50 focus:bg-white/10 transition-all"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -139,7 +139,7 @@ export function WhatsAppCTASection() {
               <motion.button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold hover:shadow-2xl hover:shadow-teal-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold hover:shadow-2xl hover:shadow-orange-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -172,11 +172,12 @@ export function WhatsAppCTASection() {
               transition={{ type: 'spring', stiffness: 200 }}
             >
               <motion.div
-                className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-teal-500/20 to-teal-600/10 border border-teal-500/30 flex items-center justify-center"
+                className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-orange
+-500/20 to-orange-600/10 border border-orange-500/30 flex items-center justify-center"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 0.5 }}
               >
-                <Check className="w-8 h-8 text-teal-400" />
+                <Check className="w-8 h-8 text-orange-400" />
               </motion.div>
               <p className="text-lg font-semibold text-white mb-2">Welcome to the Circle!</p>
               <p className="text-muted-foreground">
