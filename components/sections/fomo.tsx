@@ -29,13 +29,14 @@ export function FOMOSection() {
               This isn't a waitlist.
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed font-light">
-              It's a <span className="text-orange-400 font-semibold">shortlist</span>. We're building the Gulf's most selective founder community not for gatekeeping, but for signal. Every member has been vetted, qualified, and committed to moving fast.
+              It's a <span className="text-orange-400 font-semibold">shortlist. <br />
+              </span> We're building the Gulf's most selective founder community not for gatekeeping, but for signal. Every member has been vetted, qualified, and committed to moving fast.
             </p>
           </div>
 
           {/* Second paragraph */}
           <p className="text-lg text-muted-foreground leading-relaxed font-light">
-            The founders in this shortlist don't wait for announcements. They get the advantage: first access to capital, strategic partners, and opportunities before they're public knowledge.
+           <span className="text-orange-400 font-semibold"> The founders in this shortlist don't wait for announcements.</span> <br />They get the <span className="text-orange-400 font-semibold">advantage:</span> <br />first access to capital, strategic partners, and opportunities before they're public knowledge.
           </p>
         </motion.div>
 
