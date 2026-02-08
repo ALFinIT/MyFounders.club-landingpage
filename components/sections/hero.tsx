@@ -40,13 +40,13 @@ const lineVariants = {
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden pt-20 lg:pt-32 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full overflow-hidden px-4 sm:px-6 lg:px-8 flex items-center justify-center" style={{ minHeight: '100vh', paddingTop: '80px' }}>
       {/* Background image removed - using MFC theme from globals.css */}
 
       {/* Minimal design - decorative elements removed for better accessibility and clarity */}
 
       <motion.div
-        className="relative z-10 max-w-5xl text-left flex flex-col items-start"
+        className="relative z-10 max-w-6xl text-center flex flex-col items-center"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -57,19 +57,19 @@ export function HeroSection() {
             className="space-y-4"
             variants={itemVariants}
           >
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
+            <h1 className="text-5xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight neon-heading">
               <span className="block text-white">Build Locally.</span>
               <span className="block text-white">Champion Regionally.</span>
-              <span className="block text-orange-400">Scale Globally.</span>
+              <span className="block text-white">Scale Globally.</span>
             </h1>
           </motion.div>
 
           {/* Divider line - thick to thin */}
           <motion.div
-            className="h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-transparent rounded-full"
+            className="h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-transparent rounded-full mx-auto"
             style={{
-              width: '100%',
-              backgroundImage: 'linear-gradient(to right, #FF5B23 0%, #FF5B23 20%, transparent 100%)',
+              width: '300px',
+              backgroundImage: 'linear-gradient(to right, #FF5B23 0%, #FF5B23 30%, transparent 100%)',
               filter: 'drop-shadow(0 0 8px rgba(255, 91, 35, 0.3))',
             }}
             variants={lineVariants}
@@ -81,15 +81,15 @@ export function HeroSection() {
 
         {/* Subtext */}
         <motion.p
-          className="text-lg sm:text-xl text-gray-200 max-w-2xl mb-12 leading-relaxed font-normal"
+          className="text-xs sm:text-sm neon-subheading max-w-2xl mb-14 leading-relaxed"
           variants={itemVariants}
         >
-          Platform connecting founders, capital, and opportunity across the Gulf startup ecosystem.
+          The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA.
         </motion.p>
 
         {/* CTA Buttons */}
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 mb-16"
+          className="flex flex-col sm:flex-row gap-4 mb-6 justify-center"
           variants={itemVariants}
         >
           <motion.button
@@ -127,7 +127,7 @@ export function HeroSection() {
 
         {/* Social proof */}
         <motion.div
-  className="flex items-center gap-6 text-sm"
+  className="flex items-center justify-center gap-6 text-sm"
   variants={itemVariants}
 >
   <div className="flex -space-x-2">
@@ -168,7 +168,7 @@ export function HeroSection() {
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <p className="text-xs text-muted-foreground uppercase tracking-widest">Scroll to explore</p>
+        <p className="text-xs slow-blink text-muted-foreground uppercase tracking-widest">Scroll to explore</p>
         <div className="w-[2px] h-8 bg-gradient-to-b from-orange-500 to-transparent rounded-full" />
       </motion.div>
     </section>

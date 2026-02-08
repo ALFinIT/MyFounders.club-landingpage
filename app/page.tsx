@@ -7,7 +7,11 @@ import { SocialProofSection } from '@/components/sections/social-proof'
 import { CommunityShowcase } from '@/components/sections/community-showcase'
 import { WhatsAppCTASection } from '@/components/sections/whatsapp-cta'
 import { StatsSection } from '@/components/sections/stats'
-import { PricingSection } from '@/components/sections/pricing'
+import { PricingSectionUpdated } from '@/components/sections/pricing-updated'
+import { FOMOSection } from '@/components/sections/fomo'
+import { ProgramAnnouncementSection } from '@/components/sections/program-announcement'
+import { ApplicationFormSection } from '@/components/sections/application-form'
+import { FAQSection } from '@/components/sections/faq'
 import { Footer } from '@/components/sections/footer'
 
 export default function Home() {
@@ -23,7 +27,11 @@ export default function Home() {
         <CommunityShowcase />
         <WhatsAppCTASection />
         <StatsSection />
-        <PricingSection />
+        <PricingSectionUpdated />
+        <FOMOSection />
+        <ProgramAnnouncementSection />
+        <ApplicationFormSection />
+        <FAQSection />
         <Footer />
       </main>
     </>
