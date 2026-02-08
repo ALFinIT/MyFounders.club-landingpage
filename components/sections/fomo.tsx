@@ -41,7 +41,7 @@ export function FOMOSection() {
 
         {/* Qualification checklist */}
         <motion.div
-          className="mt-16 p-8 rounded-2xl glass border border-teal-500/20"
+          className="mt-16 p-8 rounded-2xl glass border border-orange-500/20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
@@ -67,7 +67,7 @@ export function FOMOSection() {
 
         {/* Who shouldn't apply */}
         <motion.div
-          className="mt-8 p-8 rounded-2xl glass border border-teal-500/20"
+          className="mt-8 p-8 rounded-2xl glass border border-orange-500/20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
