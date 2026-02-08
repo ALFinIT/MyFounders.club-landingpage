@@ -9,37 +9,37 @@ const features = [
     icon: Compass,
     title: 'Founder Network',
     description: 'Connect with like-minded entrepreneurs, share experiences, and build lasting partnerships.',
-    image: '/founders-hub.jpg',
+    image: '/images/founders-hub.jpg',
   },
   {
     icon: Users,
     title: 'Investor Directory',
     description: 'Access curated investor profiles and funding opportunities tailored to your stage.',
-    image: '/investor-directory.jpg',
+    image: '/images/investor-directory.jpg',
   },
   {
     icon: Zap,
     title: 'Market Insights',
     description: 'Real-time data on Gulf startup trends, competitive landscape, and growth strategies.',
-    image: '/ecosystem.jpg',
+    image: '/images/marketInsights.jpg',
   },
   {
     icon: TrendingUp,
     title: 'Growth Tools',
     description: 'Resources, templates, and frameworks to accelerate your business development.',
-    image: '/growth-tools.jpg',
+    image: '/images/growth-tools.jpg',
   },
   {
     icon: Award,
     title: 'Mentorship Hub',
     description: 'Learn from seasoned founders and industry experts through curated programs.',
-    image: '/mentorship.jpg',
+    image: '/images/mentorship.jpeg',
   },
   {
     icon: Globe,
     title: 'Global Expansion',
     description: 'Connect with international networks to scale your business beyond the region.',
-    image: '/ecosystem.jpg',
+    image: '/images/ecosystem.jpeg',
   },
 ]
 
