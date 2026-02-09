@@ -109,16 +109,8 @@ export function Footer() {
         >
           {/* Main grid with office details (left) + link columns (right) */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8">
-            {/* Left: single-line row + office details */}
+            {/* Left: office details */}
             <div className="md:col-span-2 lg:col-span-2">
-              <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-2 sm:gap-3 text-xs sm:text-sm text-white/60 mb-4">
-                <span className="inline-flex items-center"><a href="#" className="hover:text-white transition-colors">Platform</a></span>
-                <span className="hidden sm:inline text-white/30">·</span>
-                <span className="inline-flex items-center"><a href="#" className="hover:text-white transition-colors">Explore Network</a></span>
-                <span className="hidden sm:inline text-white/30">·</span>
-                <span className="inline-flex items-center"><a href="#" className="hover:text-white transition-colors">Opportunities</a></span>
-              </div>
-
               <div className="text-xs sm:text-sm text-white/70 space-y-1">
                 <div>Office 1003, Latifa Tower,</div>
                 <div>Sheikh Zayed Road (north)</div>
@@ -165,10 +157,10 @@ export function Footer() {
           </div>
         </motion.div>
 
-        {/* PART 4: Footer bottom with Platform links in middle */}
-        <motion.div className="flex flex-col gap-3 sm:gap-4 text-xs text-white/50 tracking-wider text-center">
+        {/* PART 4: Footer bottom - 3 column layout */}
+        <motion.div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50 tracking-wider">
           <p className="font-light">© 2026 My Founders Club. All rights reserved.</p>
-          <p className="font-light text-white/40">Platform · Explore Network · Opportunities</p>
+          <p className="font-light hidden sm:block">Platform · Explore Network · Opportunities</p>
           <a href="https://alfinit.vercel.app/" target="_blank" rel="noopener noreferrer" className="font-light text-white hover:text-orange-500 transition-colors duration-300">Made by ALFINIT</a>
         </motion.div>
       </div>
