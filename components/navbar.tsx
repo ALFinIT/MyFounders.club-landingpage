@@ -5,6 +5,7 @@ import { Menu, X, Settings, LogOut, Layout } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { Logo } from './logo'
+import HighQualityImage from '@/components/HighQualityImage'
 import { useAuth } from '@/context/auth-context'
 
 export function Navbar() {
@@ -85,10 +86,13 @@ export function Navbar() {
                   whileTap={{ scale: 0.95 }}
                   title={user.name || user.email}
                 >
-                  <img
+                  <HighQualityImage
                     src={userImage || ''}
                     alt={user.name || 'User'}
-                    className="w-full h-full object-cover object-top rounded-full"
+                    fill
+                    objectFit="cover"
+                    className="rounded-full"
+                    quality={100}
                   />
                 </motion.button>
               </div>

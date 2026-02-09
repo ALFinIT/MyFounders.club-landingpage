@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import BackLink from '@/components/back-link'
+import HighQualityImage from '@/components/HighQualityImage'
 import { ExternalLink } from 'lucide-react'
 import SocialHomeButtons from '@/components/social-home-buttons'
 
@@ -99,10 +100,13 @@ export default function EventsPage() {
             aria-label="View All Events on Luma"
           >
             <div className="relative h-48 w-full rounded-2xl overflow-hidden border border-white/10">
-              <img
+              <HighQualityImage
                 src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=2400&h=900&fit=crop&auto=format&q=100"
                 alt="Luma Events"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                fill
+                objectFit="cover"
+                className="group-hover:scale-105 transition-transform duration-500"
+                quality={100}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute left-6 bottom-6 text-white">
@@ -124,7 +128,14 @@ export default function EventsPage() {
               >
                 <div className="flex flex-col md:flex-row items-stretch">
                   <div className="w-full md:w-1/2 relative overflow-hidden rounded-t-2xl md:rounded-tl-2xl md:rounded-bl-none">
-                    <img src={ev.cover_url} alt={ev.name} className="w-full h-48 md:h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <HighQualityImage
+                        src={ev.cover_url}
+                        alt={ev.name}
+                        fill
+                        objectFit="cover"
+                        className="group-hover:scale-105 transition-transform duration-500"
+                        quality={100}
+                      />
                   </div>
                   <div className="p-6 w-full md:w-1/2 flex flex-col justify-center">
                     <h4 className="text-xl font-bold text-white mb-2">{ev.name}</h4>
@@ -164,10 +175,13 @@ export default function EventsPage() {
               >
                 {/* Image Container */}
                 <div className="relative h-56 overflow-hidden rounded-t-2xl">
-                  <img
+                  <HighQualityImage
                     src={event.cover_url}
                     alt={event.name}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    fill
+                    objectFit="cover"
+                    className="transition-transform duration-300 group-hover:scale-110"
+                    quality={100}
                   />
                   
                   {/* Dark overlay */}

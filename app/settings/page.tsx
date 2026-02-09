@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/auth-context'
 import { useProfile } from '@/context/profile-context'
 import BackLink from '@/components/back-link'
+import HighQualityImage from '@/components/HighQualityImage'
 import { Trash2, Save, Camera } from 'lucide-react'
 import SocialHomeButtons from '@/components/social-home-buttons'
 import { Footer } from '@/components/sections/footer'
@@ -149,10 +150,14 @@ export default function SettingsPage() {
             <div className="relative w-32 h-32 mx-auto mb-4">
               {userImage ? (
                 <div className="w-full h-full rounded-full overflow-hidden shadow-lg bg-black">
-                  <img
+                  <HighQualityImage
                     src={userImage}
                     alt="Profile"
-                    className="w-full h-full object-cover object-top"
+                    width={128}
+                    height={128}
+                    objectFit="cover"
+                    className="rounded-full"
+                    quality={100}
                   />
                 </div>
               ) : (

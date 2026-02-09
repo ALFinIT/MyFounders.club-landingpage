@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Users, Zap, Globe, Check } from 'lucide-react'
+import HighQualityImage from '@/components/HighQualityImage'
 
 const stats = [
   { number: '500+', label: 'Active Founders', icon: Users },
@@ -52,11 +52,14 @@ export function CommunityShowcase() {
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.8 }}
           >
-            <Image
+            <HighQualityImage
               src="/images/MFC-community.png"
               alt="500+ founders in Gulf ecosystem"
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              objectFit="cover"
+              className="group-hover:scale-105 transition-transform duration-500"
+              quality={100}
+              priority
             />
             <motion.div
               className="absolute inset-0 border-2 border-orange-500/20 rounded-3xl"
@@ -173,7 +176,9 @@ export function CommunityShowcase() {
                   src={testimonial.image || "/placeholder.svg"}
                   alt={testimonial.author}
                   fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  objectFit="cover"
+                  className="group-hover:scale-110 transition-transform duration-500"
+                  quality={100}
                 />
               </div>
               <div className="glass rounded-xl p-4">
@@ -195,17 +200,11 @@ export function CommunityShowcase() {
         >
           <Link href="/auth">
             <motion.a
-              className="px-12 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full font-semibold shadow-lg shadow-orange-500/40 hover:shadow-orange-500/60 transition-all overflow-hidden group relative"
+              className="inline-block px-10 py-3 bg-gradient-to-r from-orange-500 via-orange-550 to-orange-600 text-white rounded-full font-semibold shadow-lg shadow-orange-500/40 hover:shadow-orange-500/70 transition-all"
               whileHover={{ scale: 1.08, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="relative z-10">Join the 500+ Community Today</span>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 -z-10"
-                initial={{ x: '100%' }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.3 }}
-              />
+              Join the 500+ Community Today
             </motion.a>
           </Link>
         </motion.div>
