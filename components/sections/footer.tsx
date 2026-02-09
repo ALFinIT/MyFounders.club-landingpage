@@ -51,10 +51,10 @@ export function Footer() {
             <a href="https://twitter.com/my_founders_club" target="_blank" rel="noopener noreferrer" className="p-2 text-white bg-white/5 rounded-full hover:bg-white/10 transition-all">
               <Twitter className="w-4 h-4" />
             </a>
-            <a href="https://linkedin.com/company/my-founders-club" target="_blank" rel="noopener noreferrer" className="p-2 text-white bg-white/5 rounded-full hover:bg-white/10 transition-all">
+            <a href="https://www.linkedin.com/company/myfoundersclub-global" target="_blank" rel="noopener noreferrer" className="p-2 text-white bg-white/5 rounded-full hover:bg-white/10 transition-all">
               <Linkedin className="w-4 h-4" />
             </a>
-            <a href="https://instagram.com/my_founders_club" target="_blank" rel="noopener noreferrer" className="p-2 text-white bg-white/5 rounded-full hover:bg-white/10 transition-all">
+            <a href="https://www.instagram.com/myfoundersclub.global/" target="_blank" rel="noopener noreferrer" className="p-2 text-white bg-white/5 rounded-full hover:bg-white/10 transition-all">
               <Instagram className="w-4 h-4" />
             </a>
           </div>
