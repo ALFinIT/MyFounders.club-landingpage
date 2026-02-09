@@ -48,7 +48,7 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-4 ml-auto">
-            <a href="https://twitter.com/my_founders_club" target="_blank" rel="noopener noreferrer" className="p-2 text-white bg-white/5 rounded-full hover:bg-white/10 transition-all">
+            <a href="https://x.com/myfounders_club" target="_blank" rel="noopener noreferrer" className="p-2 text-white bg-white/5 rounded-full hover:bg-white/10 transition-all">
               <Twitter className="w-4 h-4" />
             </a>
             <a href="https://www.linkedin.com/company/myfoundersclub-global" target="_blank" rel="noopener noreferrer" className="p-2 text-white bg-white/5 rounded-full hover:bg-white/10 transition-all">
