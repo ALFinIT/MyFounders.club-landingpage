@@ -4,15 +4,32 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 
 // Gulf startup ecosystem companies
-const companies = [
-  { name: 'Zain', color: 'from-blue-600 to-blue-400' },
-  { name: 'Aramco', color: 'from-green-600 to-green-400' },
-  { name: 'ADIB', color: 'from-red-600 to-red-400' },
-  { name: 'Noon', color: 'from-yellow-600 to-yellow-400' },
-  { name: 'Careem', color: 'from-purple-600 to-purple-400' },
-  { name: 'Talabat', color: 'from-orange-600 to-orange-400' },
-  { name: 'Namshi', color: 'from-pink-600 to-pink-400' },
-  { name: 'Fetchr', color: 'from-indigo-600 to-indigo-400' },
+const founders = [
+  {
+    name: 'Ahmed Al Zahrani',
+    company: 'Careem',
+    image: '/founders/founder1.jpg',
+  },
+  {
+    name: 'Omar Hassan',
+    company: 'Noon',
+    image: '/founders/founder1.jpg',
+  },
+  {
+    name: 'Sara Al Mansoori',
+    company: 'Talabat',
+    image: '/founders/founder1.jpg',
+  },
+  {
+    name: 'Faisal Khan',
+    company: 'Namshi',
+    image: '/founders/founder1.jpg',
+  },
+  {
+    name: 'Yousef Ali',
+    company: 'ADIB',
+    image: '/founders/founder1.jpg',
+  },
 ]
 
 export function SocialProofSection() {
@@ -33,7 +50,7 @@ export function SocialProofSection() {
         <div className="relative overflow-hidden py-8">
           <motion.div
             className="flex gap-8"
-            animate={{ x: [0, -1200] }}
+            animate={{ x: [0, '-50%'] }}
             transition={{
               duration: 30,
               repeat: Infinity,
@@ -41,55 +58,61 @@ export function SocialProofSection() {
             }}
           >
             {/* First set */}
-            {companies.map((company, index) => (
+            {founders.map((founder, index) => (
               <motion.div
                 key={`first-${index}`}
                 className="flex-shrink-0 group"
                 whileHover={{ y: -8 }}
               >
                 <motion.div
-                  className={`w-40 h-32 rounded-2xl glass backdrop-blur-xl border border-white/10 flex flex-col items-center justify-center group-hover:border-orange-500/50 transition-all duration-300 shadow-lg`}
+                  className="w-40 h-32 rounded-2xl glass backdrop-blur-xl border border-white/10 flex flex-col items-center justify-center group-hover:border-orange-500/50 transition-all duration-300 shadow-lg"
                   whileHover={{ boxShadow: '0 0 30px rgba(255, 91, 35, 0.2)' }}
                 >
                   <motion.div
-                    className="w-16 h-16 rounded-full overflow-hidden mb-3 shadow-lg"
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                  >
-                    <img
-                      src={`https://source.unsplash.com/160x160/?portrait,${encodeURIComponent(company.name)}`}
-                      alt={company.name}
-                      className="w-full h-full object-cover"
-                    />
+  className="relative w-16 h-16 rounded-full overflow-hidden mb-3 shadow-lg"
+  animate={{ scale: [1, 1.05, 1] }}
+  transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+>
+  <Image
+    src={founder.image}
+    alt={founder.name}
+    fill
+    sizes="64px"
+    className="object-cover"
+  />
+</motion.div>
+
                   </motion.div>
-                  <p className="text-sm font-semibold text-white">{company.name}</p>
+                  <p className="text-sm font-semibold text-white">{founder.name}</p>
                 </motion.div>
-              </motion.div>
             ))}
 
             {/* Duplicate set for seamless loop */}
-            {companies.map((company, index) => (
+            {founders.map((founder, index) => (
               <motion.div
                 key={`second-${index}`}
                 className="flex-shrink-0 group"
                 whileHover={{ y: -8 }}
               >
                 <motion.div
-                  className={`w-40 h-32 rounded-2xl glass backdrop-blur-xl border border-white/10 flex flex-col items-center justify-center group-hover:border-orange-500/50 transition-all duration-300 shadow-lg`}
+                  className="w-40 h-32 rounded-2xl glass backdrop-blur-xl border border-white/10 flex flex-col items-center justify-center group-hover:border-orange-500/50 transition-all duration-300 shadow-lg"
                   whileHover={{ boxShadow: '0 0 30px rgba(255, 91, 35, 0.2)' }}
                 >
                   <motion.div
-                    className="w-16 h-16 rounded-full overflow-hidden mb-3 shadow-lg"
+                    className="relative w-16 h-16 rounded-full overflow-hidden mb-3 shadow-lg"
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
                   >
-                    <img
-                      src={`https://source.unsplash.com/160x160/?portrait,${encodeURIComponent(company.name)}`}
-                      alt={company.name}
-                      className="w-full h-full object-cover"
-                    />
+                   <Image
+  src={founder.image}
+  alt={founder.name}
+  fill
+  sizes="64px"
+  className="object-cover"
+/>
+
                   </motion.div>
-                  <p className="text-sm font-semibold text-white">{company.name}</p>
+                  <p className="text-sm font-semibold text-white">{founder.name}</p>
                 </motion.div>
               </motion.div>
             ))}

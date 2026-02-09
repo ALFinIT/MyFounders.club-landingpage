@@ -115,13 +115,13 @@ export function StatsSection() {
           <p className="text-muted-foreground mb-6">
             Join thousands of builders in the Gulf startup ecosystem
           </p>
-          <motion.button
+          {/* <motion.button
             className="px-8 py-4 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold hover:shadow-2xl hover:shadow-orange-500/50 transition-all"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
             Get Started Today
-          </motion.button>
+          </motion.button> */}
         </motion.div>
       </div>
     </section>

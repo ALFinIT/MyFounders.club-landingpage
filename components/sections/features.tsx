@@ -9,7 +9,7 @@ const features = [
     icon: Compass,
     title: 'Founder Network',
     description: 'Connect with like-minded entrepreneurs, share experiences, and build lasting partnerships.',
-    image: '/images/founders-hub.jpg',
+    image: '/images/founders-hub.jpeg',
   },
   {
     icon: Users,

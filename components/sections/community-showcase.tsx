@@ -52,7 +52,7 @@ export function CommunityShowcase() {
             transition={{ duration: 0.8 }}
           >
             <Image
-              src="/community.jpg"
+              src="/images/MFC-community.png"
               alt="500+ founders in Gulf ecosystem"
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -140,19 +140,19 @@ export function CommunityShowcase() {
         >
           {[
             {
-              image: '/investor-directory.jpg',
+              image: '/images/Ahmed.jpg',
               quote: 'Best platform to connect with investors',
               author: 'Ahmed Al-Mansouri',
               role: 'Founder, TechVenture',
             },
             {
-              image: '/growth-tools.jpg',
+              image: '/images/Fatima.jpg',
               quote: 'Transformed our business growth trajectory',
               author: 'Fatima Al-Zahra',
               role: 'CEO, InnovateME',
             },
             {
-              image: '/mentorship.jpg',
+              image: '/images/Mohammed.jpg',
               quote: 'Found the perfect mentor for our startup',
               author: 'Mohammed Al-Qassim',
               role: 'Founder, FutureScale',

@@ -84,7 +84,7 @@ export function HeroSection() {
           className="text-xs sm:text-sm neon-subheading max-w-2xl mb-14 leading-relaxed"
           variants={itemVariants}
         >
-          The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA.
+          A vetted network connecting serious founders and active investors across MENA through a structured operating system.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -113,7 +113,7 @@ export function HeroSection() {
               </motion.div>
             </span>
           </motion.button>
-          <motion.button
+          {/* <motion.button
             className="group relative inline-flex items-center justify-center px-10 py-4 glass glass-hover font-semibold text-white rounded-2xl overflow-hidden"
             whileHover={{ scale: 1.05, y: -3 }}
             whileTap={{ scale: 0.95 }}
@@ -122,7 +122,7 @@ export function HeroSection() {
               Explore the Platform
               <Zap className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
             </span>
-          </motion.button>
+          </motion.button> */}
         </motion.div>
 
         {/* Social proof */}
@@ -132,10 +132,10 @@ export function HeroSection() {
 >
   <div className="flex -space-x-2">
     {[
-      "/public/user1.jpg",
-      "/public/user2.jpg",
-      "/public/user3.jpg",
-      "/public/user4.jpg",
+      "/founders/user1.jpg",
+      "/founders/user2.jpg",
+      "/founders/user3.jpg",
+      "/founders/user4.jpg",
     ].map((src, i) => (
       <motion.div
         key={i}
@@ -164,7 +164,7 @@ export function HeroSection() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 mt-16"
+        className="absolute bottom-2 left-[46%] -translate-x-1/2 flex flex-col items-center gap-2 mt-16"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
