@@ -40,7 +40,8 @@ export default function AvatarUploader({ userId }: { userId: string }) {
     const img = new Image()
     img.src = src
     img.onload = () => {
-      const size = 256
+      // increase saved avatar resolution for higher quality exports
+      const size = 512
       const canvas = document.createElement('canvas')
       canvas.width = size
       canvas.height = size
@@ -54,6 +55,7 @@ export default function AvatarUploader({ userId }: { userId: string }) {
       ctx.fillStyle = '#000'
       ctx.fillRect(0, 0, size, size)
       ctx.drawImage(img, cx, cy, iw, ih)
+      // encode at full quality
       const data = canvas.toDataURL('image/png')
       localStorage.setItem(`user_image_${userId}`, data)
       setSrc(data)

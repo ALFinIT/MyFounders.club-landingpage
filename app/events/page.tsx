@@ -2,8 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import BackLink from '@/components/back-link'
 import { ExternalLink } from 'lucide-react'
+import SocialHomeButtons from '@/components/social-home-buttons'
 
 interface Event {
   id: string
@@ -33,19 +34,20 @@ export default function EventsPage() {
           id: String(i + 1),
           name: [`Founders Circle Networking`, `Pitch Competition`, `Mentor Masterclass`, `Gulf Startup Summit`, `Investor Breakfast`, `Founder Fireside`, `Product Showcase`, `Scale Workshop`, `Regional Meetup`, `Investor AMA`, `Founder Retreat`, `Growth Sprint`][i] || `Event ${i + 1}`,
           description: [`Connect with like-minded founders and investors`, `Showcase your startup to angel investors`, `Learn growth strategies from industry leaders`, `Annual gathering of founders, investors and partners`, `Morning investor networking`, `Intimate founder conversations`, `Showcase product demos`, `Hands-on growth workshop`, `Meet founders in your region`, `Ask-me-anything with investors`, `Multi-day founder retreat`, `Intensive growth sprint`][i] || 'Event description',
+          // request higher-resolution, full-quality images from Unsplash (q=100)
           cover_url: [
-            'https://images.unsplash.com/photo-1523225088030-7b3b7d4f8b6f?w=1200&h=800&fit=crop',
-            'https://images.unsplash.com/photo-1522199710521-72d69614c702?w=1200&h=800&fit=crop',
-            'https://images.unsplash.com/photo-1503428593586-e225b39bddfe?w=1200&h=800&fit=crop',
-            'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=1200&h=800&fit=crop',
-            'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&h=800&fit=crop',
-            'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=800&fit=crop',
-            'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&h=800&fit=crop',
-            'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&h=800&fit=crop',
-            'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&h=800&fit=crop',
-            'https://images.unsplash.com/photo-1515165562835-c2d5f6f6f9f9?w=1200&h=800&fit=crop',
-            'https://images.unsplash.com/photo-1509475826633-fed577a2c71b?w=1200&h=800&fit=crop',
-            'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&h=800&fit=crop'
+            'https://images.unsplash.com/photo-1523225088030-7b3b7d4f8b6f?w=2400&h=1600&fit=crop&auto=format&q=100',
+            'https://images.unsplash.com/photo-1522199710521-72d69614c702?w=2400&h=1600&fit=crop&auto=format&q=100',
+            'https://images.unsplash.com/photo-1503428593586-e225b39bddfe?w=2400&h=1600&fit=crop&auto=format&q=100',
+            'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=2400&h=1600&fit=crop&auto=format&q=100',
+            'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=2400&h=1600&fit=crop&auto=format&q=100',
+            'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=2400&h=1600&fit=crop&auto=format&q=100',
+            'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=2400&h=1600&fit=crop&auto=format&q=100',
+            'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=2400&h=1600&fit=crop&auto=format&q=100',
+            'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=2400&h=1600&fit=crop&auto=format&q=100',
+            'https://images.unsplash.com/photo-1515165562835-c2d5f6f6f9f9?w=2400&h=1600&fit=crop&auto=format&q=100',
+            'https://images.unsplash.com/photo-1509475826633-fed577a2c71b?w=2400&h=1600&fit=crop&auto=format&q=100',
+            'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=2400&h=1600&fit=crop&auto=format&q=100'
           ][i % 12],
           event_url: 'https://luma.com/myfounders.club',
           date: ['Feb 15, 2026','Feb 20, 2026','Feb 25, 2026','Mar 5, 2026','Mar 10, 2026','Mar 15, 2026','Mar 20, 2026','Apr 1, 2026','Apr 5, 2026','Apr 10, 2026','Apr 15, 2026','Apr 20, 2026'][i % 12]
@@ -70,9 +72,7 @@ export default function EventsPage() {
     >
       {/* Header: simple text back link */}
       <div className="fixed top-6 left-6 z-50">
-        <Link href="/" className="text-white text-sm hover:text-orange-400 transition-colors">
-          &lt;- Back
-        </Link>
+        <BackLink href="/" />
       </div>
 
       <div className="max-w-6xl mx-auto">
@@ -100,7 +100,7 @@ export default function EventsPage() {
           >
             <div className="relative h-48 w-full rounded-2xl overflow-hidden border border-white/10">
               <img
-                src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=1600&h=600&fit=crop"
+                src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=2400&h=900&fit=crop&auto=format&q=100"
                 alt="Luma Events"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -222,6 +222,8 @@ export default function EventsPage() {
           </a>
         </motion.div>
       </div>
+      {/* Floating social buttons (bottom-right) */}
+      <SocialHomeButtons />
     </motion.div>
   )
 }

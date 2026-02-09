@@ -6,15 +6,15 @@ import { Home, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react'
 
 export default function SocialHomeButtons() {
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-4">
-      <div className="flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-4 py-3 hover:bg-white/10 transition-all">
+    <div className="fixed bottom-6 right-6 z-50 flex items-end">
+      <div className="flex flex-col items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-3 py-4 hover:bg-white/10 transition-all">
         <Link href="/">
           <motion.button
-            className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-            whileHover={{ scale: 1.15 }}
-            whileTap={{ scale: 0.95 }}
-            title="Back to Home"
-          >
+              className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              title="Back to Home"
+            >
             <Home size={18} />
           </motion.button>
         </Link>
@@ -24,7 +24,7 @@ export default function SocialHomeButtons() {
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-          whileHover={{ scale: 1.15 }}
+          whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           title="Follow us on X"
         >
@@ -36,7 +36,7 @@ export default function SocialHomeButtons() {
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-          whileHover={{ scale: 1.15 }}
+          whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           title="Connect on LinkedIn"
         >
@@ -48,7 +48,7 @@ export default function SocialHomeButtons() {
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-          whileHover={{ scale: 1.15 }}
+          whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           title="Instagram"
         >
@@ -60,7 +60,7 @@ export default function SocialHomeButtons() {
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-          whileHover={{ scale: 1.15 }}
+          whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           title="YouTube"
         >

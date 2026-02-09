@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/auth-context'
 import { useProfile } from '@/context/profile-context'
-import Link from 'next/link'
+import BackLink from '@/components/back-link'
 import { Trash2, Save, Camera } from 'lucide-react'
 import SocialHomeButtons from '@/components/social-home-buttons'
 import { Footer } from '@/components/sections/footer'
@@ -134,9 +134,7 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-950 to-black">
       {/* Header */}
       <div className="fixed top-6 left-6 z-50">
-        <Link href="/" className="text-white text-sm hover:text-orange-400 transition-colors">
-          &lt;--- Back
-        </Link>
+        <BackLink href="/" />
       </div>
 
       {/* Main Content */}
