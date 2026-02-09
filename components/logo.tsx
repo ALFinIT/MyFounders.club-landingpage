@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import HighQualityImage from '@/components/HighQualityImage'
 
 export function Logo() {
   return (
@@ -15,12 +15,13 @@ export function Logo() {
         animate={{ rotate: 360 }}
         transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
       >
-        <Image
+        <HighQualityImage
           src="/App Icon Orange.svg"
           alt="My Founders Club Logo"
           width={40}
           height={40}
           className="w-full h-full rounded-full"
+          quality={100}
         />
       </motion.div>
       <div className="flex flex-col leading-tight">

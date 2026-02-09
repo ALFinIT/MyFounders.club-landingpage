@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Users, Zap, Globe, Check } from 'lucide-react'
 import HighQualityImage from '@/components/HighQualityImage'
 
@@ -172,8 +172,8 @@ export function CommunityShowcase() {
               whileHover={{ y: -8 }}
             >
               <div className="relative rounded-2xl overflow-hidden h-64 mb-4 group">
-                <Image
-                  src={testimonial.image || "/placeholder.svg"}
+                <HighQualityImage
+                  src={testimonial.image || '/placeholder.svg'}
                   alt={testimonial.author}
                   fill
                   objectFit="cover"
@@ -198,17 +198,25 @@ export function CommunityShowcase() {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <Link href="/auth">
-            <motion.a
-              className="inline-block px-10 py-3 bg-gradient-to-r from-orange-500 via-orange-550 to-orange-600 text-white rounded-full font-semibold shadow-lg shadow-orange-500/40 hover:shadow-orange-500/70 transition-all"
-              whileHover={{ scale: 1.08, y: -3 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Join the 500+ Community Today
-            </motion.a>
-          </Link>
+          <CommunityCTA />
         </motion.div>
       </div>
     </section>
+  )
+}
+
+function CommunityCTA() {
+  const router = useRouter()
+
+  return (
+    <motion.button
+      onClick={() => router.push('/auth')}
+      className="inline-block px-10 py-3 bg-gradient-to-r from-orange-500 via-orange-550 to-orange-600 text-white rounded-full font-semibold shadow-lg shadow-orange-500/40 transition-all"
+      whileHover={{ scale: 1.05, y: -3 }}
+      whileTap={{ scale: 0.95 }}
+      type="button"
+    >
+      Join the 500+ Community Today
+    </motion.button>
   )
 }

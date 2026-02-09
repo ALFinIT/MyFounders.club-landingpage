@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import HighQualityImage from '@/components/HighQualityImage'
 
 // Gulf startup ecosystem companies
 const founders = [
@@ -70,12 +70,13 @@ export function SocialProofSection() {
                 >
                   {/* Image Container - Takes majority of space */}
                   <div className="relative w-full flex-1 bg-black overflow-hidden">
-                    <Image
+                    <HighQualityImage
                       src={founder.image}
                       alt={founder.name}
                       fill
-                      sizes="320px"
+                      objectFit="cover"
                       className="object-cover object-top"
+                      quality={100}
                     />
                   </div>
 
@@ -99,13 +100,14 @@ export function SocialProofSection() {
                   whileHover={{ boxShadow: '0 0 30px rgba(255, 91, 35, 0.2)' }}
                 >
                   {/* Image Container - Takes majority of space */}
-                  <div className="relative w-full flex-1 bg-black overflow-hidden">
-                    <Image
+                    <div className="relative w-full flex-1 bg-black overflow-hidden">
+                    <HighQualityImage
                       src={founder.image}
                       alt={founder.name}
                       fill
-                      sizes="320px"
+                      objectFit="cover"
                       className="object-cover object-top"
+                      quality={100}
                     />
                   </div>
 

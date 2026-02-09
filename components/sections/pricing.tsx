@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Check, ArrowRight } from 'lucide-react'
 
 const plans = [
@@ -133,20 +133,7 @@ export function PricingSection() {
                 </div>
 
                 {/* CTA button */}
-                <Link href="/auth">
-                  <motion.a
-                    className={`w-full py-3 rounded-lg font-semibold mb-8 flex items-center justify-center gap-2 transition-all ${
-                      plan.popular
-                        ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-2xl hover:shadow-orange-500/50'
-                        : 'glass glass-hover'
-                    }`}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Get Started
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.a>
-                </Link>
+                <PricingCTA popular={plan.popular} />
 
                 {/* Features list */}
                 <div className="space-y-4">
@@ -196,5 +183,26 @@ export function PricingSection() {
         </motion.p>
       </div>
     </section>
+  )
+}
+
+function PricingCTA({ popular }: { popular?: boolean }) {
+  const router = useRouter()
+
+  return (
+    <motion.button
+      onClick={() => router.push('/auth')}
+      className={`w-full py-3 rounded-lg font-semibold mb-8 flex items-center justify-center gap-2 transition-all ${
+        popular
+          ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-2xl hover:shadow-orange-500/50'
+          : 'glass glass-hover'
+      }`}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      type="button"
+    >
+      Get Started
+      <ArrowRight className="w-4 h-4" />
+    </motion.button>
   )
 }

@@ -1,20 +1,24 @@
-'use client'
+"use client"
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Home, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react'
+import { Home, Twitter, Linkedin, Instagram, Youtube, MessageCircle } from 'lucide-react'
+import ChatWidget from './ChatWidget'
 
 export default function SocialHomeButtons() {
+  const [openChat, setOpenChat] = useState(false)
+
   return (
     <div className="fixed bottom-6 right-6 z-50 flex items-end">
       <div className="flex flex-col items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-3 py-4 hover:bg-white/10 transition-all">
         <Link href="/">
           <motion.button
-              className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              title="Back to Home"
-            >
+            className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            title="Back to Home"
+          >
             <Home size={18} />
           </motion.button>
         </Link>
@@ -66,7 +70,20 @@ export default function SocialHomeButtons() {
         >
           <Youtube size={18} />
         </motion.a>
+
+        {/* AI Chat toggle */}
+        <motion.button
+          onClick={() => setOpenChat((s) => !s)}
+          className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          title="AI Assistant"
+        >
+          <MessageCircle size={18} />
+        </motion.button>
       </div>
+
+      <ChatWidget open={openChat} onClose={() => setOpenChat(false)} />
     </div>
   )
 }

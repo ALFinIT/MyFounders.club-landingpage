@@ -11,6 +11,7 @@ interface HighQualityImageProps {
   height?: number
   className?: string
   objectFit?: 'contain' | 'cover' | 'fill' | 'scale-down'
+  imageSizes?: string
   quality?: number
   priority?: boolean
   onLoad?: () => void
@@ -31,6 +32,7 @@ export default function HighQualityImage({
   height,
   className,
   objectFit = 'cover',
+  imageSizes,
   quality = 100,
   priority = false,
   onLoad,
@@ -72,17 +74,17 @@ export default function HighQualityImage({
 
       {/* Image container with fill */}
       {fill ? (
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          quality={quality}
-          priority={priority}
-          className={`object-${objectFit} ${className}`}
-          onLoadingComplete={handleLoadingComplete}
-          onError={handleError}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              quality={quality}
+              priority={priority}
+              className={`object-${objectFit} ${className}`}
+              onLoadingComplete={handleLoadingComplete}
+              onError={handleError}
+              sizes={imageSizes}
+            />
       ) : (
         /* Fixed dimension image */
         <Image

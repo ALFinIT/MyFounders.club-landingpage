@@ -5,7 +5,6 @@ import { Menu, X, Settings, LogOut, Layout } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { Logo } from './logo'
-import HighQualityImage from '@/components/HighQualityImage'
 import { useAuth } from '@/context/auth-context'
 
 export function Navbar() {
@@ -75,31 +74,28 @@ export function Navbar() {
             </a>
           </div>
 
-          {/* CTA Button / Auth Buttons */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* CTA Button / Auth Buttons - Fixed width to prevent layout shift */}
+          <div className="hidden md:flex items-center gap-4 flex-shrink-0">
             {user && !isLoading ? (
               <div ref={dropdownRef}>
-                <motion.button
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="h-10 w-10 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg hover:shadow-orange-500/50 transition-all overflow-hidden border border-orange-400/30"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  title={user.name || user.email}
-                >
-                  <HighQualityImage
-                    src={userImage || ''}
-                    alt={user.name || 'User'}
-                    fill
-                    objectFit="cover"
-                    className="rounded-full"
-                    quality={100}
-                  />
-                </motion.button>
+                  <motion.button
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    className="h-10 w-10 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg hover:shadow-orange-500/50 transition-all overflow-hidden border border-orange-400/30"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    title={user.name || user.email}
+                  >
+                    <img
+                      src={userImage || ''}
+                      alt={user.name || 'User'}
+                      className="w-full h-full object-cover object-top rounded-full"
+                    />
+                  </motion.button>
               </div>
             ) : (
               <Link href="/auth">
                 <motion.button
-                  className="px-8 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full text-sm font-semibold shadow-lg shadow-orange-500/30 hover:shadow-orange-500/60 transition-all overflow-hidden group relative"
+                  className="px-8 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full text-sm font-semibold shadow-lg shadow-orange-500/30 hover:shadow-orange-500/60 transition-all overflow-hidden group relative flex-shrink-0"
                   whileHover={{ scale: 1.08, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -118,7 +114,7 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white"
+            className="md:hidden text-white flex-shrink-0"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

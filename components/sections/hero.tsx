@@ -1,8 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
-import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import HighQualityImage from '../HighQualityImage'
 import { ArrowRight, Zap } from 'lucide-react'
 
 const containerVariants = {
@@ -28,36 +28,17 @@ const itemVariants = {
   },
 }
 
-const lineVariants = {
-  hidden: { scaleX: 0, originX: 0 },
-  visible: {
-    scaleX: 1,
-    transition: {
-      duration: 0.8,
-      ease: 'easeOut',
-    },
-  },
-}
-
 export function HeroSection() {
   return (
     <section className="relative w-full overflow-hidden px-4 sm:px-6 lg:px-8 flex items-center justify-center" style={{ minHeight: '100vh', paddingTop: '80px' }}>
-      {/* Background image removed - using MFC theme from globals.css */}
-
-      {/* Minimal design - decorative elements removed for better accessibility and clarity */}
-
       <motion.div
         className="relative z-10 max-w-6xl text-center flex flex-col items-center"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Main heading */}
         <div className="space-y-6 mb-12">
-          <motion.div
-            className="space-y-4"
-            variants={itemVariants}
-          >
+          <motion.div className="space-y-4" variants={itemVariants}>
             <h1 className="text-5xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight neon-heading">
               <span className="block text-white">Build Locally.</span>
               <span className="block text-white">Champion Regionally.</span>
@@ -65,105 +46,82 @@ export function HeroSection() {
             </h1>
           </motion.div>
 
-          {/* Divider line - thick to thin */}
           <motion.div
             className="h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-transparent rounded-full mx-auto"
-            style={{
-              width: '300px',
-              backgroundImage: 'linear-gradient(to right, #FF5B23 0%, #FF5B23 30%, transparent 100%)',
-              filter: 'drop-shadow(0 0 8px rgba(255, 91, 35, 0.3))',
-            }}
-            variants={lineVariants}
-            initial={{ scaleX: 0, originX: 0 }}
-            animate={{ scaleX: 1 }}
+            style={{ width: '300px', filter: 'drop-shadow(0 0 8px rgba(255, 91, 35, 0.3))' }}
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
             transition={{ duration: 1.2, ease: 'easeOut' }}
           />
-        <motion.div
-          className="flex flex-col sm:flex-row gap-4 mb-6 justify-center"
-          variants={itemVariants}
-        >
-          <Link href="/auth">
-            <motion.a
-              className="group relative inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl font-semibold text-white transition-all duration-300 shadow-xl shadow-orange-500/40 overflow-hidden"
-              whileHover={{ scale: 1.05, y: -3, boxShadow: '0 20px 40px rgba(255, 91, 35, 0.5)' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700"
-                initial={{ x: '100%' }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-              <span className="relative flex items-center">
-                Join the Ecosystem
-                <motion.div
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </motion.div>
-              </span>
-            </motion.a>
-          </Link>
-          {/* <motion.button
-            className="group relative inline-flex items-center justify-center px-10 py-4 glass glass-hover font-semibold text-white rounded-2xl overflow-hidden"
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="relative flex items-center">
-              Explore the Platform
-              <Zap className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
-            </span>
-          </motion.button> */}
+
+          <motion.div className="flex flex-col sm:flex-row gap-4 mb-6 justify-center" variants={itemVariants}>
+            <HeroCTA />
+            {/* Example secondary CTA - commented out for now */}
+            {/* <motion.button className="group relative inline-flex items-center justify-center px-10 py-4 glass glass-hover font-semibold text-white rounded-2xl overflow-hidden" whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }}>
+              <span className="relative flex items-center">Explore the Platform<Zap className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" /></span>
+            </motion.button> */}
+          </motion.div>
+        </div>
+
+        <SocialProof />
+      </motion.div>
+
+      <ScrollIndicator />
+    </section>
+  )
+}
+
+function HeroCTA() {
+  const router = useRouter()
+
+  return (
+    <motion.button
+      onClick={() => router.push('/auth')}
+      className="group relative inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl font-semibold text-white transition-all duration-300 shadow-xl shadow-orange-500/40"
+      whileHover={{ scale: 1.05, y: -3 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label="Join the Ecosystem"
+      type="button"
+    >
+      <span className="relative flex items-center">
+        Join the Ecosystem
+        <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+          <ArrowRight className="ml-2 w-5 h-5" />
         </motion.div>
+      </span>
+    </motion.button>
+  )
+}
+
+function SocialProof() {
+  const avatars = [
+    '/founders/user1.jpg',
+    '/founders/user2.jpg',
+    '/founders/user3.jpg',
+    '/founders/user4.jpg',
+  ]
+
+  return (
+    <motion.div className="flex items-center justify-center gap-6 text-sm" variants={itemVariants}>
+      <div className="flex -space-x-2">
+        {avatars.map((src, i) => (
+          <motion.div key={i} className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-background bg-muted" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.1, type: 'spring', stiffness: 200 }} whileHover={{ scale: 1.1, zIndex: 10 }}>
+            <HighQualityImage src={src} alt={`Founder ${i + 1}`} fill className="object-cover" imageSizes="40px" />
+          </motion.div>
+        ))}
       </div>
 
-        {/* Social proof */}
-        <motion.div
-  className="flex items-center justify-center gap-6 text-sm"
-  variants={itemVariants}
->
-  <div className="flex -space-x-2">
-    {[
-      "/founders/user1.jpg",
-      "/founders/user2.jpg",
-      "/founders/user3.jpg",
-      "/founders/user4.jpg",
-    ].map((src, i) => (
-      <motion.div
-        key={i}
-        className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-background bg-muted"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: i * 0.1, type: "spring", stiffness: 200 }}
-        whileHover={{ scale: 1.1, zIndex: 10 }}
-      >
-        <Image
-          src={src}
-          alt={`Founder ${i + 1}`}
-          fill
-          className="object-cover"
-          sizes="40px"
-        />
-      </motion.div>
-    ))}
-  </div>
+      <p className="text-gray-200">Join <span className="text-white font-semibold">500+</span> founders in the Gulf ecosystem</p>
+    </motion.div>
+  )
+}
 
-  <p className="text-gray-200">
-    Join <span className="text-white font-semibold">500+</span> founders in the Gulf ecosystem
-  </p>
-</motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-2 left-[46%] -translate-x-1/2 flex flex-col items-center gap-2 mt-16"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <p className="text-xs slow-blink text-muted-foreground uppercase tracking-widest">Scroll to explore</p>
-        <div className="w-[2px] h-8 bg-gradient-to-b from-orange-500 to-transparent rounded-full" />
-      </motion.div>
-    </section>
+function ScrollIndicator() {
+  return (
+    <motion.div className="absolute bottom-2 left-[46%] -translate-x-1/2 flex flex-col items-center gap-2 mt-16" animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+      <p className="text-xs slow-blink text-muted-foreground uppercase tracking-widest">Scroll to explore</p>
+      <div className="w-[2px] h-8 bg-gradient-to-b from-orange-500 to-transparent rounded-full" />
+    </motion.div>
   )
 }
