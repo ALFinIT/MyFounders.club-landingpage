@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/auth-context'
 import { useProfile } from '@/context/profile-context'
 import Link from 'next/link'
-import { ArrowLeft, Trash2, Save, Camera } from 'lucide-react'
+import { Trash2, Save, Camera } from 'lucide-react'
 import SocialHomeButtons from '@/components/social-home-buttons'
 import { Footer } from '@/components/sections/footer'
 
@@ -134,15 +134,8 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-950 to-black">
       {/* Header */}
       <div className="fixed top-6 left-6 z-50">
-        <Link href="/">
-          <motion.button
-            className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white hover:bg-white/10 transition-all"
-            whileHover={{ scale: 1.05, x: -4 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ArrowLeft size={20} />
-            Back
-          </motion.button>
+        <Link href="/" className="text-white text-sm hover:text-orange-400 transition-colors">
+          &lt;--- Back
         </Link>
       </div>
 
@@ -157,11 +150,13 @@ export default function SettingsPage() {
           <div className="text-center mb-8">
             <div className="relative w-32 h-32 mx-auto mb-4">
               {userImage ? (
-                <img
-                  src={userImage}
-                  alt="Profile"
-                  className="w-full h-full rounded-full object-cover shadow-lg"
-                />
+                <div className="w-full h-full rounded-full overflow-hidden shadow-lg bg-black">
+                  <img
+                    src={userImage}
+                    alt="Profile"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
               ) : (
                 <div className="w-full h-full rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold text-5xl shadow-lg">
                   {user?.name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase()}

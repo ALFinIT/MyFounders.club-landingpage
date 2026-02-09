@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from 'framer-motion'
-import { Twitter, Linkedin, Instagram } from 'lucide-react'
+import { Twitter, Linkedin, Instagram, Youtube } from 'lucide-react'
 import Image from 'next/image'
 
 const leftLinks = [
@@ -53,6 +53,9 @@ export function Footer() {
             </a>
             <a href="https://www.linkedin.com/company/myfoundersclub-global" target="_blank" rel="noopener noreferrer" className="p-2 text-white bg-white/5 rounded-full hover:bg-white/10 transition-all">
               <Linkedin className="w-4 h-4" />
+            </a>
+            <a href="https://www.youtube.com/@myfoundersclub.global" target="_blank" rel="noopener noreferrer" className="p-2 text-white bg-white/5 rounded-full hover:bg-white/10 transition-all">
+              <Youtube className="w-4 h-4" />
             </a>
             <a href="https://www.instagram.com/myfoundersclub.global/" target="_blank" rel="noopener noreferrer" className="p-2 text-white bg-white/5 rounded-full hover:bg-white/10 transition-all">
               <Instagram className="w-4 h-4" />

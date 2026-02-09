@@ -28,10 +28,20 @@ export function ApplicationFormSection() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    // Here you would send the data to your API
-    console.log('Form submitted:', formData)
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    try {
+      const res = await fetch('/api/applications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      if (!res.ok) throw new Error('Submission failed')
+
+      setSubmitted(true)
+      setTimeout(() => setSubmitted(false), 3000)
+    } catch (err) {
+      console.error('Application submit error:', err)
+      alert('Error submitting application. Please try again.')
+    }
   }
 
   return (

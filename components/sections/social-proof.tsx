@@ -65,26 +65,26 @@ export function SocialProofSection() {
                 whileHover={{ y: -8 }}
               >
                 <motion.div
-                  className="w-40 h-32 rounded-2xl glass backdrop-blur-xl border border-white/10 flex flex-col items-center justify-center group-hover:border-orange-500/50 transition-all duration-300 shadow-lg"
+                  className="w-64 h-80 rounded-2xl overflow-hidden relative group-hover:border-orange-500/50 transition-all duration-300 shadow-lg flex flex-col border border-white/10"
                   whileHover={{ boxShadow: '0 0 30px rgba(255, 91, 35, 0.2)' }}
                 >
-                  <motion.div
-  className="relative w-16 h-16 rounded-full overflow-hidden mb-3 shadow-lg"
-  animate={{ scale: [1, 1.05, 1] }}
-  transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
->
-  <Image
-    src={founder.image}
-    alt={founder.name}
-    fill
-    sizes="64px"
-    className="object-cover"
-  />
-</motion.div>
+                  {/* Image Container - Takes majority of space */}
+                  <div className="relative w-full flex-1 bg-black overflow-hidden">
+                    <Image
+                      src={founder.image}
+                      alt={founder.name}
+                      fill
+                      sizes="320px"
+                      className="object-cover object-top"
+                    />
+                  </div>
 
-                  </motion.div>
-                  <p className="text-sm font-semibold text-white">{founder.name}</p>
+                  {/* Name Bar - Simple black background, minimal height */}
+                  <div className="w-full bg-black px-4 py-3 text-center">
+                    <p className="text-white font-semibold text-sm">{founder.name}</p>
+                  </div>
                 </motion.div>
+              </motion.div>
             ))}
 
             {/* Duplicate set for seamless loop */}
@@ -95,24 +95,24 @@ export function SocialProofSection() {
                 whileHover={{ y: -8 }}
               >
                 <motion.div
-                  className="w-40 h-32 rounded-2xl glass backdrop-blur-xl border border-white/10 flex flex-col items-center justify-center group-hover:border-orange-500/50 transition-all duration-300 shadow-lg"
+                  className="w-64 h-80 rounded-2xl overflow-hidden relative group-hover:border-orange-500/50 transition-all duration-300 shadow-lg flex flex-col border border-white/10"
                   whileHover={{ boxShadow: '0 0 30px rgba(255, 91, 35, 0.2)' }}
                 >
-                  <motion.div
-                    className="relative w-16 h-16 rounded-full overflow-hidden mb-3 shadow-lg"
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                  >
-                   <Image
-  src={founder.image}
-  alt={founder.name}
-  fill
-  sizes="64px"
-  className="object-cover"
-/>
+                  {/* Image Container - Takes majority of space */}
+                  <div className="relative w-full flex-1 bg-black overflow-hidden">
+                    <Image
+                      src={founder.image}
+                      alt={founder.name}
+                      fill
+                      sizes="320px"
+                      className="object-cover object-top"
+                    />
+                  </div>
 
-                  </motion.div>
-                  <p className="text-sm font-semibold text-white">{founder.name}</p>
+                  {/* Name Bar - Simple black background, minimal height */}
+                  <div className="w-full bg-black px-4 py-3 text-center">
+                    <p className="text-white font-semibold text-sm">{founder.name}</p>
+                  </div>
                 </motion.div>
               </motion.div>
             ))}

@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import Image from 'next/image'
 import { Users, Zap, Globe, Check } from 'lucide-react'
 
@@ -12,7 +13,7 @@ const stats = [
 
 export function CommunityShowcase() {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden px-4 sm:px-6 lg:px-8 py-24">
+    <section id="community" className="relative min-h-screen w-full overflow-hidden px-4 sm:px-6 lg:px-8 py-24">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#050505] to-[#0a0a0a] pointer-events-none" />
 
@@ -192,19 +193,21 @@ export function CommunityShowcase() {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <motion.button
-            className="px-12 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full font-semibold shadow-lg shadow-orange-500/40 hover:shadow-orange-500/60 transition-all overflow-hidden group relative"
-            whileHover={{ scale: 1.08, y: -3 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="relative z-10">Join the 500+ Community Today</span>
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 -z-10"
-              initial={{ x: '100%' }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </motion.button>
+          <Link href="/auth">
+            <motion.a
+              className="px-12 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full font-semibold shadow-lg shadow-orange-500/40 hover:shadow-orange-500/60 transition-all overflow-hidden group relative"
+              whileHover={{ scale: 1.08, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="relative z-10">Join the 500+ Community Today</span>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 -z-10"
+                initial={{ x: '100%' }}
+                whileHover={{ x: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.a>
+          </Link>
         </motion.div>
       </div>
     </section>

@@ -106,7 +106,7 @@ const cardVariants = {
 
 export function PricingSectionUpdated() {
   return (
-    <section className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+    <section id="pricing" className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <motion.div

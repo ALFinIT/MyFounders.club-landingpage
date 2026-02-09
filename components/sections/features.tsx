@@ -66,7 +66,7 @@ const itemVariants = {
 
 export function FeaturesSection() {
   return (
-    <section className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+    <section id="features" className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <motion.div

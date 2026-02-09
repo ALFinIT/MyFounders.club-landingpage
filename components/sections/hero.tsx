@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Zap } from 'lucide-react'
 
@@ -77,42 +78,33 @@ export function HeroSection() {
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.2, ease: 'easeOut' }}
           />
-        </div>
-
-        {/* Subtext */}
-        <motion.p
-          className="text-xs sm:text-sm neon-subheading max-w-2xl mb-14 leading-relaxed"
-          variants={itemVariants}
-        >
-          A vetted network connecting serious founders and active investors across MENA through a structured operating system.
-        </motion.p>
-
-        {/* CTA Buttons */}
         <motion.div
           className="flex flex-col sm:flex-row gap-4 mb-6 justify-center"
           variants={itemVariants}
         >
-          <motion.button
-            className="group relative inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl font-semibold text-white transition-all duration-300 shadow-xl shadow-orange-500/40 overflow-hidden"
-            whileHover={{ scale: 1.05, y: -3, boxShadow: '0 20px 40px rgba(255, 91, 35, 0.5)' }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700"
-              initial={{ x: '100%' }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-            <span className="relative flex items-center">
-              Join the Ecosystem
+          <Link href="/auth">
+            <motion.a
+              className="group relative inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl font-semibold text-white transition-all duration-300 shadow-xl shadow-orange-500/40 overflow-hidden"
+              whileHover={{ scale: 1.05, y: -3, boxShadow: '0 20px 40px rgba(255, 91, 35, 0.5)' }}
+              whileTap={{ scale: 0.95 }}
+            >
               <motion.div
-                animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </motion.div>
-            </span>
-          </motion.button>
+                className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700"
+                initial={{ x: '100%' }}
+                whileHover={{ x: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+              <span className="relative flex items-center">
+                Join the Ecosystem
+                <motion.div
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </motion.div>
+              </span>
+            </motion.a>
+          </Link>
           {/* <motion.button
             className="group relative inline-flex items-center justify-center px-10 py-4 glass glass-hover font-semibold text-white rounded-2xl overflow-hidden"
             whileHover={{ scale: 1.05, y: -3 }}
@@ -124,6 +116,7 @@ export function HeroSection() {
             </span>
           </motion.button> */}
         </motion.div>
+      </div>
 
         {/* Social proof */}
         <motion.div

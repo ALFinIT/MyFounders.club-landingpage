@@ -13,11 +13,13 @@ import { ProgramAnnouncementSection } from '@/components/sections/program-announ
 import { ApplicationFormSection } from '@/components/sections/application-form'
 import { FAQSection } from '@/components/sections/faq'
 import { Footer } from '@/components/sections/footer'
+import SocialHomeButtons from '@/components/social-home-buttons'
 
 export default function Home() {
   return (
     <>
       <Navbar />
+      <SocialHomeButtons />
       <main className="w-full">
         <HeroSection />
         <ProblemSection />

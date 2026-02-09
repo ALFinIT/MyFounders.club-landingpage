@@ -312,6 +312,39 @@ interface InvestorProfile {
 - **User images:** `localStorage['user_image_${userId}']` (Base64)
 - **Current user:** `localStorage['user']` (Current session)
 
+### Supabase Integration
+**Setup & Configuration:**
+- Environment variables (see `.env.example`):
+  - `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL (public)
+  - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY` - Anon/publishable key (safe for browser)
+  - `SUPABASE_SERVICE_ROLE_KEY` - Service role key (private, server-only, for enhanced security)
+
+**Supabase Client Utilities:**
+- `utils/supabase/server.ts` - Server-side Supabase client for API routes and server components
+- `utils/supabase/client.ts` - Browser-side Supabase client for client components
+- `utils/supabase/middleware.ts` - Middleware for session refresh and cookie management
+- `middleware.ts` - Root middleware that handles user session persistence
+
+**API Routes (Form Submissions):**
+- `POST /api/whatsapp` — receives `{ firstName, phone }` and inserts into `whatsapp_signups` table
+- `POST /api/applications` — receives application form data and inserts into `applications` table
+- Both routes use the server-side Supabase client for secure database operations
+
+**Database Schema:**
+- Tables created in `supabase/init.sql`:
+  - `whatsapp_signups` - Stores WhatsApp circle signup attempts
+  - `applications` - Stores "Secure Your Spot" form submissions
+  - `profiles` - Stores user profile data (future use)
+- To apply: Copy SQL from `supabase/init.sql` into Supabase SQL editor
+
+**Security Best Practices:**
+- Publishable key is safe in environment variables (sent to browser)
+- Service role key is private; store only in `.env.local` (development) or platform secrets (production)
+- Middleware automatically refreshes user sessions via cookies
+- Row-level policies can be added in Supabase to restrict unauthorized access
+
+> ⚠️ **Important:** Never commit `.env.local` or service role keys to the repository. Use `.env.example` as a template.
+
 ---
 
 ## 📄 Features by Section

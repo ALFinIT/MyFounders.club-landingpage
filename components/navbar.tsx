@@ -54,17 +54,20 @@ export function Navbar() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div className="glass rounded-full px-8 py-4 flex items-center justify-between gap-8">
+        <div className="glass rounded-full px-6 py-3 flex items-center justify-between gap-4">
           {/* Logo */}
           <Logo />
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-16">
+          <div className="hidden md:flex items-center gap-6">
             <a href="#features" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light">
               Features
             </a>
             <a href="#pricing" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light">
               Pricing
+            </a>
+            <a href="/events" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light">
+              Events
             </a>
             <a href="#community" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light">
               Community
@@ -85,7 +88,7 @@ export function Navbar() {
                   <img
                     src={userImage || ''}
                     alt={user.name || 'User'}
-                    className="w-full h-full object-cover rounded-full"
+                    className="w-full h-full object-cover object-top rounded-full"
                   />
                 </motion.button>
               </div>
@@ -137,25 +140,25 @@ export function Navbar() {
           {/* Menu Items */}
           <div className="space-y-2 mb-4">
             <Link href="/settings">
-              <motion.button
+              <motion.a
                 className="w-full flex items-center gap-3 px-4 py-2 bg-black/10 hover:bg-white/5 rounded-lg transition-colors text-white text-sm"
                 whileHover={{ x: 4 }}
                 onClick={() => setIsUserMenuOpen(false)}
               >
                 <Settings className="w-4 h-4" />
                 Settings & Profile
-              </motion.button>
+              </motion.a>
             </Link>
 
             <Link href="/dashboard">
-              <motion.button
+              <motion.a
                 className="w-full flex items-center gap-3 px-4 py-2 bg-black/10 hover:bg-white/5 rounded-lg transition-colors text-white text-sm"
                 whileHover={{ x: 4 }}
                 onClick={() => setIsUserMenuOpen(false)}
               >
                 <Layout className="w-4 h-4" />
                 Dashboard
-              </motion.button>
+              </motion.a>
             </Link>
 
             <motion.button
@@ -203,15 +206,18 @@ export function Navbar() {
             <a href="#pricing" className="text-muted-foreground hover:text-white transition-colors">
               Pricing
             </a>
+            <a href="/events" className="text-muted-foreground hover:text-white transition-colors">
+              Events
+            </a>
             <a href="#community" className="text-muted-foreground hover:text-white transition-colors">
               Community
             </a>
             {user ? (
               <>
                 <Link href="/dashboard">
-                  <button className="w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold mt-2">
+                  <a className="w-full block text-center px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold mt-2">
                     Dashboard
-                  </button>
+                  </a>
                 </Link>
                 <button
                   onClick={logout}
@@ -222,9 +228,9 @@ export function Navbar() {
               </>
             ) : (
               <Link href="/auth">
-                <button className="w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold mt-2">
+                <a className="w-full block text-center px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold mt-2">
                   Join
-                </button>
+                </a>
               </Link>
             )}
           </div>

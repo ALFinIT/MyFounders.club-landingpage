@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/auth-context'
 import { Logo } from '@/components/logo'
-import { ChevronRight, MessageCircle, Linkedin, Twitter, Instagram, Home } from 'lucide-react'
+import { ChevronRight, MessageCircle, Linkedin, Twitter, Instagram, Home, Youtube } from 'lucide-react'
 import Link from 'next/link'
 
 export default function SetupProfilePage() {
@@ -184,6 +184,19 @@ export default function SetupProfilePage() {
             title="Follow on Instagram"
           >
             <Instagram size={18} />
+          </motion.a>
+
+          {/* YouTube */}
+          <motion.a
+            href="https://www.youtube.com/@myfoundersclub.global"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.95 }}
+            title="YouTube"
+          >
+            <Youtube size={18} />
           </motion.a>
         </div>
 

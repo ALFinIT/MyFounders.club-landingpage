@@ -21,21 +21,29 @@ export function WhatsAppCTASection() {
     e.preventDefault()
     setIsLoading(true)
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsLoading(false)
+    try {
+      const formData = new FormData(e.currentTarget)
+      const payload = {
+        firstName: formData.get('firstName'),
+        phone: formData.get('phone'),
+      }
+
+      const res = await fetch('/api/whatsapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+
+      if (!res.ok) throw new Error('Failed to submit')
+
       setSubmitted(true)
-
-      // Reset after 3 seconds
       setTimeout(() => setSubmitted(false), 3000)
-    }, 800)
-
-    // In production, you'd send the form data here
-    const formData = new FormData(e.currentTarget)
-    console.log('WhatsApp form submitted:', {
-      firstName: formData.get('firstName'),
-      phone: formData.get('phone'),
-    })
+    } catch (err) {
+      console.error('WhatsApp submit error:', err)
+      alert('There was an error submitting the form. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

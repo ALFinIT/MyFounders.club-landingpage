@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Home, Twitter, Linkedin, Instagram } from 'lucide-react'
+import { Home, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react'
 
 export default function SocialHomeButtons() {
   return (
@@ -53,6 +53,18 @@ export default function SocialHomeButtons() {
           title="Instagram"
         >
           <Instagram size={18} />
+        </motion.a>
+
+        <motion.a
+          href="https://www.youtube.com/@myfoundersclub.global"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.95 }}
+          title="YouTube"
+        >
+          <Youtube size={18} />
         </motion.a>
       </div>
     </div>
