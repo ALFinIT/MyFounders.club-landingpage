@@ -47,6 +47,12 @@ export function WhatsAppCTASection() {
         phone,
       }
 
+      // Save to localStorage
+      const existing = typeof window !== 'undefined' ? localStorage.getItem('whatsapp_signups') : null
+      const arr = existing ? JSON.parse(existing as string) : []
+      arr.push({ ...payload, signedUpAt: new Date().toISOString() })
+      if (typeof window !== 'undefined') localStorage.setItem('whatsapp_signups', JSON.stringify(arr))
+
       const res = await fetch('/api/whatsapp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

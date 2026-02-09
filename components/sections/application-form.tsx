@@ -65,20 +65,20 @@ export function ApplicationFormSection() {
   }
 
   return (
-    <section className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto">
+    <section className="relative w-full py-16 sm:py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">
         {/* Section header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
             Secure Your Spot.
           </h2>
-          <p className="text-lg text-muted-foreground font-light">
+          <p className="text-base sm:text-lg text-muted-foreground font-light">
             The shortlist closes when it's full.
           </p>
         </motion.div>
@@ -86,7 +86,7 @@ export function ApplicationFormSection() {
         {/* Form */}
         <motion.form
           onSubmit={handleSubmit}
-          className="p-8 rounded-2xl glass border border-orange-500/20 space-y-6"
+          className="p-6 sm:p-8 lg:p-12 rounded-2xl glass border border-orange-500/20 space-y-5 sm:space-y-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
