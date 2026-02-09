@@ -16,16 +16,35 @@ const benefits = [
 export function WhatsAppCTASection() {
   const [submitted, setSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [phoneError, setPhoneError] = useState('')
+
+  // Validate phone number format
+  const validatePhone = (phone: string): boolean => {
+    // Accept formats like: +971501234567, +971 50 123 4567, 0501234567, etc.
+    const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/
+    return phoneRegex.test(phone.replace(/\s/g, ''))
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setPhoneError('')
+
+    const formData = new FormData(e.currentTarget)
+    const phone = formData.get('phone') as string
+    const firstName = formData.get('firstName') as string
+
+    // Validate phone number
+    if (!validatePhone(phone)) {
+      setPhoneError('Please enter a valid phone number (e.g., +971 50 123 4567)')
+      return
+    }
+
     setIsLoading(true)
 
     try {
-      const formData = new FormData(e.currentTarget)
       const payload = {
-        firstName: formData.get('firstName'),
-        phone: formData.get('phone'),
+        firstName,
+        phone,
       }
 
       const res = await fetch('/api/whatsapp', {
@@ -37,10 +56,13 @@ export function WhatsAppCTASection() {
       if (!res.ok) throw new Error('Failed to submit')
 
       setSubmitted(true)
-      setTimeout(() => setSubmitted(false), 3000)
+      // Redirect to WhatsApp community after 2 seconds
+      setTimeout(() => {
+        window.open('https://chat.whatsapp.com/FNvJDT55evI4E4EBaT4AHZ', '_blank')
+      }, 2000)
     } catch (err) {
       console.error('WhatsApp submit error:', err)
-      alert('There was an error submitting the form. Please try again.')
+      setPhoneError('Error submitting form. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -136,13 +158,19 @@ export function WhatsAppCTASection() {
                   name="phone"
                   placeholder="+971 50 000 0000"
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500/50 focus:bg-white/10 transition-all"
+                  className={`w-full px-4 py-3 rounded-lg bg-white/5 border text-white placeholder-muted-foreground focus:outline-none focus:bg-white/10 transition-all ${
+                    phoneError ? 'border-red-500/50 focus:border-red-500/50' : 'border-white/10 focus:border-orange-500/50'
+                  }`}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.45 }}
                 />
               </div>
+
+              {phoneError && (
+                <p className="text-sm text-red-400 text-center">{phoneError}</p>
+              )}
 
               <motion.button
                 type="submit"
@@ -180,16 +208,18 @@ export function WhatsAppCTASection() {
               transition={{ type: 'spring', stiffness: 200 }}
             >
               <motion.div
-                className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-orange
--500/20 to-orange-600/10 border border-orange-500/30 flex items-center justify-center"
+                className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/30 flex items-center justify-center"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 0.5 }}
               >
                 <Check className="w-8 h-8 text-orange-400" />
               </motion.div>
               <p className="text-lg font-semibold text-white mb-2">Welcome to the Circle!</p>
-              <p className="text-muted-foreground">
-                Check your WhatsApp for the community invite link.
+              <p className="text-muted-foreground mb-4">
+                Redirecting to WhatsApp in a moment...
+              </p>
+              <p className="text-xs text-white/60">
+                If not redirected, <a href="https://chat.whatsapp.com/FNvJDT55evI4E4EBaT4AHZ" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 underline">click here</a>
               </p>
             </motion.div>
           )}

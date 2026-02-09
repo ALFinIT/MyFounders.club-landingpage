@@ -92,7 +92,7 @@ export function HowItWorksSection() {
                         animate={{ scale: [1, 1.1, 1] }}
                         transition={{ duration: 3, repeat: Infinity, delay: index * 0.4 }}
                       />
-                      <span className="relative text-3xl font-bold gradient-text">{step.number}</span>
+                      <span className="relative text-3xl font-bold text-orange-500">{step.number}</span>
                     </motion.div>
 
                     {/* Icon */}

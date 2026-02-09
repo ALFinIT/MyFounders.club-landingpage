@@ -144,7 +144,7 @@ export function SocialProofSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <p className="text-2xl sm:text-3xl font-bold gradient-text">{stat.value}</p>
+              <p className="text-2xl sm:text-3xl font-bold text-orange-500">{stat.value}</p>
               <p className="text-xs sm:text-sm text-muted-foreground mt-1">{stat.label}</p>
             </motion.div>
           ))}

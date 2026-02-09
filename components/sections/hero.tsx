@@ -107,7 +107,7 @@ function SocialProof() {
       <div className="flex -space-x-2">
         {avatars.map((src, i) => (
           <motion.div key={i} className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-background bg-muted" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.1, type: 'spring', stiffness: 200 }} whileHover={{ scale: 1.1, zIndex: 10 }}>
-            <HighQualityImage src={src} alt={`Founder ${i + 1}`} fill className="object-cover" imageSizes="40px" />
+            <HighQualityImage src={src} alt={`Founder ${i + 1}`} fill className="object-cover" sizes="40px" />
           </motion.div>
         ))}
       </div>

@@ -56,7 +56,7 @@ function Counter({ value, label, suffix }: StatCounter) {
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
-      <p className="text-4xl sm:text-5xl lg:text-6xl font-light gradient-text mb-3">
+      <p className="text-4xl sm:text-5xl lg:text-6xl font-light text-orange-500 mb-3">
         {displayValue}
         {suffix}
       </p>

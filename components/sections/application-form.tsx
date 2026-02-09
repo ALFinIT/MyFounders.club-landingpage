@@ -17,6 +17,7 @@ export function ApplicationFormSection() {
   })
 
   const [submitted, setSubmitted] = useState(false)
+  const [statusMessage, setStatusMessage] = useState('')
 
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target
@@ -28,19 +29,38 @@ export function ApplicationFormSection() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+    // Save locally first (keep a local copy)
+    try {
+      const existing = typeof window !== 'undefined' ? localStorage.getItem('applications') : null
+      const arr = existing ? JSON.parse(existing as string) : []
+      arr.push({ ...formData, submittedAt: new Date().toISOString() })
+      if (typeof window !== 'undefined') localStorage.setItem('applications', JSON.stringify(arr))
+      setStatusMessage('Saved locally')
+    } catch (err) {
+      console.error('Local save error:', err)
+    }
+
+    // Send to Supabase via API (best-effort)
     try {
       const res = await fetch('/api/applications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
-      if (!res.ok) throw new Error('Submission failed')
+
+      if (!res.ok) {
+        const text = await res.text()
+        throw new Error(text || 'Submission failed')
+      }
 
       setSubmitted(true)
+      setStatusMessage('Submitted to server')
       setTimeout(() => setSubmitted(false), 3000)
+      setTimeout(() => setStatusMessage(''), 3500)
     } catch (err) {
       console.error('Application submit error:', err)
-      alert('Error submitting application. Please try again.')
+      // Keep local copy and inform user
+      setStatusMessage('Saved locally (server submission failed)')
     }
   }
 
@@ -201,6 +221,11 @@ export function ApplicationFormSection() {
           >
             {submitted ? 'Application Submitted!' : 'Join the Shortlist'}
           </motion.button>
+
+          {/* Short success / status message */}
+          {statusMessage && (
+            <p className="text-sm text-center text-green-400 font-medium mt-2">{statusMessage}</p>
+          )}
 
           {/* Privacy note */}
           <p className="text-xs text-muted-foreground text-center font-light">

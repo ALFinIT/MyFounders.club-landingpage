@@ -15,7 +15,7 @@ const features = [
     icon: Users,
     title: 'Investor Directory',
     description: 'Access curated investor profiles and funding opportunities tailored to your stage.',
-    image: '/images/investor-directory.jpg',
+    image: '/images/investor-directory.JPG',
   },
   {
     icon: Zap,
@@ -27,7 +27,7 @@ const features = [
     icon: TrendingUp,
     title: 'Growth Tools',
     description: 'Resources, templates, and frameworks to accelerate your business development.',
-    image: '/images/growth-tools.jpg',
+    image: '/images/growth-tools.JPG',
   },
   {
     icon: Award,
