@@ -37,7 +37,7 @@ function NewsletterForm({ compact = false }: { compact?: boolean }) {
 
   return (
     <form onSubmit={handleSubmit} className={compact ? 'flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3' : 'flex flex-col sm:flex-row gap-2 items-center'}>
-      {compact && <span className="text-xs font-semibold text-white/80 whitespace-nowrap">NEWSLETTER :</span>}
+      {compact && <span className="text-xs font-semibold text-white/80 whitespace-nowrap">NEWSLETTER </span>}
       <input
         type="email"
         name="email"
@@ -45,7 +45,7 @@ function NewsletterForm({ compact = false }: { compact?: boolean }) {
         onChange={(e) => setEmail(e.target.value)}
         placeholder={compact ? 'enter your professional email' : 'you@domain.com'}
         required
-        className="flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 text-xs sm:text-sm focus:outline-none focus:border-orange-500/50 transition"
+        className="flex-[2] min-w-[220px] sm:min-w-[320px] px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 text-xs sm:text-sm focus:outline-none focus:border-orange-500/50 transition"
       />
       <button
         type="submit"
@@ -149,12 +149,12 @@ export function Footer() {
           </div>
 
           {/* Newsletter - Right side below links / Full width on mobile */}
-          <div className="mt-8 md:mt-10">
-            <div className="w-full lg:w-auto lg:ml-auto lg:max-w-sm">
-              <h3 className="text-xs uppercase tracking-widest text-white/70 font-semibold mb-3 sm:mb-4">Newsletter</h3>
-              <NewsletterForm compact />
-            </div>
-          </div>
+   <div className="mt-8 md:mt-10">
+  <div className="w-full lg:max-w-sm lg:ml-40">
+    <NewsletterForm compact />
+  </div>
+</div>
+
         </motion.div>
 
         {/* PART 4: Footer bottom - 3 column layout */}

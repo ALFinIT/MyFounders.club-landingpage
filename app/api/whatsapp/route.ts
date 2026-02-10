@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
+import { appendLocalRecord } from '@/utils/localDb'
 import { cookies } from 'next/headers'
 
 export async function POST(req: Request) {
@@ -26,7 +27,23 @@ export async function POST(req: Request) {
 
     if (error) {
       console.error('Supabase error:', error)
+      if (process.env.NODE_ENV !== 'production') {
+        try {
+          await appendLocalRecord('whatsapp_signups.json', { firstName, phone, _savedAt: new Date().toISOString() })
+        } catch (e) {
+          console.error('Local persist failed:', e)
+        }
+      }
+
       return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+      try {
+        await appendLocalRecord('whatsapp_signups.json', { firstName, phone, _savedAt: new Date().toISOString() })
+      } catch (e) {
+        console.error('Local persist failed:', e)
+      }
     }
 
     return NextResponse.json({ data }, { status: 200 })

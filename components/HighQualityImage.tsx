@@ -40,8 +40,10 @@ export default function HighQualityImage({
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
 
-  const handleLoadingComplete = () => {
+  const handleLoadingComplete = (event?: React.SyntheticEvent<HTMLImageElement>) => {
     setIsLoading(false)
+    // New next/image API recommends using `onLoad`.
+    // Call the `onLoad` callback if provided.
     onLoad?.()
   }
 
@@ -81,7 +83,7 @@ export default function HighQualityImage({
               quality={quality}
               priority={priority}
               className={`object-${objectFit} ${className}`}
-              onLoadingComplete={handleLoadingComplete}
+              onLoad={handleLoadingComplete}
               onError={handleError}
               sizes={sizes}
             />
@@ -95,7 +97,7 @@ export default function HighQualityImage({
           quality={quality}
           priority={priority}
           className={`${className}`}
-          onLoadingComplete={handleLoadingComplete}
+          onLoad={handleLoadingComplete}
           onError={handleError}
         />
       )}

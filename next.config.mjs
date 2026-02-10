@@ -5,8 +5,7 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
-    domains: ['images.unsplash.com', 'ui-avatars.com'],
-    formats: ['image/webp', 'image/avif'],
+    // Use `remotePatterns` instead of the deprecated `domains` option.
     remotePatterns: [
       {
         protocol: 'https',
@@ -17,6 +16,10 @@ const nextConfig = {
         hostname: '**.ui-avatars.com',
       },
     ],
+    // Configure supported quality values to avoid runtime warnings when components
+    // use quality={100} or quality={75}.
+    qualities: [100, 75],
+    formats: ['image/webp', 'image/avif'],
   },
 }
 

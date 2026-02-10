@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
+import { appendLocalRecord } from '@/utils/localDb'
 import { cookies } from 'next/headers'
 
 export async function POST(req: Request) {
@@ -41,7 +42,25 @@ export async function POST(req: Request) {
 
     if (error) {
       console.error('Supabase error:', error)
+      // still attempt to persist locally for debugging
+      if (process.env.NODE_ENV !== 'production') {
+        try {
+          await appendLocalRecord('applications.json', { fullName, companyName, email, phone, onePitchSentence, proofOfWork, commitmentAmount, agreeCommitment, _savedAt: new Date().toISOString() })
+        } catch (e) {
+          console.error('Local persist failed:', e)
+        }
+      }
+
       return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+
+    // persist a local copy in non-production for quick local DB access
+    if (process.env.NODE_ENV !== 'production') {
+      try {
+        await appendLocalRecord('applications.json', { fullName, companyName, email, phone, onePitchSentence, proofOfWork, commitmentAmount, agreeCommitment, _savedAt: new Date().toISOString() })
+      } catch (e) {
+        console.error('Local persist failed:', e)
+      }
     }
 
     return NextResponse.json({ data }, { status: 200 })

@@ -1,25 +1,46 @@
 "use client"
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useAnimation } from 'framer-motion'
 import Link from 'next/link'
-import { Home, Twitter, Linkedin, Instagram, Youtube, MessageCircle } from 'lucide-react'
+import { Home, Twitter, Linkedin, Instagram, Youtube, MessageCircle, X } from 'lucide-react'
 import ChatWidget from './ChatWidget'
 
 export default function SocialHomeButtons() {
   const [openChat, setOpenChat] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const xControls = useAnimation()
+
+  const handleToggle = async () => {
+    setExpanded((s) => !s)
+    // spin clockwise on each click
+    try {
+      await xControls.start({ rotate: 360, transition: { duration: 0.45, ease: 'easeOut' } })
+    } finally {
+      xControls.set({ rotate: 0 })
+    }
+  }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-end">
-      <div className="flex flex-col items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-3 py-4 hover:bg-white/10 transition-all">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3">
+      {/* Glasmorphism card - expands vertically upward when opened */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 18 }}
+        animate={expanded ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.9, y: 18 }}
+        transition={{ duration: 0.22 }}
+        className="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl shadow-lg border border-white/10 bg-white/6 backdrop-blur-md"
+        style={{ pointerEvents: expanded ? 'auto' : 'none' }}
+      >
+        {/* Icons appear when expanded */}
         <Link href="/">
           <motion.button
-            className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.16 }}
+            className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
             title="Back to Home"
           >
-            <Home size={18} />
+            <Home size={20} />
           </motion.button>
         </Link>
 
@@ -27,61 +48,77 @@ export default function SocialHomeButtons() {
           href="https://twitter.com/my_founders_club"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.16, delay: 0.02 }}
+          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
           title="Follow us on X"
         >
-          <Twitter size={18} />
+          <Twitter size={20} />
         </motion.a>
 
         <motion.a
           href="https://linkedin.com/company/my-founders-club"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.16, delay: 0.04 }}
+          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
           title="Connect on LinkedIn"
         >
-          <Linkedin size={18} />
+          <Linkedin size={20} />
         </motion.a>
 
         <motion.a
           href="https://instagram.com/my_founders_club"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.16, delay: 0.06 }}
+          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
           title="Instagram"
         >
-          <Instagram size={18} />
+          <Instagram size={20} />
         </motion.a>
 
         <motion.a
           href="https://www.youtube.com/@myfoundersclub.global"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.16, delay: 0.08 }}
+          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
           title="YouTube"
         >
-          <Youtube size={18} />
+          <Youtube size={20} />
         </motion.a>
 
-        {/* AI Chat toggle */}
         <motion.button
           onClick={() => setOpenChat((s) => !s)}
-          className="p-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center"
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.16, delay: 0.1 }}
+          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
           title="AI Assistant"
         >
-          <MessageCircle size={18} />
+          <MessageCircle size={20} />
         </motion.button>
-      </div>
+      </motion.div>
+
+      {/* X button - always visible and fixed */}
+      <motion.button
+        onClick={handleToggle}
+        aria-expanded={expanded}
+        className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-lg"
+        title={expanded ? 'Close' : 'Open'}
+        animate={xControls}
+        whileHover={{ scale: 1.06 }}
+      >
+        <X size={20} />
+      </motion.button>
 
       <ChatWidget open={openChat} onClose={() => setOpenChat(false)} />
     </div>
