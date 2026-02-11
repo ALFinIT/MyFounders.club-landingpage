@@ -79,7 +79,7 @@ export default function DashboardPage() {
             <Logo />
             <div className="h-6 sm:h-8 w-px bg-orange-500/30 hidden sm:block" />
             <div className="text-xs sm:text-sm hidden sm:block">
-              <p className="text-orange-400 font-semibold">User Dashboard</p>
+              <p className="text-orange-400 font-semibold">{user.name || 'Dashboard'}</p>
               <p className="text-white/60 text-xs">My Founders Club</p>
             </div>
           </motion.div>

@@ -142,25 +142,25 @@ export function Navbar() {
           {/* Menu Items */}
           <div className="space-y-2 mb-4">
             <Link href="/settings">
-              <motion.a
-                className="w-full flex items-center gap-3 px-4 py-2 bg-black/10 hover:bg-white/5 rounded-lg transition-colors text-white text-sm"
+              <motion.div
+                className="w-full flex items-center gap-3 px-4 py-2 bg-black/10 hover:bg-white/5 rounded-lg transition-colors text-white text-sm cursor-pointer"
                 whileHover={{ x: 4 }}
                 onClick={() => setIsUserMenuOpen(false)}
               >
                 <Settings className="w-4 h-4" />
                 Settings & Profile
-              </motion.a>
+              </motion.div>
             </Link>
 
             <Link href="/dashboard">
-              <motion.a
-                className="w-full flex items-center gap-3 px-4 py-2 bg-black/10 hover:bg-white/5 rounded-lg transition-colors text-white text-sm"
+              <motion.div
+                className="w-full flex items-center gap-3 px-4 py-2 bg-black/10 hover:bg-white/5 rounded-lg transition-colors text-white text-sm cursor-pointer"
                 whileHover={{ x: 4 }}
                 onClick={() => setIsUserMenuOpen(false)}
               >
                 <Layout className="w-4 h-4" />
                 Dashboard
-              </motion.a>
+              </motion.div>
             </Link>
 
             <motion.button
