@@ -149,12 +149,16 @@ export function Footer() {
           </div>
 
           {/* Newsletter - Right side below links / Full width on mobile */}
-   <div className="mt-8 md:mt-10">
-  <div className="w-full lg:max-w-sm lg:ml-40">
-    <NewsletterForm compact />
-  </div>
-</div>
+            <div className="mt-8 md:mt-10 grid grid-cols-1 lg:grid-cols-12 items-center">
+  
+              {/* Empty space (left) */}
+          <div className="hidden lg:block lg:col-span-6" />
+        {/* Newsletter */}
+        <div className="col-span-1 lg:col-span-6 lg:pl-20">
 
+          <NewsletterForm compact />
+         </div>
+        </div>
         </motion.div>
 
         {/* PART 4: Footer bottom - 3 column layout */}

@@ -1,0 +1,115 @@
+{
+  "timestamp": "2026-02-11T09:19:57.577Z",
+  "testsRun": 8,
+  "testsPassed": 1,
+  "testsFailed": 7,
+  "details": [
+    {
+      "name": "Direct Supabase REST API Connection",
+      "passed": false,
+      "status": 404,
+      "message": "✗ Failed with status 404"
+    },
+    {
+      "name": "Local Database Verification",
+      "passed": false,
+      "message": "✗ Local database directory not found at E:\\PROJECT\\landing-page-myfounder\\data",
+      "details": {
+        "dataDirectory": "E:\\PROJECT\\landing-page-myfounder\\data",
+        "filesFound": []
+      }
+    },
+    {
+      "name": "WhatsApp Signup API",
+      "passed": false,
+      "status": 400,
+      "endpoint": "/api/whatsapp",
+      "method": "POST",
+      "requestBody": {
+        "firstName": "Test User gw92e9",
+        "phone": "+12345678907569"
+      },
+      "responseStatus": 400,
+      "responseBody": {
+        "error": "Could not find the table 'public.whatsapp_signups' in the schema cache"
+      },
+      "message": "✗ Expected 200, got 400"
+    },
+    {
+      "name": "Application Form API",
+      "passed": false,
+      "status": 400,
+      "endpoint": "/api/applications",
+      "method": "POST",
+      "requestBody": {
+        "fullName": "Founder gw92e9",
+        "companyName": "Test Company gw92e9",
+        "email": "test1770801597569@example.com",
+        "phone": "+12345678917569",
+        "onePitchSentence": "We are building the future of startup investing with AI-powered matching at 2026-02-11T09:19:57.569Z",
+        "proofOfWork": "https://github.com/example/project",
+        "commitmentAmount": "AED 500",
+        "agreeCommitment": true
+      },
+      "responseStatus": 400,
+      "responseBody": {
+        "error": "Could not find the table 'public.applications' in the schema cache"
+      },
+      "message": "✗ Expected 200, got 400"
+    },
+    {
+      "name": "Application API - Missing Fields",
+      "passed": true,
+      "status": 400,
+      "endpoint": "/api/applications",
+      "method": "POST",
+      "requestBody": {
+        "fullName": "Test"
+      },
+      "responseStatus": 400,
+      "responseBody": {
+        "error": "Missing required fields"
+      },
+      "message": "✓ POST /api/applications succeeded"
+    },
+    {
+      "name": "Admin Applications API",
+      "passed": false,
+      "status": 400,
+      "endpoint": "/api/admin/applications",
+      "method": "GET",
+      "requestBody": null,
+      "responseStatus": 400,
+      "responseBody": {
+        "error": "Could not find the table 'public.applications' in the schema cache"
+      },
+      "message": "✗ Expected 200, got 400"
+    },
+    {
+      "name": "Admin WhatsApp API",
+      "passed": false,
+      "status": 400,
+      "endpoint": "/api/admin/whatsapp",
+      "method": "GET",
+      "requestBody": null,
+      "responseStatus": 400,
+      "responseBody": {
+        "error": "Could not find the table 'public.whatsapp_signups' in the schema cache"
+      },
+      "message": "✗ Expected 200, got 400"
+    },
+    {
+      "name": "Admin Newsletter API",
+      "passed": false,
+      "status": 400,
+      "endpoint": "/api/admin/newsletter",
+      "method": "GET",
+      "requestBody": null,
+      "responseStatus": 400,
+      "responseBody": {
+        "error": "Could not find the table 'public.newsletter_signups' in the schema cache"
+      },
+      "message": "✗ Expected 200, got 400"
+    }
+  ]
+}
