@@ -47,25 +47,23 @@ export function WhatsAppCTASection() {
         phone,
       }
 
-      // Save to localStorage
-      const existing = typeof window !== 'undefined' ? localStorage.getItem('whatsapp_signups') : null
-      const arr = existing ? JSON.parse(existing as string) : []
-      arr.push({ ...payload, signedUpAt: new Date().toISOString() })
-      if (typeof window !== 'undefined') localStorage.setItem('whatsapp_signups', JSON.stringify(arr))
-
       const res = await fetch('/api/whatsapp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
 
-      if (!res.ok) throw new Error('Failed to submit')
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to submit')
+      }
 
       setSubmitted(true)
-      // Redirect to WhatsApp community after 2 seconds
+      // Redirect to WhatsApp community after 1.5 seconds
       setTimeout(() => {
         window.open('https://chat.whatsapp.com/FNvJDT55evI4E4EBaT4AHZ', '_blank')
-      }, 2000)
+      }, 1500)
     } catch (err) {
       console.error('WhatsApp submit error:', err)
       setPhoneError('Error submitting form. Please try again.')

@@ -85,11 +85,13 @@ export function Navbar() {
                     whileTap={{ scale: 0.95 }}
                     title={user.name || user.email}
                   >
-                    <img
-                      src={userImage || ''}
-                      alt={user.name || 'User'}
-                      className="w-full h-full object-cover object-top rounded-full"
-                    />
+                    {userImage && (
+                      <img
+                        src={userImage}
+                        alt={user.name || 'User'}
+                        className="w-full h-full object-cover object-top rounded-full"
+                      />
+                    )}
                   </motion.button>
               </div>
             ) : (

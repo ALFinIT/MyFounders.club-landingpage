@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Logo } from '@/components/logo'
-import { Download, Home } from 'lucide-react'
+import { Download, Home, LogOut, Users, Mail, Phone, TrendingUp, Eye, EyeOff } from 'lucide-react'
 
 export default function AdminPage() {
   const router = useRouter()
@@ -45,69 +45,94 @@ export default function AdminPage() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4 relative">
+      <div className="min-h-screen bg-black flex flex-col items-center justify-center p-3 sm:p-4 relative overflow-hidden">
+        {/* Animated background blobs - responsive */}
+        <motion.div
+          className="absolute top-10 sm:top-20 left-10 sm:left-20 w-48 sm:w-72 h-48 sm:h-72 bg-orange-500/20 rounded-full blur-3xl"
+          animate={{ y: [0, 30, 0] }}
+          transition={{ duration: 4, repeat: Infinity }}
+        />
+        <motion.div
+          className="absolute bottom-10 sm:bottom-20 right-10 sm:right-20 w-48 sm:w-72 h-48 sm:h-72 bg-orange-600/10 rounded-full blur-3xl"
+          animate={{ y: [0, -30, 0] }}
+          transition={{ duration: 5, repeat: Infinity }}
+        />
+
         {/* Home Button - Bottom Right */}
         <motion.button
           onClick={() => router.push('/')}
-          className="fixed bottom-8 right-8 p-3 glass rounded-full hover:shadow-xl transition-all"
+          className="fixed bottom-6 sm:bottom-8 right-6 sm:right-8 p-2 sm:p-3 bg-gradient-to-br from-orange-500/20 to-orange-600/20 border border-orange-500/50 rounded-full text-orange-400 hover:bg-orange-500/30 transition-all"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           title="Go to home"
         >
-          <Home size={24} className="text-white" />
+          <Home size={20} className="sm:size-6" />
         </motion.button>
 
-        <motion.div className="mb-8" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
+        <motion.div className="mb-6 sm:mb-8 relative z-10" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
           <Logo />
         </motion.div>
 
         <motion.div
-          className="w-full max-w-md glass rounded-2xl p-8"
+          className="w-full max-w-md rounded-2xl p-6 sm:p-8 border border-orange-500/30 backdrop-blur-xl relative z-10"
+          style={{
+            background: 'linear-gradient(145deg, rgba(25, 25, 25, 0.9), rgba(12, 12, 12, 0.9))',
+          }}
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-3xl font-bold text-white mb-2">Admin Login</h1>
-          <p className="text-muted-foreground mb-8">Enter your credentials</p>
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent rounded-2xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          />
+          
+          <div className="relative z-10">
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent mb-2">Admin Login</h1>
+            <p className="text-white/60 mb-6 sm:mb-8 text-sm sm:text-base">Enter your credentials to access the dashboard</p>
 
-          {error && (
-            <motion.div
-              className="bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded-lg mb-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              {error}
-            </motion.div>
-          )}
+            {error && (
+              <motion.div
+                className="bg-orange-500/10 border border-orange-500 text-orange-400 px-3 sm:px-4 py-2 sm:py-3 rounded-lg mb-6 text-xs sm:text-sm"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                ⚠️ {error}
+              </motion.div>
+            )}
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-white mb-2">Username</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="admin"
-                required
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500 transition-colors"
-              />
-            </div>
+            <form onSubmit={handleLogin} className="space-y-6">
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
+                <label className="block text-sm font-medium text-white mb-2">Username</label>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="admin"
+                  required
+                  className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-orange-500 focus:bg-white/10 transition-all"
+                />
+              </motion.div>
 
-            <div className="relative">
-              <label className="block text-sm font-medium text-white mb-2">Password</label>
-              <input
-                type={showPassword ? 'text' : 'password'}
-                value={password}
+              <motion.div className="relative" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
+                <label className="block text-sm font-medium text-white mb-2">Password</label>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500 transition-colors"
+                className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-orange-500 focus:bg-white/10 transition-all"
               />
-              <button
+              <motion.button
                 type="button"
                 onClick={() => setShowPassword((s) => !s)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 text-white hover:text-orange-500 transition-colors p-2 cursor-pointer z-10"
+                className="absolute top-1/2 right-3 -translate-y-1/2 text-white/60 hover:text-orange-400 transition-colors p-2 cursor-pointer z-10"
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
                 {showPassword ? (
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -120,19 +145,29 @@ export default function AdminPage() {
                     <circle cx="12" cy="12" r="3" />
                   </svg>
                 )}
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
 
             <motion.button
               type="submit"
               disabled={isLoading}
-              className="w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-orange-500/30 transition-all disabled:opacity-50"
+              className="w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-orange-500/50 transition-all disabled:opacity-50"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
             >
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading ? (
+                <motion.span animate={{ opacity: [1, 0.5, 1] }} transition={{ duration: 1, repeat: Infinity }}>
+                  Signing in...
+                </motion.span>
+              ) : (
+                'Sign In'
+              )}
             </motion.button>
           </form>
+          </div>
         </motion.div>
       </div>
     )
@@ -140,299 +175,432 @@ export default function AdminPage() {
 
   // Admin Dashboard - After Authentication
   return (
-    <div className="min-h-screen bg-black p-8">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-12">
-        <h1 className="text-4xl font-bold text-white">Admin Dashboard</h1>
-        <motion.button
-          onClick={handleLogout}
-          className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500 text-red-400 rounded-lg transition-colors"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Logout
-        </motion.button>
-      </div>
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Animated background elements */}
+      <motion.div
+        className="fixed top-0 left-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl -z-10"
+        animate={{ y: [0, 40, 0] }}
+        transition={{ duration: 6, repeat: Infinity }}
+      />
+      <motion.div
+        className="fixed bottom-0 right-0 w-96 h-96 bg-orange-600/5 rounded-full blur-3xl -z-10"
+        animate={{ y: [0, -40, 0] }}
+        transition={{ duration: 7, repeat: Infinity }}
+      />
 
-      <div className="space-y-12">
-        {/* Founders Section */}
+      {/* Navigation */}
+      <motion.div
+        className="sticky top-0 z-50 backdrop-blur-xl border-b border-orange-500/20 bg-black/50"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+          <motion.div
+            className="flex items-center gap-2 sm:gap-3 min-w-0"
+            whileHover={{ x: 5 }}
+          >
+            <Logo />
+            <div className="h-6 sm:h-8 w-px bg-orange-500/30 hidden sm:block" />
+            <div className="text-xs sm:text-sm hidden sm:block">
+              <p className="text-orange-400/60 text-xs">Welcome,</p>
+              <p className="text-white font-bold">Admin Panel</p>
+            </div>
+          </motion.div>
+          <motion.button
+            onClick={handleLogout}
+            className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 hover:from-orange-500/30 hover:to-orange-600/30 border border-orange-500/50 text-orange-400 rounded-lg transition-all text-xs sm:text-sm"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <LogOut size={16} />
+            <span className="hidden sm:inline">Logout</span>
+          </motion.button>
+        </div>
+      </motion.div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
+        {/* Stats overview */}
         <motion.div
-          className="rounded-2xl p-8"
-          style={{
-            background: 'linear-gradient(145deg, rgba(25, 25, 25, 1), rgba(12, 12, 12, 1))',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-          }}
+          className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-white">Founders List</h2>
-          </div>
-          <FoundersList />
+          <StatCard title="Applications" icon={<Users size={20} />} color="orange" />
+          <StatCard title="WhatsApp" icon={<Phone size={20} />} color="orange" />
+          <StatCard title="Emails" icon={<Mail size={20} />} color="orange" />
+          <StatCard title="Rate" icon={<TrendingUp size={20} />} color="orange" />
         </motion.div>
 
-        {/* Investors Section */}
+        {/* Applications Section */}
         <motion.div
-          className="rounded-2xl p-8"
+          className="rounded-2xl p-4 sm:p-8 backdrop-blur-sm border border-orange-500/30"
           style={{
-            background: 'linear-gradient(145deg, rgba(25, 25, 25, 1), rgba(12, 12, 12, 1))',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
+            background: 'linear-gradient(145deg, rgba(30, 25, 20, 0.8), rgba(15, 12, 10, 0.8))',
           }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-white">Investors List</h2>
-          </div>
-          <InvestorsList />
+          <motion.div className="flex justify-between items-start sm:items-center mb-4 sm:mb-6 flex-col sm:flex-row gap-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+            <div>
+              <h2 className="text-xl sm:text-3xl font-bold text-white">Applications</h2>
+              <p className="text-orange-400/60 text-xs sm:text-sm mt-1">Form submissions</p>
+            </div>
+          </motion.div>
+          <ApplicationsList />
+        </motion.div>
+
+        {/* WhatsApp Section */}
+        <motion.div
+          className="rounded-2xl p-4 sm:p-8 backdrop-blur-sm border border-orange-500/30"
+          style={{
+            background: 'linear-gradient(145deg, rgba(30, 25, 20, 0.8), rgba(15, 12, 10, 0.8))',
+          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <motion.div className="flex justify-between items-start sm:items-center mb-4 sm:mb-6 flex-col sm:flex-row gap-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+            <div>
+              <h2 className="text-xl sm:text-3xl font-bold text-white">WhatsApp Signups</h2>
+              <p className="text-orange-400/60 text-xs sm:text-sm mt-1">Private WhatsApp community members</p>
+            </div>
+          </motion.div>
+          <WhatsAppSignupsList />
         </motion.div>
       </div>
     </div>
   )
 }
 
-function FoundersList() {
-  const [founders, setFounders] = useState<any[]>([])
+// StatCard Component
+function StatCard({ title, icon, color }: { title: string; icon: React.ReactNode; color: string }) {
+  const colorClasses = {
+    blue: 'from-orange-500/20 to-orange-600/20 border-orange-500/30 text-orange-400',
+    green: 'from-orange-500/20 to-orange-600/20 border-orange-500/30 text-orange-400',
+    orange: 'from-orange-500/20 to-orange-600/20 border-orange-500/30 text-orange-400',
+    purple: 'from-orange-500/20 to-orange-600/20 border-orange-500/30 text-orange-400',
+  }
+
+  return (
+    <motion.div
+      className={`p-3 sm:p-6 rounded-xl bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} border backdrop-blur-sm`}
+      whileHover={{ y: -6, boxShadow: '0 20px 40px rgba(249, 115, 22, 0.2)' }}
+      transition={{ duration: 0.2 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
+      <div className="flex justify-between items-start">
+        <div className="min-w-0">
+          <p className="text-orange-400/60 text-xs font-medium">{title}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white mt-2">-</p>
+        </div>
+        <motion.div
+          className="opacity-60 text-orange-400 flex-shrink-0"
+          animate={{ rotate: [0, 5, -5, 0] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        >
+          {icon}
+        </motion.div>
+      </div>
+    </motion.div>
+  )
+}
+
+// Applications List Component
+function ApplicationsList() {
+  const [applications, setApplications] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
-  React.useEffect(() => {
-    // Load founders from localStorage
-    const users = JSON.parse(localStorage.getItem('users') || '[]')
-    const profiles = JSON.parse(localStorage.getItem('profiles') || '[]')
-
-    const foundersData = users
-      .filter((user: any) => {
-        const profile = profiles.find((p: any) => p.userId === user.id)
-        return profile?.role === 'founder' || profile?.type === 'founder'
-      })
-      .map((user: any) => {
-        const profile = profiles.find((p: any) => p.userId === user.id)
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          company: profile?.company || 'N/A',
-          stage: profile?.stage || 'N/A',
-          sector: profile?.sector || 'N/A',
-          location: profile?.location || 'N/A',
-          cofounderNeeded: profile?.cofounderNeeded ? 'Yes' : 'No',
-          updatedAt: new Date().toLocaleDateString(),
-          updatedBy: 'Founder'
-        }
-      })
-
-    setFounders(foundersData)
-    setLoading(false)
+  useEffect(() => {
+    fetchApplications()
   }, [])
 
-  const downloadExcel = () => {
-    // Create CSV data
-    const headers = ['Name', 'Email', 'Company', 'Stage', 'Sector', 'Location', 'Co-founder Needed', 'Updated By', 'Updated At']
-    const rows = founders.map(f => [
-      f.name,
-      f.email,
-      f.company,
-      f.stage,
-      f.sector,
-      f.location,
-      f.cofounderNeeded,
-      f.updatedBy,
-      f.updatedAt
+  const fetchApplications = async () => {
+    try {
+      // Try API first, then fallback to local storage
+      try {
+        const res = await fetch('/api/admin/applications')
+        if (res.ok) {
+          const data = await res.json()
+          setApplications(Array.isArray(data) ? data : data.data || [])
+          setLoading(false)
+          return
+        }
+      } catch (e) {
+        console.error('API error:', e)
+      }
+
+      // Fallback to local storage
+      const localData = localStorage.getItem('applications')
+      if (localData) {
+        const parsed = JSON.parse(localData)
+        const apps = Array.isArray(parsed) ? parsed : parsed.value || []
+        setApplications(apps)
+      }
+    } catch (err) {
+      console.error('Error loading applications:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const downloadCSV = () => {
+    const headers = ['Full Name', 'Company', 'Email', 'Phone', 'Pitch', 'Proof of Work', 'Commitment Fee', 'IP Address', 'Submitted At']
+    const rows = applications.map(app => [
+      app.fullName || '-',
+      app.companyName || '-',
+      app.email || '-',
+      app.phone || '-',
+      app.onePitchSentence || '-',
+      app.proofOfWork || '-',
+      app.commitmentAmount || 'AED 500',
+      app._ip || '-',
+      app._savedAt ? new Date(app._savedAt).toLocaleString() : '-',
     ])
 
-    // Create CSV content
-    const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
-    ].join('\n')
+    const csvContent = [headers.join(','), ...rows.map(row => row.map(cell => `"${cell}"`).join(','))].join('\n')
 
-    // Download
     const blob = new Blob([csvContent], { type: 'text/csv' })
     const url = window.URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.download = `founders_${new Date().toISOString().split('T')[0]}.csv`
+    link.download = `applications_${new Date().toISOString().split('T')[0]}.csv`
     link.click()
   }
 
   if (loading) {
-    return <div className="text-muted-foreground">Loading founders...</div>
+    return (
+      <div className="flex justify-center py-12">
+        <motion.div
+          className="w-8 h-8 rounded-full border-2 border-orange-500 border-t-transparent"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity }}
+        />
+      </div>
+    )
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-end mb-4">
+    <div className="space-y-3 sm:space-y-4">
+      <div className="flex justify-between items-start sm:items-center mb-4 sm:mb-6 flex-col sm:flex-row gap-2 sm:gap-0">
+        <p className="text-orange-400/60 text-xs sm:text-base">
+          Total: <span className="text-white font-bold text-sm sm:text-lg">{applications.length}</span>
+        </p>
         <motion.button
-          onClick={downloadExcel}
-          className="flex items-center gap-2 px-4 py-2 bg-orange-500/20 hover:bg-orange-500/30 border border-orange-500 text-orange-400 rounded-lg transition-colors"
+          onClick={downloadCSV}
+          className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 hover:from-orange-500/30 hover:to-orange-600/30 border border-orange-500/50 text-orange-400 rounded-lg transition-all text-xs sm:text-sm w-full sm:w-auto"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Download size={18} />
-          Download (CSV)
+          <Download size={16} />
+          Export CSV
         </motion.button>
       </div>
 
-      {founders.length === 0 ? (
-        <p className="text-muted-foreground text-center py-8">No founders registered yet</p>
+      {applications.length === 0 ? (
+        <div className="text-center py-8 sm:py-12">
+          <Users size={40} className="sm:size-48 mx-auto text-orange-400/20 mb-4" />
+          <p className="text-orange-400/60 text-sm sm:text-base">No applications yet</p>
+        </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-white/10">
-                <th className="px-4 py-3 text-left text-white font-semibold">Name</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Email</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Company</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Stage</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Sector</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Location</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Co-founder</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Updated By</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Updated At</th>
+        <motion.div
+          className="overflow-x-auto rounded-lg border border-orange-500/30"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          <table className="w-full text-xs sm:text-sm">
+            <thead className="bg-orange-500/10 border-b border-orange-500/30">
+              <tr>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold">Name</th>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold hidden sm:table-cell">Company</th>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold hidden md:table-cell">Email</th>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold hidden lg:table-cell">Phone</th>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold hidden lg:table-cell">Pitch</th>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold hidden xl:table-cell">Work</th>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold hidden xl:table-cell">IP</th>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold">Date</th>
               </tr>
             </thead>
-            <tbody>
-              {founders.map((founder, idx) => (
-                <tr key={founder.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td className="px-4 py-3 text-white">{founder.name}</td>
-                  <td className="px-4 py-3 text-gray-400">{founder.email}</td>
-                  <td className="px-4 py-3 text-orange-400">{founder.company}</td>
-                  <td className="px-4 py-3 text-blue-400">{founder.stage}</td>
-                  <td className="px-4 py-3 text-green-400">{founder.sector}</td>
-                  <td className="px-4 py-3 text-purple-400">{founder.location}</td>
-                  <td className="px-4 py-3 text-yellow-400">{founder.cofounderNeeded}</td>
-                  <td className="px-4 py-3 text-white">{founder.updatedBy}</td>
-                  <td className="px-4 py-3 text-gray-400">{founder.updatedAt}</td>
-                </tr>
+            <tbody className="divide-y divide-orange-500/10">
+              {applications.map((app, idx) => (
+                <motion.tr
+                  key={idx}
+                  className="hover:bg-orange-500/5 transition-colors"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  whileHover={{ x: 4 }}
+                >
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 text-white font-medium text-xs sm:text-sm truncate">{app.fullName}</td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 text-orange-400 hidden sm:table-cell text-xs">{app.companyName}</td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 text-blue-300 hidden md:table-cell text-xs">{app.email?.split('@')[0]}...</td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 text-purple-300 hidden lg:table-cell text-xs">{app.phone?.slice(-4)}</td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 text-white/70 hidden lg:table-cell text-xs max-w-xs truncate">{app.onePitchSentence}</td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 hidden xl:table-cell">
+                    {app.proofOfWork ? (
+                      <motion.a
+                        href={app.proofOfWork}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-orange-400 hover:text-orange-300 underline text-xs"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        Link
+                      </motion.a>
+                    ) : (
+                      <span className="text-white/40 text-xs">-</span>
+                    )}
+                  </td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 text-white/50 hidden xl:table-cell text-xs">{app._ip?.split('.').slice(0, 2).join('.')}...</td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 text-white/50 text-xs">
+                    {app._savedAt ? new Date(app._savedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '-'}
+                  </td>
+                </motion.tr>
               ))}
             </tbody>
           </table>
-        </div>
+        </motion.div>
       )}
     </div>
   )
 }
 
-function InvestorsList() {
-  const [investors, setInvestors] = useState<any[]>([])
+// WhatsApp Signups List Component
+function WhatsAppSignupsList() {
+  const [signups, setSignups] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
-  React.useEffect(() => {
-    // Load investors from localStorage
-    const users = JSON.parse(localStorage.getItem('users') || '[]')
-    const profiles = JSON.parse(localStorage.getItem('profiles') || '[]')
-
-    const investorsData = users
-      .filter((user: any) => {
-        const profile = profiles.find((p: any) => p.userId === user.id)
-        return profile?.role === 'investor' || profile?.type === 'investor'
-      })
-      .map((user: any) => {
-        const profile = profiles.find((p: any) => p.userId === user.id)
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          fundName: profile?.fundName || 'N/A',
-          investmentStage: profile?.investmentStage || 'N/A',
-          sectorFocus: Array.isArray(profile?.sectorFocus) ? profile.sectorFocus.join(', ') : 'N/A',
-          geographyFocus: Array.isArray(profile?.geographyFocus) ? profile.geographyFocus.join(', ') : 'N/A',
-          checkSize: profile?.checkSize || 'N/A',
-          updatedAt: new Date().toLocaleDateString(),
-          updatedBy: 'Investor'
-        }
-      })
-
-    setInvestors(investorsData)
-    setLoading(false)
+  useEffect(() => {
+    fetchSignups()
   }, [])
 
-  const downloadExcel = () => {
-    // Create CSV data
-    const headers = ['Name', 'Email', 'Fund Name', 'Investment Stage', 'Sector Focus', 'Geography Focus', 'Check Size', 'Updated By', 'Updated At']
-    const rows = investors.map(i => [
-      i.name,
-      i.email,
-      i.fundName,
-      i.investmentStage,
-      i.sectorFocus,
-      i.geographyFocus,
-      i.checkSize,
-      i.updatedBy,
-      i.updatedAt
+  const fetchSignups = async () => {
+    try {
+      // Try API first, then fallback to local storage
+      try {
+        const res = await fetch('/api/admin/whatsapp')
+        if (res.ok) {
+          const data = await res.json()
+          setSignups(Array.isArray(data) ? data : data.data || [])
+          setLoading(false)
+          return
+        }
+      } catch (e) {
+        console.error('API error:', e)
+      }
+
+      // Fallback to local storage
+      const localData = localStorage.getItem('whatsapp_signups')
+      if (localData) {
+        const parsed = JSON.parse(localData)
+        const sups = Array.isArray(parsed) ? parsed : parsed.value || []
+        setSignups(sups)
+      }
+    } catch (err) {
+      console.error('Error loading signups:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const downloadCSV = () => {
+    const headers = ['First Name', 'Phone', 'IP Address', 'Signed Up At']
+    const rows = signups.map(signup => [
+      signup.firstName || '-',
+      signup.phone || '-',
+      signup._ip || '-',
+      signup._savedAt ? new Date(signup._savedAt).toLocaleString() : '-',
     ])
 
-    // Create CSV content
-    const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
-    ].join('\n')
+    const csvContent = [headers.join(','), ...rows.map(row => row.map(cell => `"${cell}"`).join(','))].join('\n')
 
-    // Download
     const blob = new Blob([csvContent], { type: 'text/csv' })
     const url = window.URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.download = `investors_${new Date().toISOString().split('T')[0]}.csv`
+    link.download = `whatsapp_signups_${new Date().toISOString().split('T')[0]}.csv`
     link.click()
   }
 
   if (loading) {
-    return <div className="text-muted-foreground">Loading investors...</div>
+    return (
+      <div className="flex justify-center py-12">
+        <motion.div
+          className="w-8 h-8 rounded-full border-2 border-orange-500 border-t-transparent"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity }}
+        />
+      </div>
+    )
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-end mb-4">
+    <div className="space-y-3 sm:space-y-4">
+      <div className="flex justify-between items-start sm:items-center mb-4 sm:mb-6 flex-col sm:flex-row gap-2 sm:gap-0">
+        <p className="text-orange-400/60 text-xs sm:text-base">
+          Total: <span className="text-white font-bold text-sm sm:text-lg">{signups.length}</span>
+        </p>
         <motion.button
-          onClick={downloadExcel}
-          className="flex items-center gap-2 px-4 py-2 bg-orange-500/20 hover:bg-orange-500/30 border border-orange-500 text-orange-400 rounded-lg transition-colors"
+          onClick={downloadCSV}
+          className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 hover:from-orange-500/30 hover:to-orange-600/30 border border-orange-500/50 text-orange-400 rounded-lg transition-all text-xs sm:text-sm w-full sm:w-auto"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Download size={18} />
-          Download (CSV)
+          <Download size={16} />
+          Export CSV
         </motion.button>
       </div>
 
-      {investors.length === 0 ? (
-        <p className="text-muted-foreground text-center py-8">No investors registered yet</p>
+      {signups.length === 0 ? (
+        <div className="text-center py-8 sm:py-12">
+          <Phone size={40} className="sm:size-48 mx-auto text-orange-400/20 mb-4" />
+          <p className="text-orange-400/60 text-sm sm:text-base">No WhatsApp signups yet</p>
+        </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-white/10">
-                <th className="px-4 py-3 text-left text-white font-semibold">Name</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Email</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Fund Name</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Investment Stage</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Sector Focus</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Geography Focus</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Check Size</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Updated By</th>
-                <th className="px-4 py-3 text-left text-white font-semibold">Updated At</th>
+        <motion.div
+          className="overflow-x-auto rounded-lg border border-orange-500/30"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          <table className="w-full text-xs sm:text-sm">
+            <thead className="bg-orange-500/10 border-b border-orange-500/30">
+              <tr>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold">First Name</th>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold">Phone</th>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold hidden sm:table-cell">IP</th>
+                <th className="px-2 sm:px-6 py-2 sm:py-4 text-left text-orange-400 font-semibold">Date</th>
               </tr>
             </thead>
-            <tbody>
-              {investors.map((investor, idx) => (
-                <tr key={investor.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td className="px-4 py-3 text-white">{investor.name}</td>
-                  <td className="px-4 py-3 text-gray-400">{investor.email}</td>
-                  <td className="px-4 py-3 text-orange-400">{investor.fundName}</td>
-                  <td className="px-4 py-3 text-blue-400">{investor.investmentStage}</td>
-                  <td className="px-4 py-3 text-green-400">{investor.sectorFocus}</td>
-                  <td className="px-4 py-3 text-purple-400">{investor.geographyFocus}</td>
-                  <td className="px-4 py-3 text-yellow-400">{investor.checkSize}</td>
-                  <td className="px-4 py-3 text-white">{investor.updatedBy}</td>
-                  <td className="px-4 py-3 text-gray-400">{investor.updatedAt}</td>
-                </tr>
+            <tbody className="divide-y divide-orange-500/10">
+              {signups.map((signup, idx) => (
+                <motion.tr
+                  key={idx}
+                  className="hover:bg-orange-500/5 transition-colors"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  whileHover={{ x: 4 }}
+                >
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 text-white font-medium text-xs sm:text-sm">{signup.firstName}</td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 text-orange-400 text-xs sm:text-sm">{signup.phone}</td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 text-white/50 hidden sm:table-cell text-xs">{signup._ip?.split('.').slice(0, 2).join('.')}...</td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 text-white/50 text-xs">
+                    {signup._savedAt ? new Date(signup._savedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '-'}
+                  </td>
+                </motion.tr>
               ))}
             </tbody>
           </table>
-        </div>
+        </motion.div>
       )}
     </div>
   )
 }
+
+// Admin API routes for applications and whatsapp handlers (not needed for page component)

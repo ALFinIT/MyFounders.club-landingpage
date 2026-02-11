@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { CheckCircle2, AlertCircle } from 'lucide-react'
+import { CheckCircle2, AlertCircle, XCircle } from 'lucide-react'
 import { useState } from 'react'
 
 export function ApplicationFormSection() {
@@ -18,6 +18,8 @@ export function ApplicationFormSection() {
 
   const [submitted, setSubmitted] = useState(false)
   const [statusMessage, setStatusMessage] = useState('')
+  const [statusType, setStatusType] = useState<'success' | 'error' | 'info'>('info')
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target
@@ -29,18 +31,16 @@ export function ApplicationFormSection() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    // Save locally first (keep a local copy)
-    try {
-      const existing = typeof window !== 'undefined' ? localStorage.getItem('applications') : null
-      const arr = existing ? JSON.parse(existing as string) : []
-      arr.push({ ...formData, submittedAt: new Date().toISOString() })
-      if (typeof window !== 'undefined') localStorage.setItem('applications', JSON.stringify(arr))
-      setStatusMessage('Saved locally')
-    } catch (err) {
-      console.error('Local save error:', err)
+
+    if (!formData.agreeCommitment) {
+      setStatusMessage('Please agree to the commitment fee terms')
+      setStatusType('error')
+      return
     }
 
-    // Send to Supabase via API (best-effort)
+    setIsLoading(true)
+    setStatusMessage('')
+
     try {
       const res = await fetch('/api/applications', {
         method: 'POST',
@@ -48,19 +48,48 @@ export function ApplicationFormSection() {
         body: JSON.stringify(formData),
       })
 
+      const data = await res.json()
+
       if (!res.ok) {
-        const text = await res.text()
-        throw new Error(text || 'Submission failed')
+        // Handle duplicate or error
+        if (res.status === 409) {
+          setStatusMessage(data.error || 'Application already submitted with this email or phone')
+          setStatusType('error')
+        } else {
+          setStatusMessage(data.error || 'Failed to submit application')
+          setStatusType('error')
+        }
+        setIsLoading(false)
+        return
       }
 
       setSubmitted(true)
-      setStatusMessage('Submitted to server')
-      setTimeout(() => setSubmitted(false), 3000)
-      setTimeout(() => setStatusMessage(''), 3500)
+      setStatusMessage('✓ Application submitted successfully! Redirecting...')
+      setStatusType('success')
+
+      // Reset form
+      setFormData({
+        fullName: '',
+        companyName: '',
+        email: '',
+        phone: '',
+        onePitchSentence: '',
+        proofOfWork: '',
+        commitmentAmount: 'AED 500',
+        agreeCommitment: false,
+      })
+
+      // Redirect after 2 seconds
+      setTimeout(() => {
+        setSubmitted(false)
+        setStatusMessage('')
+      }, 3000)
     } catch (err) {
       console.error('Application submit error:', err)
-      // Keep local copy and inform user
-      setStatusMessage('Saved locally (server submission failed)')
+      setStatusMessage('Error submitting application. Please try again.')
+      setStatusType('error')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -101,7 +130,8 @@ export function ApplicationFormSection() {
               value={formData.fullName}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition"
+              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="Your name"
             />
           </div>
@@ -115,7 +145,8 @@ export function ApplicationFormSection() {
               value={formData.companyName}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition"
+              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="Your company"
             />
           </div>
@@ -129,7 +160,8 @@ export function ApplicationFormSection() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition"
+              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="your@email.com"
             />
           </div>
@@ -143,7 +175,8 @@ export function ApplicationFormSection() {
               value={formData.phone}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition"
+              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="+971 XX XXX XXXX"
             />
           </div>
@@ -156,8 +189,9 @@ export function ApplicationFormSection() {
               value={formData.onePitchSentence}
               onChange={handleChange}
               required
+              disabled={isLoading}
               rows={2}
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition resize-none"
+              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition resize-none disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="Be clear and concise..."
             />
           </div>
@@ -173,7 +207,8 @@ export function ApplicationFormSection() {
               name="proofOfWork"
               value={formData.proofOfWork}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition"
+              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="Link to website, product, or news"
             />
           </div>
@@ -205,27 +240,71 @@ export function ApplicationFormSection() {
               checked={formData.agreeCommitment}
               onChange={handleChange}
               required
-              className="w-5 h-5 mt-1 rounded border-white/20 bg-white/10 accent-orange-500 cursor-pointer"
+              disabled={isLoading}
+              className="w-5 h-5 mt-1 rounded border-white/20 bg-white/10 accent-orange-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             />
             <span className="text-sm text-muted-foreground font-light">
               I understand and agree to the AED 500 commitment fee (refundable if not accepted).
             </span>
           </label>
 
+          {/* Status message */}
+          {statusMessage && (
+            <motion.div
+              className={`p-3 rounded-lg flex items-start gap-3 ${
+                statusType === 'error'
+                  ? 'bg-red-500/10 border border-red-500/30'
+                  : statusType === 'success'
+                    ? 'bg-green-500/10 border border-green-500/30'
+                    : 'bg-blue-500/10 border border-blue-500/30'
+              }`}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              {statusType === 'error' ? (
+                <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+              ) : statusType === 'success' ? (
+                <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+              ) : (
+                <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+              )}
+              <p
+                className={`text-sm font-medium ${
+                  statusType === 'error'
+                    ? 'text-red-300'
+                    : statusType === 'success'
+                      ? 'text-green-300'
+                      : 'text-blue-300'
+                }`}
+              >
+                {statusMessage}
+              </p>
+            </motion.div>
+          )}
+
           {/* Submit button */}
           <motion.button
             type="submit"
-            className="w-full py-3 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold hover:shadow-2xl hover:shadow-orange-500/50 transition-all"
+            disabled={isLoading || submitted}
+            className="w-full py-3 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold hover:shadow-2xl hover:shadow-orange-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {submitted ? 'Application Submitted!' : 'Join the Shortlist'}
+            {isLoading ? (
+              <>
+                <motion.div
+                  className="w-4 h-4 rounded-full border-2 border-white border-t-transparent"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                />
+                Submitting...
+              </>
+            ) : submitted ? (
+              'Application Submitted!'
+            ) : (
+              'Join the Shortlist'
+            )}
           </motion.button>
-
-          {/* Short success / status message */}
-          {statusMessage && (
-            <p className="text-sm text-center text-green-400 font-medium mt-2">{statusMessage}</p>
-          )}
 
           {/* Privacy note */}
           <p className="text-xs text-muted-foreground text-center font-light">
