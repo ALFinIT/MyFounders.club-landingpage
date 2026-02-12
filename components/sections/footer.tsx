@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import HighQualityImage from '@/components/HighQualityImage'
+import { animationVariants, scrollRevealConfig } from '@/lib/animation-variants'
 import { useState } from 'react'
 
 function NewsletterForm({ compact = false }: { compact?: boolean }) {
@@ -83,9 +84,10 @@ export function Footer() {
       <div className="max-w-7xl mx-auto">
         {/* PART 1: Logo + Branding */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          variants={animationVariants.fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={scrollRevealConfig}
           className="mb-12 pb-8 border-b border-white/10"
         >
           <div className="flex items-start gap-4 mb-4">
@@ -109,9 +111,10 @@ export function Footer() {
 
         {/* PART 2: Office Details (left) + Links (right columns) */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          variants={animationVariants.fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={scrollRevealConfig}
           className="mb-12 pb-8 border-b border-white/10"
         >
           {/* Main grid with office details (left) + link columns (right) */}
@@ -122,7 +125,7 @@ export function Footer() {
                 <div>Office 1003, Latifa Tower,</div>
                 <div>Sheikh Zayed Road (north)</div>
                 <div>Sector, Dubai, UAE</div>
-                <div className="mt-2">Mon — 9:00 am — 6:00 pm</div>
+               
                 <div className="mt-3">
                   <a href="mailto:katerina@khgroup7.com" className="text-white/80 hover:text-white break-all">katerina@khgroup7.com</a>
                 </div>

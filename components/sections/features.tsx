@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import HighQualityImage from '@/components/HighQualityImage'
 import { Compass, Users, Zap, TrendingUp, Award, Globe } from 'lucide-react'
+import { animationVariants, scrollRevealConfig } from '@/lib/animation-variants'
 
 const features = [
   {
@@ -43,26 +44,7 @@ const features = [
   },
 ]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-    },
-  },
-}
+// Use imported variants instead of local definitions
 
 export function FeaturesSection() {
   return (
@@ -71,10 +53,10 @@ export function FeaturesSection() {
         {/* Section header */}
         <motion.div
           className="text-center mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
+          variants={animationVariants.fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={scrollRevealConfig}
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light mb-6">
             Everything You Need to Succeed
@@ -87,18 +69,18 @@ export function FeaturesSection() {
         {/* Features grid */}
           <motion.div
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-        >
+            variants={animationVariants.staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={scrollRevealConfig}
+          >
           {features.map((feature, index) => {
             const Icon = feature.icon
             return (
               <motion.div
                 key={index}
                 className="group relative rounded-2xl overflow-hidden"
-                variants={itemVariants}
+                variants={animationVariants.staggerItem}
                 whileHover={{ y: -8 }}
               >
                 {/* Image backdrop */}

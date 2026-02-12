@@ -11,14 +11,11 @@ interface BackLinkProps {
 
 export default function BackLink({ href = '/', label = 'Back' }: BackLinkProps) {
   return (
-    <Link href={href} aria-label={`Go back to previous page`}>
-      <motion.a
-        className="flex items-center gap-2 text-white text-sm hover:text-orange-400 transition-colors"
-        whileHover={{ x: -6 }}
-      >
+    <Link href={href} aria-label={`Go back to previous page`} className="flex items-center gap-2 text-white text-sm transition-colors">
+      <motion.span whileHover={{ x: -6 }} className="flex items-center gap-2">
         <ArrowLeft size={18} />
         <span className="font-medium">{label}</span>
-      </motion.a>
+      </motion.span>
     </Link>
   )
 }

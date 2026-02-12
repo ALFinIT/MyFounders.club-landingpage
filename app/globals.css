@@ -175,18 +175,19 @@ body::-webkit-scrollbar {
     letter-spacing: 0.01em;
   }
 
+  /* Default links: white; hover to hot orange to match theme */
   a {
-    color: #f5a725;
+    color: #FFFFFF;
     font-weight: 500;
+    transition: color 200ms ease;
   }
 
-  a:hover {
-    color: #ff7f50;
+  a:hover,
+  a:focus {
+    color: #FF5B23 !important;
+    outline: none;
   }
-  /* Force Tailwind `text-white` utility to match requested soft gray across UI */
-  .text-white {
-    color: #CCCCCC !important;
-  }
+  /* Keep Tailwind `text-white` utility unchanged (do not force color) */
   /* Enhanced animations */
   @keyframes fadeInUp {
     from {

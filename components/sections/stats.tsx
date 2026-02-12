@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { animationVariants, scrollRevealConfig } from '@/lib/animation-variants'
 import { useEffect, useState } from 'react'
 
 interface StatCounter {
@@ -51,10 +52,10 @@ function Counter({ value, label, suffix }: StatCounter) {
     <motion.div
       id={`counter-${label}`}
       className="text-center"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
+      variants={animationVariants.fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={scrollRevealConfig}
     >
       <p className="text-4xl sm:text-5xl lg:text-6xl font-light text-orange-500 mb-3">
         {displayValue}
@@ -84,10 +85,10 @@ export function StatsSection() {
         {/* Header */}
         <motion.div
           className="text-center mb-16 relative z-10"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          variants={animationVariants.fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={scrollRevealConfig}
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             By the Numbers

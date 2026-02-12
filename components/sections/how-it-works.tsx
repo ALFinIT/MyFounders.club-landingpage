@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Zap, Target, TrendingUp } from 'lucide-react'
+import { animationVariants, scrollRevealConfig } from '@/lib/animation-variants'
 
 const steps = [
   {
