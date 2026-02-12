@@ -53,10 +53,10 @@ export function FeaturesSection() {
         {/* Section header */}
         <motion.div
           className="text-center mb-12 sm:mb-16 lg:mb-20"
-          variants={animationVariants.fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={scrollRevealConfig}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
         >
           <h2 className="text-2xl sm:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 font-sans">
             Everything You Need to Succeed
@@ -67,24 +67,21 @@ export function FeaturesSection() {
         </motion.div>
 
         {/* Features grid - responsive for all screen sizes */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6"
-          variants={animationVariants.staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={scrollRevealConfig}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
           {features.map((feature, index) => {
             const Icon = feature.icon
             return (
               <motion.div
                 key={index}
                 className="group relative rounded-xl sm:rounded-2xl overflow-hidden flex flex-col"
-                variants={animationVariants.staggerItem}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.05 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -4 }}
               >
                 {/* Image backdrop - responsive height */}
-                <div className="relative h-32 sm:h-40 lg:h-48 overflow-hidden rounded-t-xl sm:rounded-t-2xl bg-gray-800">
+                <div className="relative h-32 sm:h-40 lg:h-48 overflow-hidden rounded-t-xl sm:rounded-t-2xl bg-gray-800 block w-full">
                   <HighQualityImage
                     src={feature.image || '/placeholder.svg'}
                     alt={feature.title}
@@ -110,7 +107,7 @@ export function FeaturesSection() {
               </motion.div>
             )
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   )

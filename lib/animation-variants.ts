@@ -31,25 +31,25 @@ export const animationVariants = {
 
   // Stagger container for grouped elements (cards, list items)
   staggerContainer: {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 1 }, // Start visible in case scroll reveal doesn't trigger
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.1,
-        duration: 0.7,
+        staggerChildren: 0.08,
+        delayChildren: 0.05,
+        duration: 0.5,
       },
     },
   },
 
   // Child element variant for staggerred animations
   staggerItem: {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 1, y: 0 }, // Start visible immediately on mobile
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.7,
+        duration: 0.5,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
@@ -98,9 +98,10 @@ export const animationVariants = {
 /**
  * Viewport config for scroll reveal triggers
  * Triggers once when element is visible in viewport
+ * Mobile-optimized to ensure elements appear
  */
 export const scrollRevealConfig = {
   once: true,
-  amount: 0.2, // trigger when ~20% of element is visible (better on mobile)
-  margin: '-100px', // start animation slightly before element enters view
+  amount: 0.1, // trigger when ~10% of element is visible (mobile-friendly, lower threshold)
+  // No margin on mobile - let elements appear naturally
 }
