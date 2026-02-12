@@ -95,20 +95,23 @@ export function Navbar() {
                   </motion.button>
               </div>
             ) : (
-              <Link href="/auth">
-                <motion.button
-                  className="px-8 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full text-sm font-semibold shadow-lg shadow-orange-500/30 hover:shadow-orange-500/60 transition-all overflow-hidden group relative flex-shrink-0"
+              <Link
+                href="/auth"
+                className="px-8 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full text-sm font-semibold shadow-lg shadow-orange-500/30 hover:shadow-orange-500/60 transition-all overflow-hidden group relative flex-shrink-0"
+              >
+                <motion.span
                   whileHover={{ scale: 1.08, y: -2 }}
                   whileTap={{ scale: 0.95 }}
+                  className="relative z-10 inline-block"
                 >
-                  <span className="relative z-10">Join</span>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 -z-10"
-                    initial={{ x: '100%' }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.button>
+                  Join
+                </motion.span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 -z-10"
+                  initial={{ x: '100%' }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
               </Link>
             )}
           </div>
@@ -216,10 +219,8 @@ export function Navbar() {
             </a>
             {user ? (
               <>
-                <Link href="/dashboard">
-                  <a className="w-full block text-center px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold mt-2">
-                    Dashboard
-                  </a>
+                <Link href="/dashboard" className="w-full block text-center px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold mt-2">
+                  Dashboard
                 </Link>
                 <button
                   onClick={logout}
@@ -229,10 +230,8 @@ export function Navbar() {
                 </button>
               </>
             ) : (
-              <Link href="/auth">
-                <a className="w-full block text-center px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold mt-2">
-                  Join
-                </a>
+              <Link href="/auth" className="w-full block text-center px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold mt-2">
+                Join
               </Link>
             )}
           </div>

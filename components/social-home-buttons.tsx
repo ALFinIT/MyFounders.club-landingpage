@@ -32,16 +32,19 @@ export default function SocialHomeButtons() {
         style={{ pointerEvents: expanded ? 'auto' : 'none' }}
       >
         {/* Icons appear when expanded */}
-        <Link href="/">
-          <motion.button
+        <Link
+          href="/"
+          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
+          title="Back to Home"
+        >
+          <motion.span
             initial={{ opacity: 0, scale: 0.8 }}
             animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.16 }}
-            className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
-            title="Back to Home"
+            className="flex items-center justify-center"
           >
             <Home size={20} />
-          </motion.button>
+          </motion.span>
         </Link>
 
         <motion.a
