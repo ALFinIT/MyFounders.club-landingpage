@@ -54,8 +54,10 @@ export function Navbar() {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <div className="glass rounded-full px-6 py-3 flex items-center justify-between gap-4">
-          {/* Logo */}
-          <Logo />
+          {/* Logo (clicking navigates to hero) */}
+          <a href="#hero" className="inline-block -ml-1">
+            <Logo />
+          </a>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-6">

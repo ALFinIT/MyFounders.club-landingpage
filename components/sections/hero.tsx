@@ -29,7 +29,7 @@ const itemVariants = {
 }
 export function HeroSection() {
   return (
-      <section className="relative w-full overflow-hidden px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center" style={{ minHeight: '100vh', paddingTop: '40px' }}>
+      <section id="hero" className="relative w-full overflow-hidden px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center" style={{ minHeight: '100vh', paddingTop: '40px' }}>
         {/* Full-width banner placed at top of hero only */}
       <div className="w-full mt-12 relative -top-6">
 
@@ -130,7 +130,7 @@ function SocialProof() {
 
 function ScrollIndicator() {
   return (
-    <motion.div className="absolute -bottom-2 left-[46%] -translate-x-1/2 flex flex-col items-center gap-2 mt-16" animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+    <motion.div className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 mt-16" animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
       <p className="text-xs slow-blink text-muted-foreground uppercase tracking-widest">Scroll to explore</p>
       <div className="w-[2px] h-8 bg-gradient-to-b from-orange-500 to-transparent rounded-full" />
     </motion.div>

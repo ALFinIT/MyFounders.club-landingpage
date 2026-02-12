@@ -58,7 +58,7 @@ export function FeaturesSection() {
           whileInView="visible"
           viewport={scrollRevealConfig}
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light mb-6">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 font-sans">
             Everything You Need to Succeed
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light">
@@ -104,8 +104,8 @@ export function FeaturesSection() {
                     <Icon className="w-6 h-6 text-white" />
                   </motion.div>
 
-                  <h3 className="text-lg font-light mb-2 text-white">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm font-light">{feature.description}</p>
+                  <h3 className="text-lg font-semibold mb-2 text-white">{feature.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm">{feature.description}</p>
                 </div>
               </motion.div>
             )
