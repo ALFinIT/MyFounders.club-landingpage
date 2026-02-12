@@ -101,6 +101,6 @@ export const animationVariants = {
  */
 export const scrollRevealConfig = {
   once: true,
-  amount: 'some' as const, // trigger when some part is visible
+  amount: 0.2, // trigger when ~20% of element is visible (better on mobile)
   margin: '-100px', // start animation slightly before element enters view
 }

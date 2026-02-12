@@ -94,13 +94,13 @@ export function WhatsAppCTASection() {
         />
       </div>
 
-      <div className="relative z-10 max-w-2xl mx-auto">
+      <div className="relative z-10 max-w-2xl mx-auto px-4">
         <motion.div
-          className="glass glass-hover p-8 sm:p-12 lg:p-16"
-          initial={{ opacity: 0, y: 40 }}
+          className="glass glass-hover p-6 sm:p-10 lg:p-16"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7 }}
         >
           {/* Header */}
           <motion.div
@@ -111,7 +111,7 @@ export function WhatsAppCTASection() {
             <MessageCircle className="w-8 h-8 text-orange-400" />
           </motion.div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-4 text-white">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-4 text-white">
             Join the Founders WhatsApp Circle
           </h2>
 
@@ -124,17 +124,17 @@ export function WhatsAppCTASection() {
             className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, staggerChildren: 0.1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ delay: 0.15, staggerChildren: 0.08 }}
           >
             {benefits.map((benefit, index) => (
               <motion.div
                 key={index}
-                className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10"
-                initial={{ opacity: 0, x: -20 }}
+                className="flex items-start gap-3 p-2 sm:p-3 rounded-lg bg-white/5 border border-white/10"
+                initial={{ opacity: 0, x: -12 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + index * 0.1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: 0.25 + index * 0.06 }}
               >
                 <Check className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
                 <span className="text-sm text-muted-foreground">{benefit}</span>
@@ -167,7 +167,7 @@ export function WhatsAppCTASection() {
                   }`}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: 0.45 }}
                 />
               </div>

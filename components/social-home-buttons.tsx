@@ -28,13 +28,13 @@ export default function SocialHomeButtons() {
         initial={{ opacity: 0, scale: 0.9, y: 18 }}
         animate={expanded ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.9, y: 18 }}
         transition={{ duration: 0.22 }}
-        className="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl shadow-lg border border-white/10 bg-white/6 backdrop-blur-md"
+        className="flex flex-col items-center justify-center gap-3 p-3 sm:p-4 rounded-2xl shadow-lg border border-white/10 bg-white/6 backdrop-blur-md"
         style={{ pointerEvents: expanded ? 'auto' : 'none' }}
       >
         {/* Icons appear when expanded */}
         <Link
           href="/"
-          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
+          className="p-2.5 sm:p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
           title="Back to Home"
         >
           <motion.span
@@ -54,7 +54,7 @@ export default function SocialHomeButtons() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.16, delay: 0.02 }}
-          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
+          className="p-2.5 sm:p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
           title="Follow us on X"
         >
           <Twitter size={20} />
@@ -67,7 +67,7 @@ export default function SocialHomeButtons() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.16, delay: 0.04 }}
-          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
+          className="p-2.5 sm:p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
           title="Connect on LinkedIn"
         >
           <Linkedin size={20} />
@@ -80,7 +80,7 @@ export default function SocialHomeButtons() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.16, delay: 0.06 }}
-          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
+          className="p-2.5 sm:p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
           title="Instagram"
         >
           <Instagram size={20} />
@@ -93,7 +93,7 @@ export default function SocialHomeButtons() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.16, delay: 0.08 }}
-          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
+          className="p-2.5 sm:p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
           title="YouTube"
         >
           <Youtube size={20} />
@@ -104,7 +104,7 @@ export default function SocialHomeButtons() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={expanded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.16, delay: 0.1 }}
-          className="p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
+          className="p-2.5 sm:p-3 text-white bg-black rounded-full hover:bg-gray-800 transition-all flex items-center justify-center shadow-sm"
           title="AI Assistant"
         >
           <MessageCircle size={20} />

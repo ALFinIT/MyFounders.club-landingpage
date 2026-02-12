@@ -48,8 +48,7 @@ export function Navbar() {
     <>
       {/* Floating Navbar */}
       <motion.nav
-        className="fixed top-6 z-[9999] max-w-2xl"
-        style={{ right: '450px' }}
+        className="fixed top-6 z-[9999] max-w-2xl left-6 right-6 md:left-auto md:right-[450px]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -130,8 +129,7 @@ export function Navbar() {
       {user && !isLoading && isUserMenuOpen && (
         <motion.div
           ref={dropdownRef}
-          className="fixed top-24 w-72 bg-black/80 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl p-6 z-[9999]"
-          style={{ right: '450px' }}
+          className="fixed top-24 w-72 right-6 md:right-[450px] bg-black/80 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl p-6 z-[9999]"
           initial={{ opacity: 0, scale: 0.8, y: -10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: -10 }}

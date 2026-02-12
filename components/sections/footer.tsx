@@ -47,12 +47,12 @@ function NewsletterForm({ compact = false }: { compact?: boolean }) {
           onChange={(e) => setEmail(e.target.value)}
           placeholder={compact ? 'enter your professional email' : 'you@domain.com'}
           required
-          className="flex-[2] min-w-[220px] sm:min-w-[320px] px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 text-xs sm:text-sm focus:outline-none focus:border-orange-500/50 transition"
+          className="flex-[2] min-w-[180px] sm:min-w-[280px] px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 text-xs sm:text-sm focus:outline-none focus:border-orange-500/50 transition"
         />
         <button
           type="submit"
           disabled={status === 'sending'}
-          className="px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-orange-500 text-white font-semibold text-xs sm:text-sm hover:shadow-lg hover:shadow-orange-500/50 transition-all disabled:opacity-50 whitespace-nowrap w-full sm:w-auto"
+          className="px-3 sm:px-5 py-2 sm:py-3 rounded-lg bg-orange-500 text-white font-semibold text-xs sm:text-sm hover:shadow-lg hover:shadow-orange-500/50 transition-all disabled:opacity-50 whitespace-nowrap w-full sm:w-auto"
         >
           {status === 'sending' ? 'Joining...' : status === 'success' ? 'Subscribed' : 'Subscribe'}
         </button>
