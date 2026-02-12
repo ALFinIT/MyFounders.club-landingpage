@@ -36,26 +36,33 @@ function NewsletterForm({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={compact ? 'flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3' : 'flex flex-col sm:flex-row gap-2 items-center'}>
-      {compact && <span className="text-xs font-semibold text-white/80 whitespace-nowrap">NEWSLETTER </span>}
-      <input
-        type="email"
-        name="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder={compact ? 'enter your professional email' : 'you@domain.com'}
-        required
-        className="flex-[2] min-w-[220px] sm:min-w-[320px] px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 text-xs sm:text-sm focus:outline-none focus:border-orange-500/50 transition"
-      />
-      <button
-        type="submit"
-        disabled={status === 'sending'}
-        className="px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-orange-500 text-white font-semibold text-xs sm:text-sm hover:shadow-lg hover:shadow-orange-500/50 transition-all disabled:opacity-50 whitespace-nowrap w-full sm:w-auto"
-      >
-        {status === 'sending' ? 'Joining...' : status === 'success' ? 'Subscribed' : 'Subscribe'}
-      </button>
-      {status === 'error' && <p className="text-xs text-red-400 mt-1 w-full sm:w-auto">Error subscribing.</p>}
-    </form>
+    <div className="w-full">
+      <form onSubmit={handleSubmit} className={compact ? 'flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3' : 'flex flex-col sm:flex-row gap-2 items-center'}>
+        {compact && <span className="text-xs font-semibold text-white/80 whitespace-nowrap">NEWSLETTER </span>}
+        <input
+          type="email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={compact ? 'enter your professional email' : 'you@domain.com'}
+          required
+          className="flex-[2] min-w-[220px] sm:min-w-[320px] px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 text-xs sm:text-sm focus:outline-none focus:border-orange-500/50 transition"
+        />
+        <button
+          type="submit"
+          disabled={status === 'sending'}
+          className="px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-orange-500 text-white font-semibold text-xs sm:text-sm hover:shadow-lg hover:shadow-orange-500/50 transition-all disabled:opacity-50 whitespace-nowrap w-full sm:w-auto"
+        >
+          {status === 'sending' ? 'Joining...' : status === 'success' ? 'Subscribed' : 'Subscribe'}
+        </button>
+        {status === 'error' && <p className="text-xs text-red-400 mt-1 w-full sm:w-auto">Error subscribing.</p>}
+      </form>
+
+      {/* Short centered success message below the newsletter column */}
+      {status === 'success' && (
+        <p className="text-sm mt-2 text-center text-[#FF5B23]">Subscribed</p>
+      )}
+    </div>
   )
 }
 

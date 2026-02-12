@@ -11,7 +11,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        // Primary: Neue Montreal (if available), fallback to Montserrat, then Inter and system fonts
+        sans: ['"Neue Montreal"', 'var(--font-montserrat)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-space-mono)', 'monospace'],
       },
       colors: {

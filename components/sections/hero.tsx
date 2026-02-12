@@ -27,33 +27,46 @@ const itemVariants = {
     },
   },
 }
-
 export function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden px-4 sm:px-6 lg:px-8 flex items-center justify-center" style={{ minHeight: '100vh', paddingTop: '80px' }}>
+      <section className="relative w-full overflow-hidden px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center" style={{ minHeight: '100vh', paddingTop: '40px' }}>
+        {/* Full-width banner placed at top of hero only */}
+      <div className="w-full mt-12 relative -top-6">
+
+  <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex justify-center">
+    <img 
+      src="/Full_logo_mfc.png" 
+      alt="MyFoundersClub Banner"
+      className="w-64 sm:w-80 md:w-[600px] lg:w-[750px] h-auto object-contain"
+    />
+  </div>
+</div>
+
+
       <motion.div
-        className="relative z-10 max-w-6xl text-center flex flex-col items-center"
+        className="relative z-10 max-w-6xl text-center flex flex-col items-center -mt-6"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="space-y-6 mb-12">
-          <motion.div className="space-y-4" variants={itemVariants}>
-            <h1 className="text-5xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight neon-heading">
-              <span className="block text-white">Build Locally.</span>
-              <span className="block text-white">Champion Regionally.</span>
-              <span className="block text-white">Scale Globally.</span>
-            </h1>
-          </motion.div>
+        <div className="space-y-6 mb-6">
 
-          <motion.div
-            className="h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-transparent rounded-full mx-auto"
-            style={{ width: '300px', filter: 'drop-shadow(0 0 8px rgba(255, 91, 35, 0.3))' }}
-            variants={itemVariants}
-            initial="hidden"
-            animate="visible"
-            transition={{ duration: 1.2, ease: 'easeOut' }}
-          />
+          <motion.div className="space-y-4" variants={itemVariants}>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.05] hero-heading font-extrabold">
+
+
+
+              <span className="block">Build Locally</span>
+              <span className="block text-[#FF5B23]">Champion Regionally</span>
+              <span className="block">Scale Globally</span>
+            </h1>
+
+            <p className="mt-6 mx-auto hero-subheading neon-subheading max-w-none text-center text-sm sm:text-base md:text-lg whitespace-nowrap">
+
+
+              The Gulf's ecosystem operating system <br/> connecting founders, capital, and opportunity across MENA and beyond.
+            </p>
+          </motion.div>
 
           <motion.div className="flex flex-col sm:flex-row gap-4 mb-6 justify-center" variants={itemVariants}>
             <HeroCTA />
@@ -103,7 +116,7 @@ function SocialProof() {
   ]
 
   return (
-    <motion.div className="flex items-center justify-center gap-6 text-sm" variants={itemVariants}>
+    <motion.div className="flex items-center justify-center gap-6 text-sm -mt-4" variants={itemVariants}>
       <div className="flex -space-x-2">
         {avatars.map((src, i) => (
           <motion.div key={i} className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-background bg-muted" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.1, type: 'spring', stiffness: 200 }} whileHover={{ scale: 1.1, zIndex: 10 }}>
@@ -112,14 +125,14 @@ function SocialProof() {
         ))}
       </div>
 
-      <p className="text-gray-200">Join <span className="text-white font-semibold">500+</span> founders in the Gulf ecosystem</p>
+      <p className="neon-subheading font-semibold">Join <span className="font-semibold">500+</span> founders in the Gulf ecosystem</p>
     </motion.div>
   )
 }
 
 function ScrollIndicator() {
   return (
-    <motion.div className="absolute bottom-2 left-[46%] -translate-x-1/2 flex flex-col items-center gap-2 mt-16" animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+    <motion.div className="absolute -bottom-2 left-[46%] -translate-x-1/2 flex flex-col items-center gap-2 mt-16" animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
       <p className="text-xs slow-blink text-muted-foreground uppercase tracking-widest">Scroll to explore</p>
       <div className="w-[2px] h-8 bg-gradient-to-b from-orange-500 to-transparent rounded-full" />
     </motion.div>

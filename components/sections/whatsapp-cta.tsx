@@ -62,7 +62,7 @@ export function WhatsAppCTASection() {
       setSubmitted(true)
       // Redirect to WhatsApp community after 1.5 seconds
       setTimeout(() => {
-        window.open('https://chat.whatsapp.com/FNvJDT55evI4E4EBaT4AHZ', '_blank')
+        window.open('https://chat.whatsapp.com/JV8WTSINaSs8HUUYMdEOEe?mode=gi_t', '_blank')
       }, 1500)
     } catch (err) {
       console.error('WhatsApp submit error:', err)
@@ -199,10 +199,11 @@ export function WhatsAppCTASection() {
                   </>
                 )}
               </motion.button>
-
               <p className="text-center text-xs text-muted-foreground">
                 No spam. High-value ecosystem updates only.
               </p>
+
+              {/* single CTA only (Join WhatsApp Community) — direct button removed */}
             </form>
           ) : (
             <motion.div
@@ -223,7 +224,7 @@ export function WhatsAppCTASection() {
                 Redirecting to WhatsApp in a moment...
               </p>
               <p className="text-xs text-white/60">
-                If not redirected, <a href="https://chat.whatsapp.com/FNvJDT55evI4E4EBaT4AHZ" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 underline">click here</a>
+                If not redirected, <a href="https://chat.whatsapp.com/JV8WTSINaSs8HUUYMdEOEe?mode=gi_t" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 underline">click here</a>
               </p>
             </motion.div>
           )}
