@@ -51,27 +51,27 @@ const problems = [
 
 export function ProblemSection() {
   return (
-    <section className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
             The Challenge
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
             Gulf founders face fragmentation and barriers that slow growth. We're changing that.
           </p>
         </motion.div>
 
         {/* Problem cards */}
         <motion.div
-          className="grid md:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -82,18 +82,18 @@ export function ProblemSection() {
             return (
               <motion.div
                 key={index}
-                className="glass glass-hover group p-8"
+                className="glass glass-hover group p-4 sm:p-6 lg:p-8"
                 variants={cardVariants}
                 whileHover="hover"
               >
                 <motion.div
-                  className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500/20 to-orange-600/10 flex items-center justify-center mb-6 group-hover:from-orange-500/30 group-hover:to-orange-600/20 transition-all"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br from-orange-500/20 to-orange-600/10 flex items-center justify-center mb-4 sm:mb-6 group-hover:from-orange-500/30 group-hover:to-orange-600/20 transition-all"
                   whileHover={{ rotate: 10 }}
                 >
-                  <Icon className="w-6 h-6 text-orange-400" />
+                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />
                 </motion.div>
-                <h3 className="text-xl font-semibold mb-3 text-white">{problem.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{problem.description}</p>
+                <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-2 sm:mb-3 text-white">{problem.title}</h3>
+                <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm">{problem.description}</p>
               </motion.div>
             )
           })}

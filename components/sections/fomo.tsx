@@ -13,7 +13,7 @@ export function FOMOSection() {
   ]
 
   return (
-    <section className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Main narrative */}
         <motion.div
@@ -35,7 +35,7 @@ export function FOMOSection() {
           </div>
 
           {/* Second paragraph */}
-          <p className="text-lg text-muted-foreground leading-relaxed font-light">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed font-light">
            <span className="text-orange-400 font-semibold"> The founders in this shortlist don't wait for announcements.</span> <br />They get the <span className="text-orange-400 font-semibold">advantage:</span> <br />first access to capital, strategic partners, and opportunities before they're public knowledge.
           </p>
         </motion.div>
@@ -48,8 +48,8 @@ export function FOMOSection() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h3 className="text-2xl font-light text-white mb-8">You Should Apply If...</h3>
-          <div className="space-y-4">
+          <h3 className="text-lg sm:text-xl lg:text-2xl font-light text-white mb-6 sm:mb-8">You Should Apply If...</h3>
+          <div className="space-y-3 sm:space-y-4">
             {qualifications.map((qualification, index) => (
               <motion.div
                 key={index}
@@ -59,8 +59,8 @@ export function FOMOSection() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 + index * 0.05 }}
               >
-                <CheckCircle2 className="w-6 h-6 text-orange-400 flex-shrink-0 mt-0.5" />
-                <span className="text-base text-muted-foreground leading-relaxed">{qualification}</span>
+                <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400 flex-shrink-0 mt-0.5" />
+                <span className="text-xs sm:text-sm lg:text-base text-muted-foreground leading-relaxed">{qualification}</span>
               </motion.div>
             ))}
           </div>
@@ -74,7 +74,7 @@ export function FOMOSection() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <h3 className="text-2xl font-light text-white mb-6 flex items-center gap-2">
+          <h3 className="text-lg sm:text-xl lg:text-2xl font-light text-white mb-4 sm:mb-6 flex items-center gap-2">
             <AlertCircle className="w-6 h-6 text-orange-400" />
             You Should Not Apply If...
           </h3>

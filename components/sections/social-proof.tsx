@@ -34,10 +34,10 @@ const founders = [
 
 export function SocialProofSection() {
   return (
-    <section className="relative w-full py-12 lg:py-20 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full py-8 sm:py-12 lg:py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <motion.p
-          className="text-center text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-8"
+          className="text-center text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6 sm:mb-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

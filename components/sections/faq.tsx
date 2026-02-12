@@ -43,20 +43,20 @@ export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         {/* Section header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
             Questions?
           </h2>
-          <p className="text-lg text-muted-foreground font-light">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground font-light">
             Get clarity before joining.
           </p>
         </motion.div>
@@ -74,9 +74,9 @@ export function FAQSection() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full p-6 flex items-center justify-between hover:bg-white/5 transition-colors text-left"
+                className="w-full p-4 sm:p-6 flex items-center justify-between hover:bg-white/5 transition-colors text-left"
               >
-                <span className="text-lg font-medium text-white">{faq.question}</span>
+                <span className="text-sm sm:text-base lg:text-lg font-medium text-white">{faq.question}</span>
                 <motion.div
                   animate={{ rotate: openIndex === index ? 180 : 0 }}
                   transition={{ duration: 0.3 }}

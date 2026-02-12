@@ -16,11 +16,11 @@ export function ProgramAnnouncementSection() {
   ]
 
   return (
-    <section className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Main heading */}
         <motion.h2
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white text-center mb-6"
+          className="text-2xl sm:text-5xl lg:text-6xl font-bold text-white text-center mb-4 sm:mb-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
@@ -31,7 +31,7 @@ export function ProgramAnnouncementSection() {
 
         {/* Subheading */}
         <motion.p
-          className="text-lg text-muted-foreground text-center mb-12 font-light"
+          className="text-sm sm:text-base lg:text-lg text-muted-foreground text-center mb-10 sm:mb-16 font-light"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}

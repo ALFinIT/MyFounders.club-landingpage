@@ -27,20 +27,20 @@ const steps = [
 
 export function HowItWorksSection() {
   return (
-    <section className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-16 lg:mb-20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
             How It Works
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
             From joining to scaling, we guide you through every step of your journey.
           </p>
         </motion.div>
@@ -49,7 +49,7 @@ export function HowItWorksSection() {
         <div className="relative">
           {/* Connecting line */}
           <motion.div
-            className="absolute top-24 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-orange-500/30 to-transparent hidden lg:block"
+            className="absolute top-16 sm:top-24 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-orange-500/30 to-transparent hidden lg:block"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true, margin: '-100px' }}
@@ -57,7 +57,7 @@ export function HowItWorksSection() {
           />
 
           <motion.div
-            className="grid md:grid-cols-3 gap-8 lg:gap-12"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: '-100px' }}
@@ -82,9 +82,9 @@ export function HowItWorksSection() {
                   />
 
                   {/* Number circle */}
-                  <div className="relative mb-8 z-10">
+                  <div className="relative mb-6 sm:mb-8 z-10">
                     <motion.div
-                      className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-500/25 to-orange-600/15 border border-orange-500/40 flex items-center justify-center shadow-lg shadow-orange-500/10"
+                      className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-gradient-to-br from-orange-500/25 to-orange-600/15 border border-orange-500/40 flex items-center justify-center shadow-lg shadow-orange-500/10"
                       whileHover={{ scale: 1.15, boxShadow: '0 0 30px rgba(255, 91, 35, 0.3)' }}
                       transition={{ duration: 0.3 }}
                     >
@@ -93,7 +93,7 @@ export function HowItWorksSection() {
                         animate={{ scale: [1, 1.1, 1] }}
                         transition={{ duration: 3, repeat: Infinity, delay: index * 0.4 }}
                       />
-                      <span className="relative text-3xl font-bold text-orange-500">{step.number}</span>
+                      <span className="relative text-xl sm:text-2xl lg:text-3xl font-bold text-orange-500">{step.number}</span>
                     </motion.div>
 
                     {/* Icon */}

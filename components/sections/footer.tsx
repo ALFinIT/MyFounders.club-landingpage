@@ -7,32 +7,47 @@ import { useState } from 'react'
 
 function NewsletterForm({ compact = false }: { compact?: boolean }) {
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error' | 'duplicate'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     setStatus('sending')
+    setErrorMessage('')
+    
     try {
-      // Save to localStorage
-      const existing = typeof window !== 'undefined' ? localStorage.getItem('newsletters') : null
-      const arr = existing ? JSON.parse(existing as string) : []
-      arr.push({ email, subscribedAt: new Date().toISOString() })
-      if (typeof window !== 'undefined') localStorage.setItem('newsletters', JSON.stringify(arr))
-
       const res = await fetch('/api/beehiv', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       })
 
-      if (!res.ok) throw new Error('Failed')
+      const data = await res.json()
+
+      if (res.status === 409) {
+        // Email already exists
+        setStatus('duplicate')
+        setErrorMessage('This email is already subscribed')
+        setTimeout(() => setStatus('idle'), 1000)
+        return
+      }
+
+      if (!res.ok) {
+        setStatus('error')
+        setErrorMessage(data.error || 'Error subscribing. Please try again.')
+        setTimeout(() => setStatus('idle'), 1000)
+        return
+      }
+
+      // Success - show message for 1 second then reset
       setStatus('success')
       setEmail('')
-      setTimeout(() => setStatus('idle'), 2000)
+      setTimeout(() => setStatus('idle'), 1000)
     } catch (err) {
       console.error('Newsletter error', err)
       setStatus('error')
-      setTimeout(() => setStatus('idle'), 2000)
+      setErrorMessage('Error subscribing. Please try again.')
+      setTimeout(() => setStatus('idle'), 1000)
     }
   }
 
@@ -47,7 +62,8 @@ function NewsletterForm({ compact = false }: { compact?: boolean }) {
           onChange={(e) => setEmail(e.target.value)}
           placeholder={compact ? 'enter your professional email' : 'you@domain.com'}
           required
-          className="flex-[2] min-w-[180px] sm:min-w-[280px] px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 text-xs sm:text-sm focus:outline-none focus:border-orange-500/50 transition"
+          disabled={status === 'sending'}
+          className="flex-[2] min-w-[180px] sm:min-w-[280px] px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 text-xs sm:text-sm focus:outline-none focus:border-orange-500/50 transition disabled:opacity-50"
         />
         <button
           type="submit"
@@ -56,12 +72,42 @@ function NewsletterForm({ compact = false }: { compact?: boolean }) {
         >
           {status === 'sending' ? 'Joining...' : status === 'success' ? 'Subscribed' : 'Subscribe'}
         </button>
-        {status === 'error' && <p className="text-xs text-red-400 mt-1 w-full sm:w-auto">Error subscribing.</p>}
       </form>
 
-      {/* Short centered success message below the newsletter column */}
+      {/* Success message in hot orange */}
       {status === 'success' && (
-        <p className="text-sm mt-2 text-center text-[#FF5B23]">Subscribed</p>
+        <motion.p 
+          className="text-sm mt-2 text-center font-semibold text-[#FF5B23]"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+        >
+          ✓ Subscribed successfully!
+        </motion.p>
+      )}
+
+      {/* Error message */}
+      {status === 'error' && (
+        <motion.p 
+          className="text-xs text-red-400 mt-2 text-center"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+        >
+          {errorMessage}
+        </motion.p>
+      )}
+
+      {/* Duplicate email message */}
+      {status === 'duplicate' && (
+        <motion.p 
+          className="text-xs text-yellow-500 mt-2 text-center"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+        >
+          {errorMessage}
+        </motion.p>
       )}
     </div>
   )

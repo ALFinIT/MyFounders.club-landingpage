@@ -57,18 +57,18 @@ function Counter({ value, label, suffix }: StatCounter) {
       whileInView="visible"
       viewport={scrollRevealConfig}
     >
-      <p className="text-4xl sm:text-5xl lg:text-6xl font-light text-orange-500 mb-3">
+      <p className="text-3xl sm:text-4xl lg:text-6xl font-light text-orange-500 mb-2 sm:mb-3">
         {displayValue}
         {suffix}
       </p>
-      <p className="text-muted-foreground text-sm sm:text-base font-light">{label}</p>
+      <p className="text-muted-foreground text-xs sm:text-base font-light">{label}</p>
     </motion.div>
   )
 }
 
 export function StatsSection() {
   return (
-    <section className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Decorative background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -84,22 +84,22 @@ export function StatsSection() {
 
         {/* Header */}
         <motion.div
-          className="text-center mb-16 relative z-10"
+          className="text-center mb-10 sm:mb-16 relative z-10"
           variants={animationVariants.fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={scrollRevealConfig}
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
             By the Numbers
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
             A growing ecosystem of innovators, investors, and opportunities.
           </p>
         </motion.div>
 
         {/* Stats grid */}
-        <div className="relative z-10 grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="relative z-10 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 lg:gap-12">
           {stats.map((stat) => (
             <Counter key={stat.label} {...stat} />
           ))}
