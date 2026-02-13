@@ -201,7 +201,8 @@ export function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <motion.div
-          className="fixed inset-0 top-20 z-40 bg-black/50 backdrop-blur-sm md:hidden flex justify-center px-4"
+          className="absolute top-full left-0 right-0 z-40 bg-black/50 backdrop-blur-sm md:hidden flex justify-center px-4 mt-3"
+
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           onClick={() => setIsOpen(false)}
@@ -222,7 +223,7 @@ export function Navbar() {
 </a>
            
             <a
-  href="#Pricing"
+  href="#pricing"
   onClick={() => setIsOpen(false)}
   className="text-muted-foreground hover:text-white transition-colors"
 >

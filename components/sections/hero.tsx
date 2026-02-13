@@ -52,16 +52,17 @@ export function HeroSection() {
         <div className="space-y-6 mb-6">
 
           <motion.div className="space-y-4" variants={itemVariants}>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] hero-heading font-extrabold">
-
-
-
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] hero-heading font-extrabold drop-shadow-lg" style={{
+              textShadow: '0 4px 12px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6)'
+            }}>
               <span className="block">Build Locally</span>
               <span className="block text-[#FF5B23]">Champion Regionally</span>
               <span className="block">Scale Globally</span>
             </h1>
 
-            <p className="mt-4 mx-auto hero-subheading neon-subheading max-w-[900px] text-center text-sm sm:text-base md:text-lg leading-relaxed">
+            <p className="mt-4 mx-auto hero-subheading neon-subheading max-w-[900px] text-center text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-lg" style={{
+              textShadow: '0 2px 8px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.5)'
+            }}>
               The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA and beyond.
             </p>
           </motion.div>
