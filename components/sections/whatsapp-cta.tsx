@@ -105,8 +105,8 @@ export function WhatsAppCTASection() {
           {/* Header */}
           <motion.div
             className="flex items-center justify-center w-16 h-16 mx-auto mb-8 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/30"
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 3, repeat: Infinity }}
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
           >
             <MessageCircle className="w-8 h-8 text-orange-400" />
           </motion.div>

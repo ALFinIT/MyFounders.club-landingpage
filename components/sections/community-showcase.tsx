@@ -85,8 +85,8 @@ export function CommunityShowcase() {
                     <div className="flex items-center gap-4">
                       <motion.div
                         className="w-14 h-14 rounded-full bg-orange-500/20 flex items-center justify-center"
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
+                        whileHover={{ scale: 1.2 }}
+                        transition={{ duration: 0.3 }}
                       >
                         <Icon className="w-7 h-7 text-orange-400" />
                       </motion.div>

@@ -202,65 +202,48 @@ export function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <motion.div
-          className="absolute top-full left-0 right-0 z-40 bg-black/50 backdrop-blur-sm md:hidden flex justify-center px-4 mt-3"
-
+          className="fixed top-0 left-0 right-0 bottom-0 z-40 bg-black/50 backdrop-blur-sm md:hidden flex flex-col"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           onClick={() => setIsOpen(false)}
         >
           <motion.div
-            className="mt-2 glass rounded-2xl p-6 w-full max-w-sm"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+            className="mt-20 mx-4 glass rounded-2xl p-4 w-full max-w-xs self-center"
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
             onClick={(e) => e.stopPropagation()}
           >
-          <div className="flex flex-col gap-4">
-            <a
-  href="#features"
-  onClick={() => setIsOpen(false)}
-  className="text-muted-foreground hover:text-white transition-colors"
->
-  Features
-</a>
-           
-            <a
-  href="#pricing"
-  onClick={() => setIsOpen(false)}
-  className="text-muted-foreground hover:text-white transition-colors"
->
-  Pricing
-</a>
-            
-<a
-  href="/events"
-  onClick={() => setIsOpen(false)}
-  className="text-muted-foreground hover:text-white transition-colors"
->
-  Events
-</a>
-            
-            <a
-  href="#community"
-  onClick={() => setIsOpen(false)}
-  className="text-muted-foreground hover:text-white transition-colors"
->
-   Community
-</a>
+          <div className="flex flex-col gap-3">
+            <a href="#features" onClick={() => setIsOpen(false)} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+              Features
+            </a>
+            <a href="#pricing" onClick={() => setIsOpen(false)} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+              Pricing
+            </a>
+            <a href="/events" onClick={() => setIsOpen(false)} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+              Events
+            </a>
+            <a href="#community" onClick={() => setIsOpen(false)} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+              Community
+            </a>
 
             {user ? (
               <>
-                <Link href="/dashboard" className="w-full block text-center px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold mt-2">
+                <Link href="/dashboard" onClick={() => setIsOpen(false)} className="w-full block text-center px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold text-sm mt-2">
                   Dashboard
                 </Link>
                 <button
-                  onClick={logout}
-                  className="w-full px-4 py-3 bg-red-500/20 border border-red-500 text-red-400 rounded-lg font-semibold"
+                  onClick={() => {
+                    logout()
+                    setIsOpen(false)
+                  }}
+                  className="w-full px-4 py-2.5 bg-red-500/20 border border-red-500 text-red-400 rounded-lg font-semibold text-sm"
                 >
                   Logout
                 </button>
               </>
             ) : (
-              <Link href="/auth" className="w-full block text-center px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold mt-2">
+              <Link href="/auth" onClick={() => setIsOpen(false)} className="w-full block text-center px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold text-sm mt-2">
                 Join
               </Link>
             )}

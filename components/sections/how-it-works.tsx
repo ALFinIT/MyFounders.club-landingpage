@@ -90,8 +90,6 @@ export function HowItWorksSection() {
                     >
                       <motion.div
                         className="absolute inset-0 rounded-full bg-gradient-to-br from-orange-500/20 to-transparent"
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ duration: 3, repeat: Infinity, delay: index * 0.4 }}
                       />
                       <span className="relative text-xl sm:text-2xl lg:text-3xl font-bold text-orange-500">{step.number}</span>
                     </motion.div>
@@ -99,8 +97,8 @@ export function HowItWorksSection() {
                     {/* Icon */}
                     <motion.div
                       className="absolute top-4 right-4 w-12 h-12 bg-gradient-to-br from-orange-500/30 to-orange-600/20 rounded-2xl flex items-center justify-center border border-orange-500/40 shadow-md shadow-orange-500/10"
-                      animate={{ y: [0, -6, 0], x: [0, 2, 0] }}
-                      transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.25, ease: 'easeInOut' }}
+                      whileHover={{ scale: 1.2, rotate: 5 }}
+                      transition={{ duration: 0.3 }}
                     >
                       <Icon className="w-6 h-6 text-orange-300" />
                     </motion.div>
