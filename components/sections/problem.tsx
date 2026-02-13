@@ -61,10 +61,10 @@ export function ProblemSection() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6)' }}>
             The Challenge
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-2xl mx-auto" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
             Gulf founders face fragmentation and barriers that slow growth. We're changing that.
           </p>
         </motion.div>
@@ -92,8 +92,8 @@ export function ProblemSection() {
                 >
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />
                 </motion.div>
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-2 sm:mb-3 text-white">{problem.title}</h3>
-                <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm">{problem.description}</p>
+                <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-2 sm:mb-3 text-white" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.7)' }}>{problem.title}</h3>
+                <p className="text-gray-300 leading-relaxed text-xs sm:text-sm" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>{problem.description}</p>
               </motion.div>
             )
           })}

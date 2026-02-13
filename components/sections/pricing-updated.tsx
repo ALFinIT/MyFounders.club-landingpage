@@ -116,10 +116,14 @@ export function PricingSectionUpdated() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg" style={{
+            textShadow: '0 4px 12px rgba(0, 0, 0, 0.9)'
+          }}>
             Plans & Access
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto font-light drop-shadow-lg" style={{
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
+          }}>
             Choose your entry point into the Gulf ecosystem.
           </p>
         </motion.div>

@@ -41,7 +41,7 @@ export function SocialProofSection() {
       <div className="max-w-6xl mx-auto">
         {/* Premium scroll reveal heading */}
         <motion.p
-          className="text-center text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6 sm:mb-8"
+          className="text-center text-xs sm:text-sm font-semibold uppercase tracking-widest text-gray-300 mb-6 sm:mb-8 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}

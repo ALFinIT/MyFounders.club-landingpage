@@ -149,8 +149,8 @@ export function Footer() {
             </div>
 
             <div>
-              <p className="text-2xl md:text-3xl font-bold tracking-wide text-white">MY FOUNDER CLUBS</p>
-              <p className="mt-1 text-sm md:text-base text-muted-foreground font-light">Build Locally. Champion Regionally. Scale Globally.</p>
+              <p className="text-2xl md:text-3xl font-bold tracking-wide text-white drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>MY FOUNDER CLUBS</p>
+              <p className="mt-1 text-sm md:text-base text-gray-300 font-light" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>Build Locally. Champion Regionally. Scale Globally.</p>
             </div>
           </div>
         </motion.div>
@@ -167,7 +167,7 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8">
             {/* Left: office details */}
             <div className="md:col-span-2 lg:col-span-2">
-              <div className="text-xs sm:text-sm text-white/70 space-y-1">
+              <div className="text-xs sm:text-sm text-white/80 space-y-1" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>
                 <div>Office 1003, Latifa Tower,</div>
                 <div>Sheikh Zayed Road (north)</div>
                 <div>Sector, Dubai, UAE</div>
@@ -184,18 +184,18 @@ export function Footer() {
             {/* Right: Link columns */}
             {allLinks.map((sec, i) => (
               <div key={i} className="sm:col-span-1 lg:col-span-1">
-                <h3 className="text-xs uppercase tracking-widest text-white/70 font-semibold mb-3">{sec.label}</h3>
+                <h3 className="text-xs uppercase tracking-widest text-white/80 font-semibold mb-3 drop-shadow-lg" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>{sec.label}</h3>
                 <ul className="space-y-2">
                   {Array.isArray(sec.links[0]) ? (
                     sec.links.map((l: any, idx: number) => (
                       <li key={idx}>
-                        <a href={l.url} target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors font-light">{l.text}</a>
+                        <a href={l.url} target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm text-white/70 hover:text-orange-400 transition-colors font-light" style={{ textShadow: '0 1px 3px rgba(0, 0, 0, 0.6)' }}>{l.text}</a>
                       </li>
                     ))
                   ) : (
                     sec.links.map((l: any, idx: number) => (
                       <li key={idx}>
-                        <a href="#" className="text-xs sm:text-sm text-white/60 hover:text-white transition-colors font-light">{typeof l === 'string' ? l : l.text}</a>
+                        <a href="#" className="text-xs sm:text-sm text-white/70 hover:text-orange-400 transition-colors font-light" style={{ textShadow: '0 1px 3px rgba(0, 0, 0, 0.6)' }}>{typeof l === 'string' ? l : l.text}</a>
                       </li>
                     ))
                   )}

@@ -104,10 +104,10 @@ export function ApplicationFormSection() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.8)' }}>
             Secure Your Spot.
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground font-light">
+          <p className="text-base sm:text-lg text-gray-300 font-light" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
             The shortlist closes when it's full.
           </p>
         </motion.div>
@@ -123,7 +123,7 @@ export function ApplicationFormSection() {
         >
           {/* Full Name */}
           <div>
-            <label className="block text-sm font-medium text-white mb-2">Full Name *</label>
+            <label className="block text-sm font-medium text-white/90 mb-2" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>Full Name *</label>
             <input
               type="text"
               name="fullName"
@@ -138,7 +138,7 @@ export function ApplicationFormSection() {
 
           {/* Company Name */}
           <div>
-            <label className="block text-sm font-medium text-white mb-2">Company Name *</label>
+            <label className="block text-sm font-medium text-white/90 mb-2" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>Company Name *</label>
             <input
               type="text"
               name="companyName"

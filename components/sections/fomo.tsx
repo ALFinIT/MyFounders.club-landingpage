@@ -25,17 +25,17 @@ export function FOMOSection() {
         >
           {/* First paragraph */}
           <div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.8)' }}>
               This isn't a waitlist.
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed font-light">
+            <p className="text-lg text-gray-300 leading-relaxed font-light" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.7)' }}>
               It's a <span className="text-orange-400 font-semibold">shortlist. <br />
               </span> We're building the Gulf's most selective founder community not for gatekeeping, but for signal. Every member has been vetted, qualified, and committed to moving fast.
             </p>
           </div>
 
           {/* Second paragraph */}
-          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed font-light">
+          <p className="text-sm sm:text-base lg:text-lg text-gray-300 leading-relaxed font-light" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.7)' }}>
            <span className="text-orange-400 font-semibold"> The founders in this shortlist don't wait for announcements.</span> <br />They get the <span className="text-orange-400 font-semibold">advantage:</span> <br />first access to capital, strategic partners, and opportunities before they're public knowledge.
           </p>
         </motion.div>
@@ -48,7 +48,7 @@ export function FOMOSection() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h3 className="text-lg sm:text-xl lg:text-2xl font-light text-white mb-6 sm:mb-8">You Should Apply If...</h3>
+          <h3 className="text-lg sm:text-xl lg:text-2xl font-light text-white mb-6 sm:mb-8 drop-shadow-lg" style={{ textShadow: '0 3px 10px rgba(0, 0, 0, 0.8)' }}>You Should Apply If...</h3>
           <div className="space-y-3 sm:space-y-4">
             {qualifications.map((qualification, index) => (
               <motion.div
@@ -60,7 +60,7 @@ export function FOMOSection() {
                 transition={{ delay: 0.1 + index * 0.05 }}
               >
                 <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400 flex-shrink-0 mt-0.5" />
-                <span className="text-xs sm:text-sm lg:text-base text-muted-foreground leading-relaxed">{qualification}</span>
+                <span className="text-xs sm:text-sm lg:text-base text-gray-300 leading-relaxed" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>{qualification}</span>
               </motion.div>
             ))}
           </div>
@@ -74,11 +74,11 @@ export function FOMOSection() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <h3 className="text-lg sm:text-xl lg:text-2xl font-light text-white mb-4 sm:mb-6 flex items-center gap-2">
+          <h3 className="text-lg sm:text-xl lg:text-2xl font-light text-white mb-4 sm:mb-6 flex items-center gap-2 drop-shadow-lg" style={{ textShadow: '0 3px 10px rgba(0, 0, 0, 0.8)' }}>
             <AlertCircle className="w-6 h-6 text-orange-400" />
             You Should Not Apply If...
           </h3>
-          <ul className="space-y-3 text-muted-foreground">
+          <ul className="space-y-3 text-gray-300" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>
             <li>• You're still in the ideation phase</li>
             <li>• You're looking for validation, not execution</li>
             <li>• You're not ready to commit 12+ months</li>

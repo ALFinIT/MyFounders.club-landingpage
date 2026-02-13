@@ -53,10 +53,14 @@ export function FAQSection() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 drop-shadow-lg" style={{
+            textShadow: '0 4px 12px rgba(0, 0, 0, 0.9)'
+          }}>
             Questions?
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground font-light">
+          <p className="text-sm sm:text-base lg:text-lg text-gray-300 font-light drop-shadow-lg" style={{
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
+          }}>
             Get clarity before joining.
           </p>
         </motion.div>
@@ -76,12 +80,14 @@ export function FAQSection() {
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full p-4 sm:p-6 flex items-center justify-between hover:bg-white/5 transition-colors text-left"
               >
-                <span className="text-sm sm:text-base lg:text-lg font-medium text-white">{faq.question}</span>
+                <span className="text-sm sm:text-base lg:text-lg font-medium text-white drop-shadow-lg" style={{
+                  textShadow: '0 1px 4px rgba(0, 0, 0, 0.8)'
+                }}>{faq.question}</span>
                 <motion.div
                   animate={{ rotate: openIndex === index ? 180 : 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                  <ChevronDown className="w-5 h-5 text-gray-400" />
                 </motion.div>
               </button>
 
@@ -94,7 +100,9 @@ export function FAQSection() {
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden"
               >
-                <div className="px-6 pb-6 text-muted-foreground leading-relaxed font-light">
+                <div className="px-6 pb-6 text-gray-300 leading-relaxed font-light drop-shadow-lg" style={{
+                  textShadow: '0 1px 4px rgba(0, 0, 0, 0.8)'
+                }}>
                   {faq.answer}
                 </div>
               </motion.div>

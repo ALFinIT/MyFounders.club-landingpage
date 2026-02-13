@@ -111,11 +111,11 @@ export function WhatsAppCTASection() {
             <MessageCircle className="w-8 h-8 text-orange-400" />
           </motion.div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-4 text-white">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-4 text-white drop-shadow-lg" style={{ textShadow: '0 3px 10px rgba(0, 0, 0, 0.8)' }}>
             Join the Founders WhatsApp Circle
           </h2>
 
-          <p className="text-center text-muted-foreground mb-8 text-lg leading-relaxed">
+          <p className="text-center text-gray-300 mb-8 text-lg leading-relaxed" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
             Get real-time ecosystem updates, events, funding alerts, and curated opportunities directly in our private WhatsApp community.
           </p>
 
@@ -137,7 +137,7 @@ export function WhatsAppCTASection() {
                 transition={{ delay: 0.25 + index * 0.06 }}
               >
                 <Check className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-muted-foreground">{benefit}</span>
+                <span className="text-sm text-gray-300" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>{benefit}</span>
               </motion.div>
             ))}
           </motion.div>

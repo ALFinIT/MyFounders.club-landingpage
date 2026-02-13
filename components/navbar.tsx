@@ -79,9 +79,9 @@ export function Navbar() {
           {/* CTA Button / Auth Buttons - Fixed width to prevent layout shift */}
           <div className="hidden md:flex items-center gap-2 md:gap-3 flex-shrink-0">
             {user && !isLoading ? (
-              <div ref={dropdownRef}>
-                  <motion.button
-                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+               <div ref={dropdownRef} className="relative">
+      <motion.button
+                    onClick={() => setIsUserMenuOpen(prev => !prev)}
                     className="h-10 w-10 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg hover:shadow-orange-500/50 transition-all overflow-hidden border border-orange-400/30"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
@@ -95,6 +95,7 @@ export function Navbar() {
                       />
                     )}
                   </motion.button>
+                  
               </div>
             ) : (
               <Link
@@ -131,13 +132,12 @@ export function Navbar() {
       {/* User Dropdown - Rendered Outside Navbar */}
       {user && !isLoading && isUserMenuOpen && (
         <motion.div
-          ref={dropdownRef}
-         className="fixed top-[88px] left-1/2 -translate-x-1/2 md:left-auto md:right-[calc((100vw-768px)/2+24px)] w-72 max-w-[calc(100vw-2rem)] bg-black/80 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl p-6 z-[9999]"
-
-          initial={{ opacity: 0, scale: 0.8, y: -10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: -10 }}
-        >
+    ref={dropdownRef}
+    className="fixed top-[88px] left-1/2 -translate-x-1/2 md:left-auto md:right-[calc((100vw-768px)/2+24px)] w-72 max-w-[calc(100vw-2rem)] bg-black/80 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl p-6 z-[9999]"
+    initial={{ opacity: 0, scale: 0.8, y: -10 }}
+    animate={{ opacity: 1, scale: 1, y: 0 }}
+    exit={{ opacity: 0, scale: 0.8, y: -10 }}
+  >
           {/* User Profile Section */}
           <div className="text-center mb-4 pb-4 border-b border-white/20">
             <p className="text-white font-semibold text-lg">{user.name || 'User'}</p>

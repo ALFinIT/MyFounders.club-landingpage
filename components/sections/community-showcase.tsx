@@ -26,14 +26,14 @@ export function CommunityShowcase() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.8)' }}>
             Join{' '}
             <span className="text-orange-500">
               500+ Founders
             </span>
             {' '}in the Gulf Ecosystem
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          </h2> 
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
             Be part of a thriving community revolutionizing the startup landscape across the Middle East
           </p>
         </motion.div>

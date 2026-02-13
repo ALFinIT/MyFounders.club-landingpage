@@ -61,7 +61,7 @@ function Counter({ value, label, suffix }: StatCounter) {
         {displayValue}
         {suffix}
       </p>
-      <p className="text-muted-foreground text-xs sm:text-base font-light">{label}</p>
+      <p className="text-gray-400 text-xs sm:text-base font-light" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>{label}</p>
     </motion.div>
   )
 }
@@ -90,10 +90,10 @@ export function StatsSection() {
           whileInView="visible"
           viewport={scrollRevealConfig}
         >
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.9)' }}>
             By the Numbers
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-2xl mx-auto" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
             A growing ecosystem of innovators, investors, and opportunities.
           </p>
         </motion.div>
@@ -113,7 +113,7 @@ export function StatsSection() {
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
-          <p className="text-muted-foreground mb-6">
+          <p className="text-gray-300 mb-6" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
             Join thousands of builders in the Gulf startup ecosystem
           </p>
           {/* <motion.button

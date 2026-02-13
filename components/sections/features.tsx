@@ -58,10 +58,14 @@ export function FeaturesSection() {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-2xl sm:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 font-sans">
+          <h2 className="text-2xl sm:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 font-sans drop-shadow-lg" style={{
+            textShadow: '0 4px 12px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.8)'
+          }}>
             Everything You Need to Succeed
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
+          <p className="text-sm sm:text-base lg:text-lg text-white max-w-2xl mx-auto font-light drop-shadow-lg" style={{
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
+          }}>
             Comprehensive tools and community designed for the Gulf startup ecosystem.
           </p>
         </motion.div>
@@ -93,16 +97,20 @@ export function FeaturesSection() {
                 </div>
 
                 {/* Content - responsive padding and text */}
-                <div className="bg-black/60 p-4 sm:p-5 lg:p-6 rounded-b-xl sm:rounded-b-2xl flex-grow flex flex-col">
+                <div className="bg-black/80 p-4 sm:p-5 lg:p-6 rounded-b-xl sm:rounded-b-2xl flex-grow flex flex-col border-t border-white/10">
                   <motion.div
                     className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mb-3 sm:mb-4 bg-transparent flex-shrink-0"
                     whileHover={{ rotate: 0, scale: 1.02 }}
                   >
-                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500" />
                   </motion.div>
 
-                  <h3 className="text-base sm:text-lg lg:text-lg font-semibold mb-2 text-white">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm">{feature.description}</p>
+                  <h3 className="text-base sm:text-lg lg:text-lg font-semibold mb-2 text-white drop-shadow-lg" style={{
+                    textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)'
+                  }}>{feature.title}</h3>
+                  <p className="text-gray-300 leading-relaxed text-xs sm:text-sm drop-shadow-lg" style={{
+                    textShadow: '0 1px 4px rgba(0, 0, 0, 0.8)'
+                  }}>{feature.description}</p>
                 </div>
               </motion.div>
             )
