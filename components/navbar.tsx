@@ -132,7 +132,7 @@ export function Navbar() {
       {user && !isLoading && isUserMenuOpen && (
         <motion.div
           ref={dropdownRef}
-          className="fixed top-24 w-72 left-1/2 -translate-x-1/2 md:left-auto md:right-6 bg-black/80 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl p-6 z-[9999]"
+          className="fixed top-24 w-72 left-1/2 -translate-x-1/2  bg-black/80 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl p-6 z-[9999]"
           initial={{ opacity: 0, scale: 0.8, y: -10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: -10 }}
