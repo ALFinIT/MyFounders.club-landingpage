@@ -46,21 +46,21 @@ export function Navbar() {
 
   return (
     <>
-      {/* Floating Navbar */}
+      {/* Floating Navbar - Centered on screen middle */}
       <motion.nav
-        className="fixed top-6 z-[9999] left-1/2 -translate-x-1/2 px-4 w-[calc(100%-2rem)] sm:max-w-[500px]"
+        className="fixed top-6 z-[9999] left-1/2 -translate-x-1/2 px-4 w-full max-w-[700px]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div className="glass rounded-full px-6 py-3 flex items-center justify-between gap-6 w-full">
+        <div className="glass rounded-full px-4 sm:px-6 py-3 flex items-center justify-between gap-3 sm:gap-4 md:gap-5 w-full">
           {/* Logo (clicking navigates to hero) */}
           <a href="#hero" className="inline-block flex-shrink-0">
             <Logo />
           </a>
 
           {/* Desktop Menu - Horizontal Layout */}
-          <div className="hidden md:flex items-center gap-6 flex-shrink-0">
+          <div className="hidden md:flex items-center gap-3 lg:gap-4 flex-shrink-0">
             <a href="#features" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
               Features
             </a>
