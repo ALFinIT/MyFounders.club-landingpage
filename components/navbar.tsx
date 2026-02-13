@@ -48,7 +48,7 @@ export function Navbar() {
     <>
       {/* Floating Navbar */}
       <motion.nav
-        className="fixed top-6 z-[9999] max-w-2xl left-6 right-6 md:left-auto md:right-[450px]"
+        className="fixed top-6 z-[9999] left-1/2 -translate-x-1/2 max-w-2xl px-4 w-full md:w-auto"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -131,7 +131,7 @@ export function Navbar() {
       {user && !isLoading && isUserMenuOpen && (
         <motion.div
           ref={dropdownRef}
-          className="fixed top-24 w-72 right-6 md:right-[450px] bg-black/80 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl p-6 z-[9999]"
+          className="fixed top-24 w-72 left-1/2 -translate-x-1/2 md:left-auto md:right-6 bg-black/80 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl p-6 z-[9999]"
           initial={{ opacity: 0, scale: 0.8, y: -10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: -10 }}
@@ -200,10 +200,17 @@ export function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <motion.div
-          className="fixed top-24 left-4 right-4 z-40 glass rounded-2xl p-6 md:hidden"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
+          className="fixed inset-0 top-20 left-0 right-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={() => setIsOpen(false)}
         >
+          <motion.div
+            className="mx-4 mt-2 glass rounded-2xl p-6"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            onClick={(e) => e.stopPropagation()}
+          >
           <div className="flex flex-col gap-4">
             <a href="#features" className="text-muted-foreground hover:text-white transition-colors">
               Features
@@ -235,6 +242,7 @@ export function Navbar() {
               </Link>
             )}
           </div>
+          </motion.div>
         </motion.div>
       )}
     </>
