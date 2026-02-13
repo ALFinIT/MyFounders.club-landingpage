@@ -46,21 +46,21 @@ export function Navbar() {
 
   return (
     <>
-      {/* Floating Navbar - Centered on screen middle */}
+      {/* Floating Navbar - Truly Centered on Screen */}
       <motion.nav
-        className="fixed top-6 z-[9999] left-1/2 -translate-x-1/2 px-4 w-full max-w-[700px]"
+        className="fixed top-6 z-[9999] left-1/2 -translate-x-1/2 w-[min(calc(100vw-2rem),700px)]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div className="glass rounded-full px-4 sm:px-6 py-3 flex items-center justify-between gap-3 sm:gap-4 md:gap-5 w-full">
+        <div className="glass rounded-full px-4 sm:px-6 py-3 flex items-center justify-between gap-2 sm:gap-3 md:gap-4 lg:gap-5 w-full">
           {/* Logo (clicking navigates to hero) */}
           <a href="#hero" className="inline-block flex-shrink-0">
             <Logo />
           </a>
 
           {/* Desktop Menu - Horizontal Layout */}
-          <div className="hidden md:flex items-center gap-3 lg:gap-4 flex-shrink-0">
+          <div className="hidden md:flex items-center gap-2 md:gap-3 lg:gap-4 flex-shrink-0">
             <a href="#features" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
               Features
             </a>
@@ -76,7 +76,7 @@ export function Navbar() {
           </div>
 
           {/* CTA Button / Auth Buttons - Fixed width to prevent layout shift */}
-          <div className="hidden md:flex items-center gap-4 flex-shrink-0">
+          <div className="hidden md:flex items-center gap-2 md:gap-3 flex-shrink-0">
             {user && !isLoading ? (
               <div ref={dropdownRef}>
                   <motion.button
