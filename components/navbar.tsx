@@ -48,12 +48,13 @@ export function Navbar() {
     <>
       {/* Floating Navbar - Truly Centered on Screen */}
       <motion.nav
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-[9999] w-[92%] max-w-5xl"
+        className="fixed top-6 inset-x-0 z-[9999] flex justify-center px-4"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div className="glass rounded-full px-4 sm:px-6 py-3 flex items-center justify-between gap-2 sm:gap-3 md:gap-4 lg:gap-5 w-full">
+        <div className="glass rounded-full px-4 sm:px-6 py-3 w-full max-w-3xl flex items-center justify-between">
+
           {/* Logo (clicking navigates to hero) */}
           <a href="#hero" className="inline-block flex-shrink-0">
             <Logo />
