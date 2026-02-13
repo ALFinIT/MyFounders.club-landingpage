@@ -213,18 +213,38 @@ export function Navbar() {
             onClick={(e) => e.stopPropagation()}
           >
           <div className="flex flex-col gap-4">
-            <a href="#features" className="text-muted-foreground hover:text-white transition-colors">
-              Features
-            </a>
-            <a href="#pricing" className="text-muted-foreground hover:text-white transition-colors">
-              Pricing
-            </a>
-            <a href="/events" className="text-muted-foreground hover:text-white transition-colors">
-              Events
-            </a>
-            <a href="#community" className="text-muted-foreground hover:text-white transition-colors">
-              Community
-            </a>
+            <a
+  href="#features"
+  onClick={() => setIsOpen(false)}
+  className="text-muted-foreground hover:text-white transition-colors"
+>
+  Features
+</a>
+           
+            <a
+  href="#Pricing"
+  onClick={() => setIsOpen(false)}
+  className="text-muted-foreground hover:text-white transition-colors"
+>
+  Pricing
+</a>
+            
+<a
+  href="/events"
+  onClick={() => setIsOpen(false)}
+  className="text-muted-foreground hover:text-white transition-colors"
+>
+  Events
+</a>
+            
+            <a
+  href="#community"
+  onClick={() => setIsOpen(false)}
+  className="text-muted-foreground hover:text-white transition-colors"
+>
+   Community
+</a>
+
             {user ? (
               <>
                 <Link href="/dashboard" className="w-full block text-center px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold mt-2">
