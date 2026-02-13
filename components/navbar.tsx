@@ -48,7 +48,7 @@ export function Navbar() {
     <>
       {/* Floating Navbar - Truly Centered on Screen */}
       <motion.nav
-        className="fixed top-6 z-[9999] left-1/2 -translate-x-1/2 w-[min(calc(100vw-2rem),700px)]"
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-[9999] w-[92%] max-w-5xl"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
