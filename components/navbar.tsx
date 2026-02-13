@@ -200,13 +200,13 @@ export function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <motion.div
-          className="fixed inset-0 top-20 left-0 right-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 top-20 z-40 bg-black/50 backdrop-blur-sm md:hidden flex justify-center px-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           onClick={() => setIsOpen(false)}
         >
           <motion.div
-            className="mx-4 mt-2 glass rounded-2xl p-6"
+            className="mt-2 glass rounded-2xl p-6 w-full max-w-sm"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             onClick={(e) => e.stopPropagation()}
