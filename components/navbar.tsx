@@ -48,29 +48,29 @@ export function Navbar() {
     <>
       {/* Floating Navbar */}
       <motion.nav
-        className="fixed top-6 z-[9999] left-1/2 -translate-x-1/2 px-4 w-[calc(100%-2rem)]"
+        className="fixed top-6 z-[9999] left-1/2 -translate-x-1/2 px-4 w-full sm:w-auto sm:max-w-[450px]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div className="glass rounded-full px-4 sm:px-6 py-3 flex items-center justify-between gap-3 sm:gap-4 w-full">
+        <div className="glass rounded-full px-4 sm:px-6 py-3 flex items-center justify-between gap-2 sm:gap-3 md:gap-4 w-full">
           {/* Logo (clicking navigates to hero) */}
           <a href="#hero" className="inline-block flex-shrink-0">
             <Logo />
           </a>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-4 lg:gap-6 flex-wrap justify-center">
-            <a href="#features" className="text-xs lg:text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+          <div className="hidden md:flex items-center gap-3 lg:gap-4 flex-wrap justify-center">
+            <a href="#features" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap text-center">
               Features
             </a>
-            <a href="#pricing" className="text-xs lg:text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+            <a href="#pricing" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap text-center">
               Pricing
             </a>
-            <a href="/events" className="text-xs lg:text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+            <a href="/events" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap text-center">
               Events
             </a>
-            <a href="#community" className="text-xs lg:text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+            <a href="#community" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap text-center">
               Community
             </a>
           </div>
