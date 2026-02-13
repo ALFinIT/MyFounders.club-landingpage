@@ -22,6 +22,8 @@ export default function AuthPage() {
   const [isForgotPassword, setIsForgotPassword] = useState(false)
   const [forgotEmail, setForgotEmail] = useState('')
   const [forgotMessage, setForgotMessage] = useState('')
+  const [forgotLoading, setForgotLoading] = useState(false)
+  const [forgotError, setForgotError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -40,6 +42,38 @@ export default function AuthPage() {
       setError(err instanceof Error ? err.message : 'Authentication failed')
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setForgotError('')
+    setForgotMessage('')
+    setForgotLoading(true)
+
+    try {
+      const res = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: forgotEmail }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send reset email')
+      }
+
+      setForgotMessage('✓ Password reset link sent to your email. Please check your inbox.')
+      setForgotEmail('')
+      setTimeout(() => {
+        setIsForgotPassword(false)
+        setForgotMessage('')
+      }, 4000)
+    } catch (err) {
+      setForgotError(err instanceof Error ? err.message : 'Failed to send reset email')
+    } finally {
+      setForgotLoading(false)
     }
   }
 
@@ -66,28 +100,29 @@ export default function AuthPage() {
           </motion.div>
           <h1 className="text-5xl font-bold text-white mb-6">My Founders Club</h1>
           <p className="text-xl text-white/90 mb-8">Build Locally. Champion Regionally. Scale Globally.</p>
-          <p className="text-lg text-white/75">Join 500+ founders in the Gulf startup ecosystem</p>
 
-          {/* Stats */}
+          {/* Stats Below Text */}
           <motion.div
-            className="mt-12 grid grid-cols-3 gap-8"
+            className="mt-8 grid grid-cols-3 gap-8 bg-white/5 rounded-2xl p-8 border border-white/10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
             <div>
-              <p className="text-3xl font-bold text-white">500+</p>
+              <p className="text-3xl font-bold text-orange-400">500+</p>
               <p className="text-sm text-white/75">Founders</p>
             </div>
             <div>
-              <p className="text-3xl font-bold text-white">50+</p>
+              <p className="text-3xl font-bold text-orange-400">50+</p>
               <p className="text-sm text-white/75">Investors</p>
             </div>
             <div>
-              <p className="text-3xl font-bold text-white">$100M+</p>
+              <p className="text-3xl font-bold text-orange-400">$100M+</p>
               <p className="text-sm text-white/75">Funding</p>
             </div>
           </motion.div>
+
+          <p className="text-lg text-white/75 mt-8">Join 500+ founders in the Gulf startup ecosystem</p>
         </div>
       </motion.div>
 
@@ -252,11 +287,7 @@ export default function AuthPage() {
           {isForgotPassword && !isSignup && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-8 pt-8 border-t border-white/20">
               <h3 className="text-xl font-bold text-white mb-4">Reset Password</h3>
-              <form onSubmit={(e) => {
-                e.preventDefault()
-                setForgotMessage('Password reset link sent to your email. Please check your inbox.')
-                setTimeout(() => setIsForgotPassword(false), 3000)
-              }} className="space-y-4">
+              <form onSubmit={handleForgotPassword} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-white mb-2">Email Address</label>
                   <input
@@ -265,16 +296,29 @@ export default function AuthPage() {
                     onChange={(e) => setForgotEmail(e.target.value)}
                     placeholder="your@email.com"
                     required
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500 transition-colors"
+                    disabled={forgotLoading}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
                   />
                 </div>
+
+                {forgotError && (
+                  <motion.div
+                    className="bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded-lg"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    {forgotError}
+                  </motion.div>
+                )}
+
                 <motion.button
                   type="submit"
-                  className="w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-orange-500/30 transition-all flex items-center justify-center gap-2"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={forgotLoading}
+                  className="w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-orange-500/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                  whileHover={{ scale: forgotLoading ? 1 : 1.02 }}
+                  whileTap={{ scale: forgotLoading ? 1 : 0.98 }}
                 >
-                  Send Reset Link
+                  {forgotLoading ? 'Sending...' : 'Send Reset Link'}
                 </motion.button>
               </form>
               {forgotMessage && (
@@ -282,6 +326,17 @@ export default function AuthPage() {
                   {forgotMessage}
                 </motion.p>
               )}
+              <button
+                type="button"
+                onClick={() => {
+                  setIsForgotPassword(false)
+                  setForgotMessage('')
+                  setForgotError('')
+                }}
+                className="w-full mt-4 px-4 py-2 text-white/70 hover:text-white transition-colors text-sm"
+              >
+                Back to Login
+              </button>
             </motion.div>
           )}
         </div>

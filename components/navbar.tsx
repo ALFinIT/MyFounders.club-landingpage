@@ -14,6 +14,7 @@ export function Navbar() {
   const [isLoading, setIsLoading] = useState(true)
   const { user, logout } = useAuth()
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   // Load user image from localStorage
   useEffect(() => {
@@ -33,7 +34,12 @@ export function Navbar() {
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        buttonRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
         setIsUserMenuOpen(false)
       }
     }
@@ -79,8 +85,9 @@ export function Navbar() {
           {/* CTA Button / Auth Buttons - Fixed width to prevent layout shift */}
           <div className="hidden md:flex items-center gap-2 md:gap-3 flex-shrink-0">
             {user && !isLoading ? (
-               <div ref={dropdownRef} className="relative">
+               <div className="relative">
       <motion.button
+                    ref={buttonRef}
                     onClick={() => setIsUserMenuOpen(prev => !prev)}
                     className="h-10 w-10 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg hover:shadow-orange-500/50 transition-all overflow-hidden border border-orange-400/30"
                     whileHover={{ scale: 1.1 }}
