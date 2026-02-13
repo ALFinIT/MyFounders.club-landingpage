@@ -12,9 +12,30 @@ const spaceMono = Space_Mono({ subsets: ['latin'], weight: ['400', '700'], varia
 const montserrat = Montserrat({ subsets: ['latin'], variable: '--font-montserrat' })
 
 export const metadata: Metadata = {
-  title: 'My Founders Club - Build Locally. Champion Regionally. Scale Globally.',
-  description: 'Platform connecting founders, capital, and opportunity across the Gulf startup ecosystem.',
+  title: 'MY FOUNDERS CLUB',
+  description:
+    "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA and beyond.",
   generator: 'vite',
+  openGraph: {
+    title: 'MY FOUNDERS CLUB',
+    description:
+      "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA and beyond.",
+    images: [
+      {
+        url: '/App Icon Orange.svg',
+        width: 800,
+        height: 600,
+        alt: 'MY FOUNDERS CLUB Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'MY FOUNDERS CLUB',
+    description:
+      "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA and beyond.",
+    images: ['/App Icon Orange.svg'],
+  },
 }
 
 export const viewport: Viewport = {
