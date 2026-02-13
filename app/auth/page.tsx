@@ -92,14 +92,15 @@ export default function AuthPage() {
 
         <div className="relative z-10 text-center">
           <motion.div
-            className="mb-8"
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 4, repeat: Infinity }}
+            className="mb-8 flex justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
           >
             <Logo />
           </motion.div>
-          <h1 className="text-5xl font-bold text-white mb-6">My Founders Club</h1>
-          <p className="text-xl text-white/90 mb-8">Build Locally. Champion Regionally. Scale Globally.</p>
+          <h1 className="text-5xl font-bold text-white mb-6 drop-shadow-2xl" style={{ textShadow: '0 4px 16px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.8)' }}>My Founders Club</h1>
+          <p className="text-xl text-gray-200 mb-8 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)' }}>Build Locally. Champion Regionally. Scale Globally.</p>
 
           {/* Stats Below Text */}
           <motion.div
@@ -141,10 +142,10 @@ export default function AuthPage() {
 
           {/* Form */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-            <h2 className="text-4xl font-bold text-white mb-2">
+            <h2 className="text-4xl font-bold text-white mb-2 drop-shadow-2xl" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.8)' }}>
               {isSignup ? 'Create Account' : 'Welcome Back'}
             </h2>
-            <p className="text-muted-foreground mb-8">
+            <p className="text-gray-300 mb-8 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)' }}>
               {isSignup ? 'Join the My Founders Club community' : 'Sign in to your account'}
             </p>
 
@@ -161,32 +162,32 @@ export default function AuthPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {isSignup && (
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2">Full Name</label>
+                  <label className="block text-sm font-medium text-gray-200 mb-2 drop-shadow-sm" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.8)' }}>Full Name</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="John Doe"
                     required
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500 transition-colors"
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-colors"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-sm font-medium text-white mb-2">Email</label>
+                <label className="block text-sm font-medium text-gray-200 mb-2 drop-shadow-sm" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.8)' }}>Email</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
                   required
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500 transition-colors"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white mb-2">Password</label>
+                <label className="block text-sm font-medium text-gray-200 mb-2 drop-shadow-sm" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.8)' }}>Password</label>
                 <div className="relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
@@ -213,7 +214,7 @@ export default function AuthPage() {
 
               {isSignup && (
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2">Confirm Password</label>
+                  <label className="block text-sm font-medium text-gray-200 mb-2 drop-shadow-sm" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.8)' }}>Confirm Password</label>
                   <div className="relative">
                     <input
                       type={showConfirmPassword ? 'text' : 'password'}
@@ -221,7 +222,7 @@ export default function AuthPage() {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="••••••••"
                       required
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500 transition-colors pr-12"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-colors pr-12"
                     />
                     <button
                       type="button"
@@ -259,7 +260,7 @@ export default function AuthPage() {
 
             {/* Toggle Auth Mode */}
             <div className="mt-6 text-center space-y-3">
-              <p className="text-muted-foreground">
+              <p className="text-gray-300">
                 {isSignup ? 'Already have an account?' : "Don't have an account?"}{' '}
                 <button
                   onClick={() => {
@@ -272,7 +273,7 @@ export default function AuthPage() {
                 </button>
               </p>
               {!isSignup && (
-                <p className="text-sm">
+                <p className="text-sm text-gray-400">
                   <button
                     type="button"
                     onClick={() => setIsForgotPassword(!isForgotPassword)}
@@ -286,10 +287,10 @@ export default function AuthPage() {
           </motion.div>
           {isForgotPassword && !isSignup && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-8 pt-8 border-t border-white/20">
-              <h3 className="text-xl font-bold text-white mb-4">Reset Password</h3>
+              <h3 className="text-xl font-bold text-white mb-4 drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.9)' }}>Reset Password</h3>
               <form onSubmit={handleForgotPassword} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2">Email Address</label>
+                  <label className="block text-sm font-medium text-gray-200 mb-2 drop-shadow-sm" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.8)' }}>Email Address</label>
                   <input
                     type="email"
                     value={forgotEmail}
@@ -297,7 +298,7 @@ export default function AuthPage() {
                     placeholder="your@email.com"
                     required
                     disabled={forgotLoading}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
                   />
                 </div>
 

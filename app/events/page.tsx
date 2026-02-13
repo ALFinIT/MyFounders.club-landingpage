@@ -84,10 +84,10 @@ export default function EventsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-4">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-4 drop-shadow-2xl" style={{ textShadow: '0 4px 16px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.8)' }}>
             My Founders Club Events
           </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-4">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-4 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)' }}>
               Join us for exclusive networking events, pitch competitions, and masterclasses. Connect with the Gulf startup ecosystem.
             </p>
 
@@ -110,8 +110,8 @@ export default function EventsPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute left-6 bottom-6 text-white">
-                <h3 className="text-2xl font-bold">View All Events on Luma</h3>
-                <p className="text-sm text-white/80">Real-time event listings, RSVP and more on our Luma community.</p>
+                <h3 className="text-2xl font-bold drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.9)' }}>View All Events on Luma</h3>
+                <p className="text-sm text-gray-300 drop-shadow-lg" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.9)' }}>Real-time event listings, RSVP and more on our Luma community.</p>
               </div>
             </div>
           </a>
@@ -138,9 +138,9 @@ export default function EventsPage() {
                       />
                   </div>
                   <div className="p-6 w-full md:w-1/2 flex flex-col justify-center">
-                    <h4 className="text-xl font-bold text-white mb-2">{ev.name}</h4>
-                    <p className="text-sm text-muted-foreground mb-4">{ev.description}</p>
-                    <div className="text-xs text-white/80">{ev.date}</div>
+                    <h4 className="text-xl font-bold text-white mb-2 drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.9)' }}>{ev.name}</h4>
+                    <p className="text-sm text-gray-300 mb-4 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)' }}>{ev.description}</p>
+                    <div className="text-xs text-gray-400 drop-shadow-lg" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)' }}>{ev.date}</div>
                   </div>
                 </div>
               </a>

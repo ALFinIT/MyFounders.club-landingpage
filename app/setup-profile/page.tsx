@@ -104,7 +104,7 @@ export default function SetupProfilePage() {
           <div className="flex justify-center mb-6">
             <Logo />
           </div>
-          <h1 className="text-4xl font-light text-gray-200 mb-8">Welcome to My Founders Club</h1>
+          <h1 className="text-4xl font-light text-gray-100 mb-8 drop-shadow-2xl" style={{ textShadow: '0 4px 16px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.8)' }}>Welcome to My Founders Club</h1>
         </motion.div>
 
         {/* Quick Start Message */}
@@ -118,7 +118,7 @@ export default function SetupProfilePage() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
         >
-          <p className="text-gray-300 mb-6">You're all set! Go to your dashboard to manage your account and connect with the community.</p>
+          <p className="text-gray-200 mb-6 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)' }}>You're all set! Go to your dashboard to manage your account and connect with the community.</p>
           <motion.a
             href="/dashboard"
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-orange-500/30 transition-all"

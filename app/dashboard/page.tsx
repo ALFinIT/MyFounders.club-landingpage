@@ -138,10 +138,10 @@ export default function DashboardPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-3 break-words">
+                <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-3 break-words drop-shadow-2xl" style={{ textShadow: '0 4px 16px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.8)' }}>
                   Welcome, <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">{user.name}</span>
                 </h1>
-                <p className="text-orange-300/80 text-sm sm:text-base md:text-lg font-light">
+                <p className="text-gray-300 text-sm sm:text-base md:text-lg font-light drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)' }}>
                   You're now part of the My Founders Club community
                 </p>
               </motion.div>
@@ -161,7 +161,7 @@ export default function DashboardPage() {
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative p-4 sm:p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/[0.02]">
                   <div className="flex items-center justify-between mb-6 sm:mb-8 flex-wrap gap-3">
-                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white flex items-center gap-2 sm:gap-3">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white flex items-center gap-2 sm:gap-3 drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.9)' }}>
                       <div className="p-2 sm:p-3 rounded-lg bg-orange-500/20 border border-orange-500/50">
                         <User size={18} className="sm:size-5" />
                       </div>
@@ -184,8 +184,8 @@ export default function DashboardPage() {
                       className="group/item p-3 sm:p-4 rounded-xl bg-white/5 border border-white/10 hover:border-orange-500/50 transition-all"
                       whileHover={{ x: 4 }}
                     >
-                      <p className="text-white/50 text-xs font-medium mb-2 uppercase tracking-wide">Full Name</p>
-                      <p className="text-lg sm:text-xl md:text-2xl font-semibold text-white break-words">{user.name}</p>
+                      <p className="text-gray-400 text-xs font-medium mb-2 uppercase tracking-wide drop-shadow-sm">Full Name</p>
+                      <p className="text-lg sm:text-xl md:text-2xl font-semibold text-white break-words drop-shadow-lg" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)' }}>{user.name}</p>
                     </motion.div>
 
                     {/* Email */}
@@ -195,9 +195,9 @@ export default function DashboardPage() {
                     >
                       <div className="flex items-center gap-2 mb-2">
                         <Mail size={14} className="sm:size-4 text-orange-400" />
-                        <p className="text-white/50 text-xs font-medium uppercase tracking-wide">Email</p>
+                        <p className="text-gray-400 text-xs font-medium uppercase tracking-wide drop-shadow-sm">Email</p>
                       </div>
-                      <p className="text-white font-medium text-xs sm:text-sm md:text-base break-all">{user.email}</p>
+                      <p className="text-white font-medium text-xs sm:text-sm md:text-base break-all drop-shadow-lg" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)' }}>{user.email}</p>
                     </motion.div>
 
                     {/* User ID */}
@@ -205,8 +205,8 @@ export default function DashboardPage() {
                       className="group/item p-3 sm:p-4 rounded-xl bg-white/5 border border-white/10 hover:border-orange-500/50 transition-all"
                       whileHover={{ x: 4 }}
                     >
-                      <p className="text-white/50 text-xs font-medium mb-2 uppercase tracking-wide">User ID</p>
-                      <p className="text-xs font-mono text-orange-400 break-all">{user.id}</p>
+                      <p className="text-gray-400 text-xs font-medium mb-2 uppercase tracking-wide drop-shadow-sm">User ID</p>
+                      <p className="text-xs font-mono text-orange-400 break-all drop-shadow-lg" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)' }}>{user.id}</p>
                     </motion.div>
                   </div>
                 </div>
@@ -224,27 +224,27 @@ export default function DashboardPage() {
               <div className="group relative rounded-2xl overflow-hidden border border-orange-500/30 backdrop-blur-xl p-6 bg-gradient-to-br from-white/5 to-white/[0.02] h-full flex flex-col justify-between">
                 <div className="space-y-4">
                   <div className="p-4 rounded-lg bg-gradient-to-br from-orange-500/30 to-orange-600/20 border border-orange-500/50">
-                    <p className="text-orange-300/70 text-xs md:text-sm font-medium uppercase tracking-wide">Account Status</p>
+                    <p className="text-orange-300/70 text-xs md:text-sm font-medium uppercase tracking-wide drop-shadow-sm">Account Status</p>
                     <div className="flex items-center gap-2 mt-2">
                       <motion.div
                         className="w-3 h-3 rounded-full bg-green-400"
                         animate={{ scale: [1, 1.2, 1] }}
                         transition={{ duration: 2, repeat: Infinity }}
                       />
-                      <p className="text-lg md:text-xl font-bold text-orange-400">Active</p>
+                      <p className="text-lg md:text-xl font-bold text-orange-400 drop-shadow-lg" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)' }}>Active</p>
                     </div>
                   </div>
 
                   <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:border-orange-500/50 transition-all">
-                    <p className="text-white/50 text-xs md:text-sm font-medium uppercase tracking-wide">Member Since</p>
-                    <p className="text-lg md:text-xl font-semibold text-white mt-2">2026</p>
+                    <p className="text-gray-400 text-xs md:text-sm font-medium uppercase tracking-wide drop-shadow-sm">Member Since</p>
+                    <p className="text-lg md:text-xl font-semibold text-white mt-2 drop-shadow-lg" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)' }}>2026</p>
                   </div>
 
                   <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:border-orange-500/50 transition-all flex items-center gap-2">
                     <Zap size={18} className="text-orange-400" />
                     <div>
-                      <p className="text-white/50 text-xs md:text-sm font-medium uppercase tracking-wide">Status</p>
-                      <p className="text-white font-semibold">Premium</p>
+                      <p className="text-gray-400 text-xs md:text-sm font-medium uppercase tracking-wide drop-shadow-sm">Status</p>
+                      <p className="text-white font-semibold drop-shadow-lg" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)' }}>Premium</p>
                     </div>
                   </div>
                 </div>

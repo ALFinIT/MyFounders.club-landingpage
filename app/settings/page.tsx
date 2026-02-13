@@ -187,10 +187,10 @@ export default function SettingsPage() {
               />
             </div>
 
-            <h1 className="text-3xl font-bold text-white mb-2">{formData.name || 'User'}</h1>
-            <p className="text-gray-400">{formData.email}</p>
+            <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-2xl" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.8)' }}>{formData.name || 'User'}</h1>
+            <p className="text-gray-300 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)' }}>{formData.email}</p>
             {userProfile && (
-              <p className="text-orange-400 text-sm font-semibold mt-2">
+              <p className="text-orange-400 text-sm font-semibold mt-2 drop-shadow-lg" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)' }}>
                 {userProfile.type === 'founder' ? 'Founder' : 'Investor'}
               </p>
             )}
