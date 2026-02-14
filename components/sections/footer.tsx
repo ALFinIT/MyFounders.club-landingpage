@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import HighQualityImage from '@/components/HighQualityImage'
 import { animationVariants, scrollRevealConfig } from '@/lib/animation-variants'
 import { useState } from 'react'
+import Link from 'next/link'
 
 function NewsletterForm({ compact = false }: { compact?: boolean }) {
   const [email, setEmail] = useState('')
@@ -114,9 +115,18 @@ function NewsletterForm({ compact = false }: { compact?: boolean }) {
 }
 
 const allLinks = [
-  { label: 'Platform', links: ['Explore Network', 'Opportunities'] },
-  { label: 'Privacy', links: ['Privacy Policy', 'Data Usage'] },
-  { label: 'About', links: ['About Us'] },
+  { label: 'Platform', links: [
+    { text: 'Explore Network', href: '/platform/explore-network' },
+    { text: 'Opportunities', href: '/platform/opportunities' },
+  ] },
+  { label: 'Privacy', links: [
+    { text: 'Privacy Policy', href: '/privacy/privacy-policy' },
+    { text: 'Data Usage', href: '/privacy/data-usage' },
+    { text: 'Terms and Conditions', href: '/terms' },
+  ] },
+  { label: 'About', links: [
+    { text: 'About Us', href: '/about/about-us' },
+  ] },
   { label: 'Social', links: [
     { text: 'LinkedIn', url: 'https://www.linkedin.com/company/myfoundersclub-global' },
     { text: 'Instagram', url: 'https://www.instagram.com/myfoundersclub.global/' },
@@ -186,19 +196,15 @@ export function Footer() {
               <div key={i} className="sm:col-span-1 lg:col-span-1">
                 <h3 className="text-xs uppercase tracking-widest text-white/80 font-semibold mb-3 drop-shadow-lg" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>{sec.label}</h3>
                 <ul className="space-y-2">
-                  {Array.isArray(sec.links[0]) ? (
-                    sec.links.map((l: any, idx: number) => (
-                      <li key={idx}>
+                  {sec.links.map((l: any, idx: number) => (
+                    <li key={idx}>
+                      {l.url ? (
                         <a href={l.url} target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm text-white/70 hover:text-orange-400 transition-colors font-light" style={{ textShadow: '0 1px 3px rgba(0, 0, 0, 0.6)' }}>{l.text}</a>
-                      </li>
-                    ))
-                  ) : (
-                    sec.links.map((l: any, idx: number) => (
-                      <li key={idx}>
-                        <a href="#" className="text-xs sm:text-sm text-white/70 hover:text-orange-400 transition-colors font-light" style={{ textShadow: '0 1px 3px rgba(0, 0, 0, 0.6)' }}>{typeof l === 'string' ? l : l.text}</a>
-                      </li>
-                    ))
-                  )}
+                      ) : (
+                        <Link href={l.href} onMouseEnter={() => typeof window !== 'undefined' && (window as any).__next_prefetch && (window as any).__next_prefetch(l.href)} className="text-xs sm:text-sm text-white/70 hover:text-orange-400 transition-colors font-light" style={{ textShadow: '0 1px 3px rgba(0, 0, 0, 0.6)' }}>{l.text}</Link>
+                      )}
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))}

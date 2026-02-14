@@ -14,6 +14,7 @@ export function ApplicationFormSection() {
     proofOfWork: '',
     commitmentAmount: 'AED 500',
     agreeCommitment: false,
+    agreeTerms: false,
   })
 
   const [submitted, setSubmitted] = useState(false)
@@ -38,20 +39,37 @@ export function ApplicationFormSection() {
       return
     }
 
+    if (!formData.agreeTerms) {
+      setStatusMessage('Please accept the Terms and Conditions')
+      setStatusType('error')
+      return
+    }
+    // Optimistic UI: show immediate feedback to reduce perceived latency
+    setSubmitted(true)
     setIsLoading(true)
-    setStatusMessage('')
+    setStatusMessage('Submitting...')
+    setStatusType('info')
 
+    // Use fetch with keepalive where possible to avoid blocking on navigation
     try {
       const res = await fetch('/api/applications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
+        keepalive: true,
       })
 
-      const data = await res.json()
+      // Try to parse JSON only if response has content-type
+      let data: any = {}
+      try {
+        data = await res.json()
+      } catch (e) {
+        // ignore parse errors
+      }
 
       if (!res.ok) {
-        // Handle duplicate or error
+        // rollback optimistic state on error
+        setSubmitted(false)
         if (res.status === 409) {
           setStatusMessage(data.error || 'Application already submitted with this email or phone')
           setStatusType('error')
@@ -63,11 +81,11 @@ export function ApplicationFormSection() {
         return
       }
 
-      setSubmitted(true)
-      setStatusMessage('✓ Application submitted successfully! Redirecting...')
+      // Success: keep submitted state and show success message
+      setStatusMessage('✓ Application submitted successfully!')
       setStatusType('success')
 
-      // Reset form
+      // Reset form fields (without removing submitted indicator immediately)
       setFormData({
         fullName: '',
         companyName: '',
@@ -77,16 +95,18 @@ export function ApplicationFormSection() {
         proofOfWork: '',
         commitmentAmount: 'AED 500',
         agreeCommitment: false,
+        agreeTerms: false,
       })
 
-      // Redirect after 2 seconds
+      // Clear messages after a short moment but keep 'submitted' briefly to show confirmation
       setTimeout(() => {
         setSubmitted(false)
         setStatusMessage('')
-      }, 3000)
+      }, 2500)
     } catch (err) {
       console.error('Application submit error:', err)
-      setStatusMessage('Error submitting application. Please try again.')
+      setSubmitted(false)
+      setStatusMessage('Network error submitting application. Please try again.')
       setStatusType('error')
     } finally {
       setIsLoading(false)
@@ -245,6 +265,22 @@ export function ApplicationFormSection() {
             />
             <span className="text-sm text-muted-foreground font-light">
               I understand and agree to the AED 500 commitment fee (refundable if not accepted).
+            </span>
+          </label>
+
+          {/* Terms and Conditions checkbox */}
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              name="agreeTerms"
+              checked={formData.agreeTerms}
+              onChange={handleChange}
+              required
+              disabled={isLoading}
+              className="w-5 h-5 mt-1 rounded border-white/20 bg-white/10 accent-orange-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            />
+            <span className="text-sm text-muted-foreground font-light">
+              I accept the <a href="/MyFoundersClub_Terms_and_Conditions_v1.0.pdf" target="_blank" rel="noopener noreferrer" className="underline text-white">Terms and Conditions</a>.
             </span>
           </label>
 

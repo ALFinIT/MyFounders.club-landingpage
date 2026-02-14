@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Menu, X, Settings, LogOut, Layout } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Logo } from './logo'
 import { useAuth } from '@/context/auth-context'
 
@@ -13,6 +14,7 @@ export function Navbar() {
   const [userImage, setUserImage] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const { user, logout } = useAuth()
+  const router = useRouter()
   const dropdownRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
@@ -50,6 +52,42 @@ export function Navbar() {
     }
   }, [isUserMenuOpen])
 
+  const handleNavClick = (e: any) => {
+    const href = e.currentTarget?.getAttribute('href') || ''
+    if (!href) return
+
+    // In-page hash links -> smooth scroll
+    if (href.startsWith('#')) {
+      e.preventDefault()
+      const el = document.querySelector(href)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      } else {
+        // fallback: update hash
+        window.location.hash = href
+      }
+      setIsOpen(false)
+      return
+    }
+
+    // Internal page links -> navigate then smooth scroll to top
+    if (href.startsWith('/')) {
+      e.preventDefault()
+      setIsOpen(false)
+      router.push(href)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
+  const prefetchRoute = (href?: string | null) => {
+    if (!href) return
+    try {
+      if (href.startsWith('/')) router.prefetch(href)
+    } catch (e) {
+      // ignore
+    }
+  }
+
   return (
     <>
       {/* Floating Navbar - Truly Centered on Screen */}
@@ -62,22 +100,22 @@ export function Navbar() {
         <div className="glass rounded-full px-4 sm:px-6 py-3 w-full max-w-3xl flex items-center justify-between">
 
           {/* Logo (clicking navigates to hero) */}
-          <a href="#hero" className="inline-block flex-shrink-0">
+          <a href="#hero" onClick={handleNavClick} onMouseEnter={(e) => prefetchRoute(e.currentTarget.getAttribute('href'))} onTouchStart={(e) => prefetchRoute((e.currentTarget as any).getAttribute('href'))} className="inline-block flex-shrink-0">
             <Logo />
           </a>
 
           {/* Desktop Menu - Horizontal Layout */}
           <div className="hidden md:flex items-center gap-2 md:gap-3 lg:gap-4 flex-shrink-0">
-            <a href="#features" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+            <a href="#features" onClick={handleNavClick} onMouseEnter={(e) => prefetchRoute(e.currentTarget.getAttribute('href'))} onTouchStart={(e) => prefetchRoute((e.currentTarget as any).getAttribute('href'))} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
               Features
             </a>
-            <a href="#pricing" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+            <a href="#pricing" onClick={handleNavClick} onMouseEnter={(e) => prefetchRoute(e.currentTarget.getAttribute('href'))} onTouchStart={(e) => prefetchRoute((e.currentTarget as any).getAttribute('href'))} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
               Pricing
             </a>
-            <a href="/events" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+            <a href="/events" onClick={handleNavClick} onMouseEnter={(e) => prefetchRoute(e.currentTarget.getAttribute('href'))} onTouchStart={(e) => prefetchRoute((e.currentTarget as any).getAttribute('href'))} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
               Events
             </a>
-            <a href="#community" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+            <a href="#community" onClick={handleNavClick} onMouseEnter={(e) => prefetchRoute(e.currentTarget.getAttribute('href'))} onTouchStart={(e) => prefetchRoute((e.currentTarget as any).getAttribute('href'))} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
               Community
             </a>
           </div>
@@ -221,16 +259,16 @@ export function Navbar() {
             onClick={(e) => e.stopPropagation()}
           >
           <div className="flex flex-col gap-3">
-            <a href="#features" onClick={() => setIsOpen(false)} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+            <a href="#features" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
               Features
             </a>
-            <a href="#pricing" onClick={() => setIsOpen(false)} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+            <a href="#pricing" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
               Pricing
             </a>
-            <a href="/events" onClick={() => setIsOpen(false)} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+            <a href="/events" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
               Events
             </a>
-            <a href="#community" onClick={() => setIsOpen(false)} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+            <a href="#community" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
               Community
             </a>
 

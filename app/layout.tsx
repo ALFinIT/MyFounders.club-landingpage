@@ -22,7 +22,7 @@ export const metadata: Metadata = {
       "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA and beyond.",
     images: [
       {
-        url: '/App Icon Orange.svg',
+        url: '/Main Logo Icon.svg',
         width: 800,
         height: 600,
         alt: 'MY FOUNDERS CLUB Logo',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: 'MY FOUNDERS CLUB',
     description:
       "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA and beyond.",
-    images: ['/App Icon Orange.svg'],
+    images: ['/Main Logo Icon.svg'],
   },
 }
 
