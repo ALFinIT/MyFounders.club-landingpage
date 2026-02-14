@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import HighQualityImage from '@/components/HighQualityImage'
 import Link from 'next/link'
+import SocialHomeButtons from '@/components/social-home-buttons'
 
 export default function TermsPage() {
   return (
@@ -312,6 +313,8 @@ export default function TermsPage() {
           <p className="text-white/70 text-xs mt-6">Copyright 2026 KH Group 7 FZE. All rights reserved. MyFoundersClub is a registered trading name.</p>
         </div>
       </motion.div>
+
+      <SocialHomeButtons />
     </main>
   )
 }
