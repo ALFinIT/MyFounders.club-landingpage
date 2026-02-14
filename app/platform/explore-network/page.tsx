@@ -1,4 +1,5 @@
 import React from 'react'
+import SocialHomeButtons from '@/components/social-home-buttons'
 
 export default function ExploreNetworkPage() {
   return (
@@ -21,6 +22,7 @@ export default function ExploreNetworkPage() {
           </section>
         </div>
       </div>
+      <SocialHomeButtons />
     </main>
   )
 }

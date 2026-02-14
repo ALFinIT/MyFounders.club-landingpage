@@ -1,4 +1,5 @@
 import React from 'react'
+import SocialHomeButtons from '@/components/social-home-buttons'
 
 export default function PrivacyPolicyPage() {
   return (
@@ -22,6 +23,7 @@ export default function PrivacyPolicyPage() {
           </section>
         </div>
       </div>
+      <SocialHomeButtons />
     </main>
   )
 }

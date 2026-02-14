@@ -280,7 +280,7 @@ export function ApplicationFormSection() {
               className="w-5 h-5 mt-1 rounded border-white/20 bg-white/10 accent-orange-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             />
             <span className="text-sm text-muted-foreground font-light">
-              I accept the <a href="/MyFoundersClub_Terms_and_Conditions_v1.0.pdf" target="_blank" rel="noopener noreferrer" className="underline text-white">Terms and Conditions</a>.
+              I accept the <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-white hover:text-orange-400 transition-colors">Terms and Conditions</a>.
             </span>
           </label>
 

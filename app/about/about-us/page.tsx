@@ -1,4 +1,5 @@
 import React from 'react'
+import SocialHomeButtons from '@/components/social-home-buttons'
 
 export default function AboutUsPage() {
   return (
@@ -18,6 +19,7 @@ export default function AboutUsPage() {
           </section>
         </div>
       </div>
+      <SocialHomeButtons />
     </main>
   )
-}
+
