@@ -125,7 +125,7 @@ export function ApplicationFormSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.8)' }}>
-            Secure Your Spot.
+            Secure Your Spot
           </h2>
           <p className="text-base sm:text-lg text-gray-300 font-light" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
             The shortlist closes when it's full.
@@ -280,7 +280,7 @@ export function ApplicationFormSection() {
               className="w-5 h-5 mt-1 rounded border-white/20 bg-white/10 accent-orange-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             />
             <span className="text-sm text-muted-foreground font-light">
-              I accept the <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-white hover:text-orange-400 transition-colors">Terms and Conditions</a>.
+              I accept the <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-white hover:text-orange-400 transition-colors no-underline">Terms and Conditions</a>.
             </span>
           </label>
 
