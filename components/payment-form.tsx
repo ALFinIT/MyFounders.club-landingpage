@@ -369,11 +369,11 @@ export function PaymentForm({
             className="text-gray-300 text-sm cursor-pointer"
           >
             I agree to the{' '}
-            <a href="/terms" className="text-orange-400 hover:text-orange-300">
+            <a href="/terms" className="text-orange-400 hover:text-orange-300 no-underline">
               Terms and Conditions
             </a>
             {' '}and{' '}
-            <a href="/privacy/privacy-policy" className="text-orange-400 hover:text-orange-300">
+            <a href="/privacy/privacy-policy" className="text-orange-400 hover:text-orange-300 no-underline">
               Privacy Policy
             </a>
           </label>

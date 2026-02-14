@@ -36,7 +36,7 @@ export default function PaymentFailedPage({
       },
       'network_error': {
         title: 'Network Error',
-        description: 'We're having trouble connecting to the payment service. Please check your connection and try again.'
+        description: 'We are having trouble connecting to the payment service. Please check your connection and try again.'
       }
     };
 
