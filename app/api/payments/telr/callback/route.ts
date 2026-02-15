@@ -168,6 +168,7 @@ async function handleCallback(req: NextRequest) {
     if (paymentStatus === 'completed') {
       try {
         await sendConfirmationEmail(
+          transporter,
           subscription.email,
           subscription.full_name,
           subscription.tier,
@@ -211,6 +212,7 @@ async function handleCallback(req: NextRequest) {
  * Send confirmation email after successful payment
  */
 async function sendConfirmationEmail(
+  transporter: any,
   email: string,
   fullName: string,
   tier: string,
