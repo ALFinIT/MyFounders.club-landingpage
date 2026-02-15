@@ -12,6 +12,7 @@ const spaceMono = Space_Mono({ subsets: ['latin'], weight: ['400', '700'], varia
 const montserrat = Montserrat({ subsets: ['latin'], variable: '--font-montserrat' })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://myfoundersclub.com'),
   title: 'MY FOUNDERS CLUB',
   description:
     "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA and beyond.",
