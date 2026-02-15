@@ -79,7 +79,7 @@ export default function ComingSoonPage() {
         </motion.div>
 
         {/* Features Preview */}
-        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mt-6">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl mt-6">
           <div className="p-4 rounded-xl border border-orange-500/20 bg-orange-500/5 backdrop-blur-sm">
             <Zap className="w-6 h-6 text-orange-400 mx-auto mb-3" />
             <h3 className="text-white font-semibold mb-2">Fast Platform</h3>

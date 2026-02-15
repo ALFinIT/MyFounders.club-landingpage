@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { Users, Zap, Globe, Check } from 'lucide-react'
 import HighQualityImage from '@/components/HighQualityImage'
+import LogoMarquee from '@/components/LogoMarquee'
 
 const stats = [
   { number: '500+', label: 'Active Founders', icon: Users },
@@ -132,7 +133,7 @@ export function CommunityShowcase() {
 
         {/* Featured Testimonials */}
         <motion.div
-          className="grid md:grid-cols-3 gap-6"
+          className="grid md:grid-cols-3 gap-10"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
@@ -160,14 +161,14 @@ export function CommunityShowcase() {
           ].map((testimonial, index) => (
             <motion.div
               key={index}
-              className="group"
+              className="group mb-8"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15 }}
               whileHover={{ y: -8 }}
             >
-              <div className="relative rounded-2xl overflow-hidden h-64 mb-4 group">
+              <div className="relative rounded-2xl overflow-hidden h-64 mb-6 group">
                 <HighQualityImage
                   src={testimonial.image || '/placeholder.svg'}
                   alt={testimonial.author}
@@ -177,42 +178,29 @@ export function CommunityShowcase() {
                   quality={100}
                 />
               </div>
-              <div className="glass rounded-xl p-4">
-                <p className="text-muted-foreground italic mb-3">"{testimonial.quote}"</p>
-                <p className="font-semibold text-white">{testimonial.author}</p>
-                <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+              <div className="glass rounded-xl p-6 space-y-3">
+                <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
+                <div className="pt-2">
+                  <p className="font-semibold text-white">{testimonial.author}</p>
+                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                </div>
               </div>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* CTA */}
+        {/* Logo marquee */}
         <motion.div
-          className="text-center mt-20"
+          className="mt-12"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <CommunityCTA />
+          <LogoMarquee count={25} speedSeconds={40} />
         </motion.div>
       </div>
     </section>
   )
 }
 
-function CommunityCTA() {
-  const router = useRouter()
-
-  return (
-    <motion.button
-      onClick={() => router.push('/auth')}
-      className="inline-block px-10 py-3 bg-orange-500 text-white rounded-full font-semibold shadow-lg shadow-orange-500/40 transition-all"
-      whileHover={{ scale: 1.05, y: -3 }}
-      whileTap={{ scale: 0.95 }}
-      type="button"
-    >
-      Join the 500+ Community Today
-    </motion.button>
-  )
-}

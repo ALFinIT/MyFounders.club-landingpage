@@ -20,7 +20,7 @@ export default function StatsContract() {
         </div>
 
         <div className="flex-1 text-center sm:text-right">
-          <p className="text-sm text-gray-300">Join 500+ founders in the Gulf startup ecosystem</p>
+          <p className="text-sm text-gray-300">Join 500+ Founders in the Gulf Ecosystem</p>
         </div>
       </div>
     </div>
