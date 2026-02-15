@@ -28,9 +28,6 @@ export default function PaymentsAdminPage() {
   const [filterStatus, setFilterStatus] = useState<string>('all')
   const [filterDate, setFilterDate] = useState<string>('all')
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!
-  const supabase = createClient(supabaseUrl, supabaseKey)
 
   useEffect(() => {
     fetchPayments()
@@ -39,10 +36,18 @@ export default function PaymentsAdminPage() {
   const fetchPayments = async () => {
     try {
       setLoading(true)
-      let query = supabase
-        .from('subscriptions')
-        .select('*')
-        .order('created_at', { ascending: false })
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
+
+      if (!supabaseUrl || !supabaseKey) {
+        setError('Supabase is not configured. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY.')
+        setLoading(false)
+        return
+      }
+
+      const supabase = createClient(supabaseUrl, supabaseKey)
+
+      let query = supabase.from('subscriptions').select('*').order('created_at', { ascending: false })
 
       if (filterStatus !== 'all') {
         query = query.eq('payment_status', filterStatus)
