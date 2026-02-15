@@ -1,27 +1,39 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
+// Mark this route as dynamic - never cache, always run at request time
+export const dynamic = 'force-dynamic'
+
 const Stripe = require('stripe')
 const nodemailer = require('nodemailer')
 
-const stripe = new (typeof Stripe === 'function' ? Stripe : Stripe.default)(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2024-06-20',
-})
+// Initialize clients lazily inside handlers
+function initializeClients() {
+  const stripeInstance = new (typeof Stripe === 'function' ? Stripe : Stripe.default)(process.env.STRIPE_SECRET_KEY || '', {
+    apiVersion: '2024-06-20',
+  })
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!
-const supabase = createClient(supabaseUrl, supabaseKey)
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
+  
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Supabase environment variables are not configured')
+  }
 
-// Email transporter (configure with your email service)
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_SECURE === 'true',
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-})
+  const supabaseInstance = createClient(supabaseUrl, supabaseKey)
+
+  const transporterInstance = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || '587'),
+    secure: process.env.SMTP_SECURE === 'true',
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD,
+    },
+  })
+
+  return { stripe: stripeInstance, supabase: supabaseInstance, transporter: transporterInstance }
+}
 
 /**
  * POST /api/payments/stripe/create-payment-intent
@@ -38,6 +50,8 @@ const transporter = nodemailer.createTransport({
  */
 export async function POST(req: NextRequest) {
   try {
+    const { stripe, supabase, transporter } = initializeClients()
+
     const body = await req.json()
     const { tier, billingCycle, email, fullName, userId } = body
 
@@ -60,7 +74,6 @@ export async function POST(req: NextRequest) {
     }
 
     // Get pricing from database
-    // use the already defined supabase client
     const { data: pricingData, error: pricingError } = await supabase
       .from('pricing_tiers')
       .select('*')

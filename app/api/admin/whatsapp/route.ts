@@ -4,6 +4,9 @@ import { cookies } from 'next/headers'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 
+// Mark this route as dynamic - never cache
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   try {
     // Try Supabase first

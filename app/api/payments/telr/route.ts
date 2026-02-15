@@ -1,25 +1,45 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
-const crypto = require('crypto')
+// Mark this route as dynamic - never cache, always run at request time
+export const dynamic = 'force-dynamic'
 
+const crypto = require('crypto')
 const nodemailer = require('nodemailer')
 
-// Telr configuration
-const TELR_API_KEY = process.env.TELR_API_KEY || ''
-const TELR_STORE_ID = process.env.TELR_STORE_ID || ''
-const TELR_AUTHKEY = process.env.TELR_AUTHKEY || ''
+// Initialize clients lazily inside handlers
+function initializeClients() {
+  const TELR_API_KEY = process.env.TELR_API_KEY || ''
+  const TELR_STORE_ID = process.env.TELR_STORE_ID || ''
+  const TELR_AUTHKEY = process.env.TELR_AUTHKEY || ''
 
-// Email transporter
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_SECURE === 'true',
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-})
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Supabase environment variables are not configured')
+  }
+
+  const transporterInstance = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || '587'),
+    secure: process.env.SMTP_SECURE === 'true',
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD,
+    },
+  })
+
+  const supabaseInstance = createClient(supabaseUrl, supabaseKey)
+
+  return {
+    TELR_API_KEY,
+    TELR_STORE_ID,
+    TELR_AUTHKEY,
+    transporter: transporterInstance,
+    supabase: supabaseInstance,
+  }
+}
 
 /**
  * POST /api/payments/telr
@@ -44,6 +64,8 @@ const transporter = nodemailer.createTransport({
  */
 export async function POST(req: NextRequest) {
   try {
+    const { TELR_API_KEY, TELR_STORE_ID, TELR_AUTHKEY, transporter, supabase } = initializeClients()
+
     const body = await req.json()
     const { 
       tier, 
@@ -67,9 +89,6 @@ export async function POST(req: NextRequest) {
     }
 
     // Get pricing from database
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!
-    const supabase = createClient(supabaseUrl, supabaseKey)
     const { data: pricingData, error: pricingError } = await supabase
       .from('pricing_tiers')
       .select('*')
@@ -97,7 +116,7 @@ export async function POST(req: NextRequest) {
     switch(paymentMethod) {
       case 'card':
         paymentResponse = await processCardPayment(
-          amountAED, reference, email, fullName, phoneNumber, 
+          amountAED, reference, email, fullName, phoneNumber,
           country, city, address, tier, billingCycle, supabase
         )
         break

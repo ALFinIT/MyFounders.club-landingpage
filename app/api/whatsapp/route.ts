@@ -3,6 +3,9 @@ import { createClient } from '@/utils/supabase/server'
 import { appendLocalRecord } from '@/utils/localDb'
 import { cookies } from 'next/headers'
 
+// Mark this route as dynamic - never cache
+export const dynamic = 'force-dynamic'
+
 // Get client IP from request
 function getClientIP(req: Request): string {
   const forwarded = req.headers.get('x-forwarded-for')

@@ -1,21 +1,42 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
+// Mark this route as dynamic
+export const dynamic = 'force-dynamic'
+
 const nodemailer = require('nodemailer')
 
-// Telr configuration
-const TELR_STORE_ID = process.env.TELR_STORE_ID || ''
-const TELR_AUTHKEY = process.env.TELR_AUTHKEY || ''
+// Initialize clients lazily
+function initializeClients() {
+  const TELR_STORE_ID = process.env.TELR_STORE_ID || ''
+  const TELR_AUTHKEY = process.env.TELR_AUTHKEY || ''
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_SECURE === 'true',
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-})
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Supabase environment variables are not configured')
+  }
+
+  const transporterInstance = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || '587'),
+    secure: process.env.SMTP_SECURE === 'true',
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD,
+    },
+  })
+
+  const supabaseInstance = createClient(supabaseUrl, supabaseKey)
+
+  return {
+    TELR_STORE_ID,
+    TELR_AUTHKEY,
+    transporter: transporterInstance,
+    supabase: supabaseInstance,
+  }
+}
 
 /**
  * Handle Telr payment callbacks (webhook)
@@ -36,6 +57,8 @@ export async function GET(req: NextRequest) {
 
 async function handleCallback(req: NextRequest) {
   try {
+    const { TELR_STORE_ID, TELR_AUTHKEY, transporter, supabase } = initializeClients()
+
     let data: any = {}
 
     // Parse data based on content type
@@ -75,10 +98,6 @@ async function handleCallback(req: NextRequest) {
         { status: 400 }
       )
     }
-
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!
-    const supabase = createClient(supabaseUrl, supabaseKey)
 
     // Find subscription by payment ID
     const { data: subscription, error: findError } = await supabase

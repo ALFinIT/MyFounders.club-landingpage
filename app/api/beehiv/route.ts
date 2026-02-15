@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server'
+
+// Mark this route as dynamic - never cache
+export const dynamic = 'force-dynamic'
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import fs from 'fs/promises'

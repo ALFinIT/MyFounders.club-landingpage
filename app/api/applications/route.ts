@@ -5,6 +5,9 @@ import { cookies } from 'next/headers'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 
+// Mark this route as dynamic - never cache
+export const dynamic = 'force-dynamic'
+
 // Get client IP from request
 function getClientIP(req: Request): string {
   const forwarded = req.headers.get('x-forwarded-for')

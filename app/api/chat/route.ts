@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Mark this route as dynamic - never cache
+export const dynamic = 'force-dynamic'
+
 // Simulated context knowledge base - can be enhanced with actual data
 const knowledgeBase = {
   aboutMFC: 'My Founders Club (MFC) is a vibrant community connecting founders and investors to build amazing companies together.',

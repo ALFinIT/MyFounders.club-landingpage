@@ -1,5 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 
+// Mark this route as dynamic - never cache
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: Request) {
   try {
     const { email } = await request.json()
