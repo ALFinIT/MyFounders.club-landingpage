@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { createClient } from '@supabase/supabase-js'
 import { Logo } from '@/components/logo'
-import { Download, Home, LogOut, Users, Mail, Phone, TrendingUp, Eye, EyeOff } from 'lucide-react'
+import { Download, Home, LogOut, Users, Mail, Phone, TrendingUp, Eye, EyeOff, CreditCard } from 'lucide-react'
 
 export default function AdminPage() {
   const router = useRouter()
@@ -271,6 +272,25 @@ export default function AdminPage() {
           </motion.div>
           <WhatsAppSignupsList />
         </motion.div>
+
+        {/* Payments Section */}
+        <motion.div
+          className="rounded-2xl p-4 sm:p-8 backdrop-blur-sm border border-orange-500/30"
+          style={{
+            background: 'linear-gradient(145deg, rgba(30, 25, 20, 0.8), rgba(15, 12, 10, 0.8))',
+          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <motion.div className="flex justify-between items-start sm:items-center mb-4 sm:mb-6 flex-col sm:flex-row gap-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+            <div>
+              <h2 className="text-xl sm:text-3xl font-bold text-white">Payment Transactions</h2>
+              <p className="text-orange-400/60 text-xs sm:text-sm mt-1">All payment and subscription details</p>
+            </div>
+          </motion.div>
+          <PaymentsList />
+        </motion.div>
       </div>
     </div>
   )
@@ -470,6 +490,246 @@ function ApplicationsList() {
   )
 }
 
+// Payments List Component
+function PaymentsList() {
+  const [payments, setPayments] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [filterStatus, setFilterStatus] = useState<string>('all')
+
+  useEffect(() => {
+    fetchPayments()
+  }, [filterStatus])
+
+  const fetchPayments = async () => {
+    try {
+      setLoading(true)
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
+
+      if (!supabaseUrl || !supabaseKey) {
+        console.error('Missing Supabase config')
+        setLoading(false)
+        return
+      }
+
+      const supabase = createClient(supabaseUrl, supabaseKey)
+
+      let query = supabase
+        .from('subscriptions')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+      if (filterStatus !== 'all') {
+        query = query.eq('payment_status', filterStatus)
+      }
+
+      const { data, error } = await query
+
+      if (error) {
+        console.error('Error fetching payments:', error)
+      } else {
+        setPayments(data || [])
+      }
+    } catch (err) {
+      console.error('Error loading payments:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const downloadCSV = () => {
+    const headers = ['Name', 'Email', 'Tier', 'Amount (AED)', 'Billing', 'Method', 'Status', 'Transaction ID', 'Date']
+    const rows = payments.map(p => [
+      p.full_name || '-',
+      p.email || '-',
+      p.tier || '-',
+      p.amount_aed || '-',
+      p.billing_cycle || '-',
+      p.payment_gateway || '-',
+      p.payment_status || '-',
+      p.payment_id || '-',
+      p.created_at ? new Date(p.created_at).toLocaleString() : '-',
+    ])
+
+    const csvContent = [headers.join(','), ...rows.map(row => row.map(cell => `"${cell}"`).join(','))].join('\n')
+
+    const blob = new Blob([csvContent], { type: 'text/csv' })
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `payments_${new Date().toISOString().split('T')[0]}.csv`
+    link.click()
+  }
+
+  const stats = {
+    total: payments.length,
+    completed: payments.filter(p => p.payment_status === 'completed').length,
+    pending: payments.filter(p => p.payment_status === 'pending').length,
+    failed: payments.filter(p => p.payment_status === 'failed').length,
+    revenue: payments
+      .filter(p => p.payment_status === 'completed')
+      .reduce((sum, p) => sum + (p.amount_aed || 0), 0),
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'bg-green-500/20 border-green-500/50 text-green-400'
+      case 'pending':
+        return 'bg-yellow-500/20 border-yellow-500/50 text-yellow-400'
+      case 'failed':
+        return 'bg-red-500/20 border-red-500/50 text-red-400'
+      default:
+        return 'bg-gray-500/20 border-gray-500/50 text-gray-400'
+    }
+  }
+
+  const getMethodColor = (method: string) => {
+    switch (method?.toLowerCase()) {
+      case 'telr':
+        return 'text-cyan-400'
+      case 'stripe':
+        return 'text-blue-400'
+      case 'payfort':
+        return 'text-purple-400'
+      default:
+        return 'text-gray-400'
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-12">
+        <motion.div
+          className="w-8 h-8 rounded-full border-2 border-orange-500 border-t-transparent"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity }}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-3 sm:space-y-4">
+      {/* Stats Row */}
+      <motion.div
+        className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
+        <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
+          <p className="text-orange-400/60 text-xs">Total</p>
+          <p className="text-xl font-bold text-white">{stats.total}</p>
+        </div>
+        <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+          <p className="text-green-400/60 text-xs">Completed</p>
+          <p className="text-xl font-bold text-green-400">{stats.completed}</p>
+        </div>
+        <div className="p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+          <p className="text-yellow-400/60 text-xs">Pending</p>
+          <p className="text-xl font-bold text-yellow-400">{stats.pending}</p>
+        </div>
+        <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
+          <p className="text-orange-400/60 text-xs">Revenue AED</p>
+          <p className="text-xl font-bold text-orange-400">{stats.revenue.toFixed(0)}</p>
+        </div>
+      </motion.div>
+
+      {/* Filter and Export */}
+      <div className="flex justify-between items-start sm:items-center mb-4 sm:mb-6 flex-col sm:flex-row gap-2 sm:gap-0">
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          className="px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-xs focus:outline-none focus:border-orange-500"
+        >
+          <option value="all">All Status</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+          <option value="failed">Failed</option>
+          <option value="refunded">Refunded</option>
+        </select>
+        <motion.button
+          onClick={downloadCSV}
+          className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-orange-500/20 to-orange-600/20 hover:from-orange-500/30 hover:to-orange-600/30 border border-orange-500/50 text-orange-400 rounded-lg transition-all text-xs sm:text-sm w-full sm:w-auto"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Download size={16} />
+          Export CSV
+        </motion.button>
+      </div>
+
+      {payments.length === 0 ? (
+        <div className="text-center py-8 sm:py-12">
+          <CreditCard size={40} className="sm:size-48 mx-auto text-orange-400/20 mb-4" />
+          <p className="text-orange-400/60 text-sm sm:text-base">No payments yet</p>
+        </div>
+      ) : (
+        <motion.div
+          className="overflow-x-auto rounded-lg border border-orange-500/30"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          <table className="w-full text-xs sm:text-sm">
+            <thead className="bg-orange-500/10 border-b border-orange-500/30">
+              <tr>
+                <th className="px-2 sm:px-4 py-2 sm:py-4 text-left text-orange-400 font-semibold">Name</th>
+                <th className="px-2 sm:px-4 py-2 sm:py-4 text-left text-orange-400 font-semibold">Email</th>
+                <th className="px-2 sm:px-4 py-2 sm:py-4 text-left text-orange-400 font-semibold hidden sm:table-cell">Plan</th>
+                <th className="px-2 sm:px-4 py-2 sm:py-4 text-left text-orange-400 font-semibold">Amount</th>
+                <th className="px-2 sm:px-4 py-2 sm:py-4 text-left text-orange-400 font-semibold hidden md:table-cell">Method</th>
+                <th className="px-2 sm:px-4 py-2 sm:py-4 text-left text-orange-400 font-semibold">Status</th>
+                <th className="px-2 sm:px-4 py-2 sm:py-4 text-left text-orange-400 font-semibold hidden lg:table-cell">Transaction ID</th>
+                <th className="px-2 sm:px-4 py-2 sm:py-4 text-left text-orange-400 font-semibold">Date</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-orange-500/10">
+              {payments.map((payment, idx) => (
+                <motion.tr
+                  key={idx}
+                  className="hover:bg-orange-500/5 transition-colors"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.02 }}
+                  whileHover={{ x: 4 }}
+                >
+                  <td className="px-2 sm:px-4 py-2 sm:py-4 text-white font-medium text-xs sm:text-sm truncate">
+                    {payment.full_name || '-'}
+                  </td>
+                  <td className="px-2 sm:px-4 py-2 sm:py-4 text-blue-300 text-xs sm:text-sm truncate">
+                    {payment.email?.split('@')[0]}...
+                  </td>
+                  <td className="px-2 sm:px-4 py-2 sm:py-4 text-orange-400 hidden sm:table-cell text-xs capitalize">
+                    {payment.tier?.replace('-', ' ') || '-'}
+                  </td>
+                  <td className="px-2 sm:px-4 py-2 sm:py-4 text-green-400 font-bold text-xs sm:text-sm">
+                    {payment.amount_aed?.toFixed(2) || '0'} AED
+                  </td>
+                  <td className={`px-2 sm:px-4 py-2 sm:py-4 hidden md:table-cell font-semibold text-xs ${getMethodColor(payment.payment_gateway)}`}>
+                    {payment.payment_gateway?.toUpperCase() || '-'}
+                  </td>
+                  <td className="px-2 sm:px-4 py-2 sm:py-4">
+                    <span className={`px-2 py-1 rounded text-xs font-medium border ${getStatusColor(payment.payment_status)}`}>
+                      {payment.payment_status}
+                    </span>
+                  </td>
+                  <td className="px-2 sm:px-4 py-2 sm:py-4 text-gray-400 hidden lg:table-cell text-xs font-mono">
+                    {payment.payment_id?.slice(0, 12)}...
+                  </td>
+                  <td className="px-2 sm:px-4 py-2 sm:py-4 text-white/50 text-xs">
+                    {payment.created_at ? new Date(payment.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' }) : '-'}
+                  </td>
+                </motion.tr>
+              ))}
+            </tbody>
+          </table>
+        </motion.div>
+      )}
+    </div>
+  )
+}
+
 // WhatsApp Signups List Component
 function WhatsAppSignupsList() {
   const [signups, setSignups] = useState<any[]>([])
@@ -602,5 +862,3 @@ function WhatsAppSignupsList() {
     </div>
   )
 }
-
-// Admin API routes for applications and whatsapp handlers (not needed for page component)

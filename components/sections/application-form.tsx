@@ -3,8 +3,12 @@
 import { motion } from 'framer-motion'
 import { CheckCircle2, AlertCircle, XCircle } from 'lucide-react'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/context/auth-context'
 
 export function ApplicationFormSection() {
+  const router = useRouter()
+  const { user } = useAuth()
   const [formData, setFormData] = useState({
     fullName: '',
     companyName: '',
@@ -32,6 +36,17 @@ export function ApplicationFormSection() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+
+    // Check if user is authenticated
+    if (!user) {
+      setStatusMessage('Please log in to submit your application')
+      setStatusType('error')
+      // Redirect to auth page with return URL
+      setTimeout(() => {
+        router.push(`/auth?returnUrl=${encodeURIComponent(window.location.pathname + '#application')}`)
+      }, 1000)
+      return
+    }
 
     if (!formData.agreeCommitment) {
       setStatusMessage('Please agree to the commitment fee terms')

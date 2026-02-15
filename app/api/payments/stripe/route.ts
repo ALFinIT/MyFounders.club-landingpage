@@ -1,9 +1,10 @@
-import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+const Stripe = require('stripe')
+const nodemailer = require('nodemailer')
+
+const stripe = new (typeof Stripe === 'function' ? Stripe : Stripe.default)(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2024-06-20',
 })
 
@@ -59,7 +60,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Get pricing from database
-    const supabase = createClient()
+    // use the already defined supabase client
     const { data: pricingData, error: pricingError } = await supabase
       .from('pricing_tiers')
       .select('*')
@@ -166,7 +167,7 @@ export async function PUT(req: NextRequest) {
     // Retrieve payment intent from Stripe
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId)
 
-    const supabase = createClient()
+    // use the already defined supabase client
 
     // Update subscription status based on payment intent
     if (paymentIntent.status === 'succeeded') {

@@ -1,9 +1,9 @@
-'use server'
-
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
-import crypto from 'crypto'
-import nodemailer from 'nodemailer'
+
+const crypto = require('crypto')
+
+const nodemailer = require('nodemailer')
 
 // Telr configuration
 const TELR_API_KEY = process.env.TELR_API_KEY || ''
@@ -22,23 +22,42 @@ const transporter = nodemailer.createTransport({
 })
 
 /**
- * POST /api/payments/telr/create-transaction
+ * POST /api/payments/telr
  * 
- * Creates a Telr payment transaction for UAE payments
- * Supports AED currency directly
+ * Handles payment processing through Telr gateway
+ * Supports: Card, Telr Wallet, Google Pay, Apple Pay
+ * All payments processed in AED for UAE operations
  * 
  * Request body:
  * {
  *   "tier": "founder-pass",
  *   "billingCycle": "monthly",
  *   "email": "user@example.com",
- *   "fullName": "John Doe"
+ *   "fullName": "John Doe",
+ *   "phoneNumber": "+971501234567",
+ *   "country": "AE",
+ *   "city": "Dubai",
+ *   "address": "123 Business Street",
+ *   "businessName": "Company Name",
+ *   "paymentMethod": "card" | "telr" | "gpay" | "applepay"
  * }
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { tier, billingCycle, email, fullName, userId } = body
+    const { 
+      tier, 
+      billingCycle, 
+      email, 
+      fullName, 
+      userId,
+      phoneNumber,
+      country,
+      city,
+      address,
+      businessName,
+      paymentMethod = 'card' // Default to card
+    } = body
 
     if (!tier || !billingCycle || !email || !fullName) {
       return NextResponse.json(
@@ -48,7 +67,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Get pricing from database
-    const supabase = createClient()
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!
+    const supabase = createClient(supabaseUrl, supabaseKey)
     const { data: pricingData, error: pricingError } = await supabase
       .from('pricing_tiers')
       .select('*')
@@ -70,66 +91,360 @@ export async function POST(req: NextRequest) {
     // Generate unique reference
     const reference = `MFC-${tier}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
 
-    // Create payment data
-    const paymentData = {
-      store: TELR_STORE_ID,
-      authkey: TELR_AUTHKEY,
-      type: 'json',
-      amount: Math.round(amountAED * 100), // Convert to fils (cents)
-      currency: 'AED',
-      description: `${tier} subscription - ${billingCycle}`,
-      reference,
-      email,
-      fname: fullName.split(' ')[0],
-      lname: fullName.split(' ')[1] || '',
-      notify: 1, // Enable notifications
-      return: `${process.env.NEXT_PUBLIC_APP_URL}/payment-success`,
-      cancel: `${process.env.NEXT_PUBLIC_APP_URL}/payment-failed`,
+    // Route to appropriate payment method handler
+    let paymentResponse
+
+    switch(paymentMethod) {
+      case 'card':
+        paymentResponse = await processCardPayment(
+          amountAED, reference, email, fullName, phoneNumber, 
+          country, city, address, tier, billingCycle, supabase
+        )
+        break
+      case 'telr':
+        paymentResponse = await processTelrWalletPayment(
+          amountAED, reference, email, fullName, phoneNumber,
+          country, city, address, tier, billingCycle, supabase
+        )
+        break
+      case 'gpay':
+        paymentResponse = await processGooglePayPayment(
+          amountAED, reference, email, fullName, phoneNumber,
+          country, city, address, tier, billingCycle, supabase
+        )
+        break
+      case 'applepay':
+        paymentResponse = await processApplePayPayment(
+          amountAED, reference, email, fullName, phoneNumber,
+          country, city, address, tier, billingCycle, supabase
+        )
+        break
+      default:
+        return NextResponse.json(
+          { error: 'Invalid payment method' },
+          { status: 400 }
+        )
     }
 
-    // Generate Telr authentication signature
-    const signature = generateTelrSignature(paymentData)
-    paymentData.signature = signature
-
-    // Save subscription record with pending status
-    const { data: subscription, error: subscriptionError } = await supabase
-      .from('subscriptions')
-      .insert({
-        user_id: userId || email,
-        email,
-        full_name: fullName,
-        tier,
-        billing_cycle: billingCycle,
-        amount_aed: amountAED,
-        amount_usd: pricingData.price_monthly_usd || 0,
-        currency: 'AED',
-        payment_gateway: 'telr',
-        payment_status: 'pending',
-        payment_id: reference,
-        subscription_status: 'active',
-        start_date: new Date().toISOString(),
-        ip_address: req.headers.get('x-forwarded-for') || '',
-      })
-      .select()
-      .single()
-
-    if (subscriptionError) {
-      console.error('Error creating subscription record:', subscriptionError)
-    }
-
-    return NextResponse.json({
-      success: true,
-      paymentData,
-      telrPaymentUrl: `https://telr.com/gateway/process.php`,
-      subscriptionId: subscription?.id,
-      reference,
-    })
+    return NextResponse.json(paymentResponse)
   } catch (error) {
-    console.error('Telr payment error:', error)
+    console.error('Payment processing error:', error)
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Payment processing failed' },
       { status: 500 }
     )
+  }
+}
+
+/**
+ * Process Credit/Debit Card Payment (Visa, Mastercard)
+ * Routes through Telr gateway for PCI compliance
+ */
+async function processCardPayment(
+  amountAED: number,
+  reference: string,
+  email: string,
+  fullName: string,
+  phoneNumber: string,
+  country: string,
+  city: string,
+  address: string,
+  tier: string,
+  billingCycle: string,
+  supabase: any
+) {
+  // Create payment data for Telr card processing
+  const paymentData = {
+    store: TELR_STORE_ID,
+    authkey: TELR_AUTHKEY,
+    type: 'json',
+    amount: Math.round(amountAED * 100), // Convert to fils (cents)
+    currency: 'AED',
+    description: `${tier} subscription - ${billingCycle} | Card Payment`,
+    reference,
+    email,
+    fname: fullName.split(' ')[0],
+    lname: fullName.split(' ')[1] || '',
+    phone: phoneNumber || '',
+    country: country || 'AE',
+    city: city || '',
+    address: address || '',
+    notify: 1,
+    ipn: `${process.env.NEXT_PUBLIC_APP_URL}/api/payments/telr/callback`,
+    return: `${process.env.NEXT_PUBLIC_APP_URL}/payment-success`,
+    cancel: `${process.env.NEXT_PUBLIC_APP_URL}/payment-failed`,
+    test: process.env.NODE_ENV === 'development' ? 1 : 0,
+  }
+
+  // Generate Telr authentication signature
+  const signatureString = `${TELR_STORE_ID}${paymentData.amount}${paymentData.currency}${TELR_AUTHKEY}`
+  const authSignature = crypto.createHash('sha256').update(signatureString).digest('hex')
+  ;(paymentData as any).signature = authSignature
+
+  // Save subscription record with pending status
+  const { data: subscription } = await supabase
+    .from('subscriptions')
+    .insert({
+      user_id: email,
+      email,
+      full_name: fullName,
+      phone_number: phoneNumber || null,
+      country: country || 'AE',
+      city: city || null,
+      address: address || null,
+      tier,
+      billing_cycle: billingCycle,
+      amount_aed: amountAED,
+      currency: 'AED',
+      payment_gateway: 'telr',
+      payment_method: 'card',
+      payment_status: 'pending',
+      payment_id: reference,
+      subscription_status: 'inactive',
+      start_date: new Date().toISOString(),
+    })
+    .select()
+    .single()
+
+  return {
+    success: true,
+    paymentData,
+    paymentMethod: 'card',
+    telrPaymentUrl: `https://telr.com/gateway/process.php`,
+    subscriptionId: subscription?.id,
+    reference,
+  }
+}
+
+/**
+ * Process Telr Wallet Payment
+ * Direct Telr wallet payment for UAE customers
+ */
+async function processTelrWalletPayment(
+  amountAED: number,
+  reference: string,
+  email: string,
+  fullName: string,
+  phoneNumber: string,
+  country: string,
+  city: string,
+  address: string,
+  tier: string,
+  billingCycle: string,
+  supabase: any
+) {
+  // Telr wallet payment configuration
+  const paymentData = {
+    store: TELR_STORE_ID,
+    authkey: TELR_AUTHKEY,
+    type: 'json',
+    amount: Math.round(amountAED * 100),
+    currency: 'AED',
+    description: `${tier} subscription - ${billingCycle} | Telr Wallet`,
+    reference,
+    email,
+    fname: fullName.split(' ')[0],
+    lname: fullName.split(' ')[1] || '',
+    phone: phoneNumber || '',
+    country: country || 'AE',
+    city: city || '',
+    address: address || '',
+    tpay: 1, // Enable Telr Pay wallet
+    notify: 1,
+    ipn: `${process.env.NEXT_PUBLIC_APP_URL}/api/payments/telr/callback`,
+    return: `${process.env.NEXT_PUBLIC_APP_URL}/payment-success`,
+    cancel: `${process.env.NEXT_PUBLIC_APP_URL}/payment-failed`,
+  }
+
+  const signatureString = `${TELR_STORE_ID}${paymentData.amount}${paymentData.currency}${TELR_AUTHKEY}`
+  const authSignature = crypto.createHash('sha256').update(signatureString).digest('hex')
+  ;(paymentData as any).signature = authSignature
+
+  const { data: subscription } = await supabase
+    .from('subscriptions')
+    .insert({
+      user_id: email,
+      email,
+      full_name: fullName,
+      phone_number: phoneNumber || null,
+      country: country || 'AE',
+      city: city || null,
+      address: address || null,
+      tier,
+      billing_cycle: billingCycle,
+      amount_aed: amountAED,
+      currency: 'AED',
+      payment_gateway: 'telr',
+      payment_method: 'telr_wallet',
+      payment_status: 'pending',
+      payment_id: reference,
+      subscription_status: 'inactive',
+      start_date: new Date().toISOString(),
+    })
+    .select()
+    .single()
+
+  return {
+    success: true,
+    paymentData,
+    paymentMethod: 'telr_wallet',
+    telrPaymentUrl: `https://telr.com/gateway/process.php`,
+    subscriptionId: subscription?.id,
+    reference,
+  }
+}
+
+/**
+ * Process Google Pay Payment
+ * Google Pay transactions through Telr gateway
+ */
+async function processGooglePayPayment(
+  amountAED: number,
+  reference: string,
+  email: string,
+  fullName: string,
+  phoneNumber: string,
+  country: string,
+  city: string,
+  address: string,
+  tier: string,
+  billingCycle: string,
+  supabase: any
+) {
+  // Google Pay configuration
+  const paymentData = {
+    store: TELR_STORE_ID,
+    authkey: TELR_AUTHKEY,
+    type: 'json',
+    amount: Math.round(amountAED * 100),
+    currency: 'AED',
+    description: `${tier} subscription - ${billingCycle} | Google Pay`,
+    reference,
+    email,
+    fname: fullName.split(' ')[0],
+    lname: fullName.split(' ')[1] || '',
+    phone: phoneNumber || '',
+    country: country || 'AE',
+    city: city || '',
+    address: address || '',
+    notify: 1,
+    ipn: `${process.env.NEXT_PUBLIC_APP_URL}/api/payments/telr/callback`,
+    return: `${process.env.NEXT_PUBLIC_APP_URL}/payment-success`,
+    cancel: `${process.env.NEXT_PUBLIC_APP_URL}/payment-failed`,
+  }
+
+  const signatureString = `${TELR_STORE_ID}${paymentData.amount}${paymentData.currency}${TELR_AUTHKEY}`
+  const authSignature = crypto.createHash('sha256').update(signatureString).digest('hex')
+  ;(paymentData as any).signature = authSignature
+
+  const { data: subscription } = await supabase
+    .from('subscriptions')
+    .insert({
+      user_id: email,
+      email,
+      full_name: fullName,
+      phone_number: phoneNumber || null,
+      country: country || 'AE',
+      city: city || null,
+      address: address || null,
+      tier,
+      billing_cycle: billingCycle,
+      amount_aed: amountAED,
+      currency: 'AED',
+      payment_gateway: 'telr',
+      payment_method: 'google_pay',
+      payment_status: 'pending',
+      payment_id: reference,
+      subscription_status: 'inactive',
+      start_date: new Date().toISOString(),
+    })
+    .select()
+    .single()
+
+  return {
+    success: true,
+    paymentData,
+    paymentMethod: 'google_pay',
+    telrPaymentUrl: `https://telr.com/gateway/process.php`,
+    subscriptionId: subscription?.id,
+    reference,
+  }
+}
+
+/**
+ * Process Apple Pay Payment
+ * Apple Pay transactions through Telr gateway
+ */
+async function processApplePayPayment(
+  amountAED: number,
+  reference: string,
+  email: string,
+  fullName: string,
+  phoneNumber: string,
+  country: string,
+  city: string,
+  address: string,
+  tier: string,
+  billingCycle: string,
+  supabase: any
+) {
+  // Apple Pay configuration
+  const paymentData = {
+    store: TELR_STORE_ID,
+    authkey: TELR_AUTHKEY,
+    type: 'json',
+    amount: Math.round(amountAED * 100),
+    currency: 'AED',
+    description: `${tier} subscription - ${billingCycle} | Apple Pay`,
+    reference,
+    email,
+    fname: fullName.split(' ')[0],
+    lname: fullName.split(' ')[1] || '',
+    phone: phoneNumber || '',
+    country: country || 'AE',
+    city: city || '',
+    address: address || '',
+    notify: 1,
+    ipn: `${process.env.NEXT_PUBLIC_APP_URL}/api/payments/telr/callback`,
+    return: `${process.env.NEXT_PUBLIC_APP_URL}/payment-success`,
+    cancel: `${process.env.NEXT_PUBLIC_APP_URL}/payment-failed`,
+  }
+
+  const signatureString = `${TELR_STORE_ID}${paymentData.amount}${paymentData.currency}${TELR_AUTHKEY}`
+  const authSignature = crypto.createHash('sha256').update(signatureString).digest('hex')
+  ;(paymentData as any).signature = authSignature
+
+  const { data: subscription } = await supabase
+    .from('subscriptions')
+    .insert({
+      user_id: email,
+      email,
+      full_name: fullName,
+      phone_number: phoneNumber || null,
+      country: country || 'AE',
+      city: city || null,
+      address: address || null,
+      tier,
+      billing_cycle: billingCycle,
+      amount_aed: amountAED,
+      currency: 'AED',
+      payment_gateway: 'telr',
+      payment_method: 'apple_pay',
+      payment_status: 'pending',
+      payment_id: reference,
+      subscription_status: 'inactive',
+      start_date: new Date().toISOString(),
+    })
+    .select()
+    .single()
+
+  return {
+    success: true,
+    paymentData,
+    paymentMethod: 'apple_pay',
+    telrPaymentUrl: `https://telr.com/gateway/process.php`,
+    subscriptionId: subscription?.id,
+    reference,
   }
 }
 
@@ -151,7 +466,9 @@ export async function PUT(req: NextRequest) {
       )
     }
 
-    const supabase = createClient()
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!
+    const supabase = createClient(supabaseUrl, supabaseKey)
 
     // Find subscription by payment ID
     const { data: subscription, error: fetchError } = await supabase
@@ -253,13 +570,6 @@ export async function PUT(req: NextRequest) {
       { status: 500 }
     )
   }
-}
-
-/**
- * Generate Telr authentication signature
- */function generateTelrSignature(data: any): string {
-  const signatureString = `${TELR_STORE_ID}${data.amount}${data.currency}${TELR_AUTHKEY}`
-  return crypto.createHash('sha256').update(signatureString).digest('hex')
 }
 
 /**

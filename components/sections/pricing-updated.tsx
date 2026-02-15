@@ -1,7 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Check, ArrowRight } from 'lucide-react'
+import { PaymentModal } from '@/components/PaymentModal'
 
 const plans = [
   {
@@ -105,6 +107,28 @@ const cardVariants = {
 }
 
 export function PricingSectionUpdated() {
+  const [paymentModal, setPaymentModal] = useState<{
+    isOpen: boolean
+    tier?: string
+    billingCycle?: 'monthly' | 'annual'
+    amount?: number
+  }>({ isOpen: false })
+
+  const handlePlan = (tier: string, amount: number) => {
+    // For Founder Access Pass
+    if (tier === 'founder-pass') {
+      setPaymentModal({
+        isOpen: true,
+        tier,
+        billingCycle: 'monthly',
+        amount,
+      })
+    } else {
+      // For other plans, show inquiry form or external link
+      alert(`Contact us for ${tier} pricing: support@myfounders.club`)
+    }
+  }
+
   return (
     <section id="pricing" className="relative w-full py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -173,6 +197,14 @@ export function PricingSectionUpdated() {
 
                 {/* CTA button */}
                 <motion.button
+                  onClick={() => {
+                    // Founder Access Pass = $25
+                    if (plan.name === 'Founder Access Pass') {
+                      handlePlan('founder-pass', 25)
+                    } else {
+                      handlePlan(plan.name.toLowerCase(), 0)
+                    }
+                  }}
                   className={`w-full py-3 rounded-lg font-semibold mb-8 flex items-center justify-center gap-2 transition-all ${
                     plan.popular
                       ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-2xl hover:shadow-orange-500/50'
@@ -235,6 +267,15 @@ export function PricingSectionUpdated() {
           ))}
         </motion.div>
       </div>
+
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={paymentModal.isOpen}
+        onClose={() => setPaymentModal({ isOpen: false })}
+        tier={paymentModal.tier || 'founder-pass'}
+        billingCycle={paymentModal.billingCycle || 'monthly'}
+        amount={paymentModal.amount || 25}
+      />
     </section>
   )
 }

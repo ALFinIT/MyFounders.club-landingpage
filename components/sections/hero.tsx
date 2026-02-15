@@ -89,7 +89,7 @@ function HeroCTA() {
 
   return (
     <motion.button
-      onClick={() => router.push('/auth')}
+      onClick={() => router.push('/coming-soon')}
       className="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl font-semibold text-white transition-all duration-300 shadow-xl shadow-orange-500/40 w-full sm:w-auto max-w-[340px]"
       whileHover={{ scale: 1.05, y: -3 }}
       whileTap={{ scale: 0.95 }}

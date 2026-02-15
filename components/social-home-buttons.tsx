@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion, useAnimation } from 'framer-motion'
 import Link from 'next/link'
-import { Home, Twitter, Linkedin, Instagram, Youtube, MessageCircle, X } from 'lucide-react'
+import { Home, Twitter, Linkedin, Instagram, Youtube, MessageCircle, X, Plus } from 'lucide-react'
 import ChatWidget from './ChatWidget'
 
 export default function SocialHomeButtons() {
@@ -111,7 +111,7 @@ export default function SocialHomeButtons() {
         </motion.button>
       </motion.div>
 
-      {/* X button - always visible and fixed */}
+      {/* X/Plus button - toggle icon based on expanded state */}
       <motion.button
         onClick={handleToggle}
         aria-expanded={expanded}
@@ -120,7 +120,7 @@ export default function SocialHomeButtons() {
         animate={xControls}
         whileHover={{ scale: 1.06 }}
       >
-        <X size={20} />
+        {expanded ? <X size={20} /> : <Plus size={20} />}
       </motion.button>
 
       <ChatWidget open={openChat} onClose={() => setOpenChat(false)} />

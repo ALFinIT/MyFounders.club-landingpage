@@ -143,7 +143,7 @@ export default function PaymentFailedPage({
           <p className="text-gray-400 mb-4">
             Our support team is available to assist with payment issues
           </p>
-          <div className="flex flex-col gap-2 sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col gap-4 sm:flex-row justify-center">
             <a
               href="mailto:support@myfounders.club"
               className="text-orange-400 hover:text-orange-300 font-semibold"

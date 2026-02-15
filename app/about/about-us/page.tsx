@@ -22,4 +22,4 @@ export default function AboutUsPage() {
       <SocialHomeButtons />
     </main>
   )
-
+}

@@ -1,14 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/context/auth-context'
 import { Logo } from '@/components/logo'
 import { ChevronRight } from 'lucide-react'
 
 export default function AuthPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const returnUrl = searchParams.get('returnUrl') || '/setup-profile'
   const { login, signup } = useAuth()
   const [isSignup, setIsSignup] = useState(false)
   const [name, setName] = useState('')
@@ -32,12 +34,18 @@ export default function AuthPage() {
 
     try {
       if (isSignup) {
+        // Validate password match for signup
+        if (password !== confirmPassword) {
+          setError('Passwords do not match')
+          setIsLoading(false)
+          return
+        }
         await signup(email, password, name)
-        router.push('/setup-profile')
       } else {
         await login(email, password)
-        router.push('/setup-profile')
       }
+      // Redirect to return URL or setup profile
+      router.push(returnUrl)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Authentication failed')
     } finally {

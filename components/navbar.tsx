@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Menu, X, Settings, LogOut, Layout } from 'lucide-react'
+import { Plus, X, Settings, LogOut, Layout } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -169,7 +169,7 @@ export function Navbar() {
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden text-white flex-shrink-0"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={24} /> : <Plus size={24} />}
           </button>
         </div>
       </motion.nav>
