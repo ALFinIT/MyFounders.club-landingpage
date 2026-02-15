@@ -38,7 +38,7 @@ export default function ComingSoonPage() {
       <Navbar />
       <SocialHomeButtons />
       
-      <div className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden pt-20 md:pt-24">
+      <div className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden pt-16 md:pt-18">
         {/* Background gradient effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-blue-500/5 pointer-events-none" />
 
@@ -53,7 +53,7 @@ export default function ComingSoonPage() {
           <img 
             src="/Full_logo_mfc.png" 
             alt="MyFoundersClub"
-            className="w-48 sm:w-64 md:w-80 h-auto object-contain"
+            className="w-36 sm:w-48 md:w-56 h-auto object-contain"
           />
         </motion.div>
 
@@ -65,20 +65,20 @@ export default function ComingSoonPage() {
             <Sparkles className="w-6 h-6 text-orange-400 animate-pulse" />
           </div>
           
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
             <span className="block bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 bg-clip-text text-transparent">
               Coming Soon
             </span>
             <span className="block text-white mt-3">MYFOUNDERSCLUB</span>
           </h1>
 
-          <p className="text-gray-300 text-base md:text-lg mt-6 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-gray-300 text-sm md:text-base mt-4 max-w-xl mx-auto leading-relaxed">
             We're building something extraordinary. The MYFOUNDERSCLUB ecosystem platform is launching soon with powerful tools to connect founders, capital, and opportunity across the Gulf and beyond.
           </p>
         </motion.div>
 
         {/* Features Preview */}
-        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl mt-8">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mt-6">
           <div className="p-4 rounded-xl border border-orange-500/20 bg-orange-500/5 backdrop-blur-sm">
             <Zap className="w-6 h-6 text-orange-400 mx-auto mb-3" />
             <h3 className="text-white font-semibold mb-2">Fast Platform</h3>
@@ -99,7 +99,7 @@ export default function ComingSoonPage() {
         </motion.div>
 
         {/* CTA Buttons */}
-        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-8">
+        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-6">
           {/* Go to Pricing */}
           <Link
             href="/#pricing"
@@ -115,7 +115,7 @@ export default function ComingSoonPage() {
         {/* Countdown or Info Section */}
         <motion.div 
           variants={itemVariants} 
-          className="mt-12 p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 backdrop-blur-sm max-w-2xl w-full"
+          className="mt-8 p-4 rounded-2xl border border-blue-500/20 bg-blue-500/5 backdrop-blur-sm max-w-xl w-full"
         >
           <h3 className="text-lg font-semibold text-blue-300 mb-3 flex items-center gap-2">
             <Calendar className="w-5 h-5" />
@@ -144,20 +144,33 @@ export default function ComingSoonPage() {
         {/* Newsletter Signup */}
         <motion.div 
           variants={itemVariants} 
-          className="mt-8 p-6 rounded-2xl border border-orange-500/30 bg-gradient-to-r from-orange-500/5 to-transparent backdrop-blur-sm max-w-2xl w-full"
+          className="mt-6 p-4 rounded-2xl border border-orange-500/30 bg-gradient-to-r from-orange-500/5 to-transparent backdrop-blur-sm max-w-xl w-full"
         >
           <h3 className="text-lg font-semibold text-white mb-4">Get Notified</h3>
           <p className="text-gray-300 text-sm mb-4">Be the first to know when MYFOUNDERSCLUB launches</p>
-          <div className="flex gap-2">
+          <form className="flex gap-2" onSubmit={async (e) => {
+            e.preventDefault()
+            const form = e.currentTarget as HTMLFormElement
+            const input = form.querySelector('input') as HTMLInputElement
+            const email = input?.value || ''
+            try {
+              await fetch('/api/notify-contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ page: '/coming-soon', email }) })
+              alert('Thanks — we will notify you')
+              input.value = ''
+            } catch (err) {
+              alert('Failed to submit')
+            }
+          }}>
             <input
+              name="email"
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-orange-500/30 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:bg-white/20 transition-all"
+              className="flex-1 px-3 py-2 rounded-lg bg-white/10 border border-orange-500/30 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:bg-white/20 transition-all text-sm"
             />
-            <button className="px-6 py-3 bg-orange-500 hover:bg-orange-600 rounded-lg font-semibold text-white transition-all active:scale-95">
+            <button type="submit" className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg font-semibold text-white text-sm transition-all active:scale-95">
               Notify Me
             </button>
-          </div>
+          </form>
         </motion.div>
 
         {/* Trust Badges */}
