@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Zap, Calendar, Sparkles } from 'lucide-react'
 import { Navbar } from '@/components/navbar'
 import SocialHomeButtons from '@/components/social-home-buttons'
+import StatsContract from '@/components/StatsContract'
 
 export default function ComingSoonPage() {
   const router = useRouter()
@@ -180,6 +181,7 @@ export default function ComingSoonPage() {
             <span>Secure • Fast • Reliable</span>
           </div>
         </motion.div>
+        <StatsContract />
       </motion.div>
 
       {/* Floating Animation Elements */}

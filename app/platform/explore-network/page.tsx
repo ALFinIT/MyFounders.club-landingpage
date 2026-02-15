@@ -1,5 +1,6 @@
 import React from 'react'
 import SocialHomeButtons from '@/components/social-home-buttons'
+import StatsContract from '@/components/StatsContract'
 
 export default function ExploreNetworkPage() {
   return (
@@ -23,6 +24,7 @@ export default function ExploreNetworkPage() {
         </div>
       </div>
       <SocialHomeButtons />
+      <StatsContract />
     </main>
   )
 }
