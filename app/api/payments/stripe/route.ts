@@ -167,6 +167,8 @@ export async function POST(req: NextRequest) {
  */
 export async function PUT(req: NextRequest) {
   try {
+    const { stripe, supabase, transporter } = initializeClients()
+    
     const body = await req.json()
     const { paymentIntentId, subscriptionId } = body
 
@@ -179,8 +181,6 @@ export async function PUT(req: NextRequest) {
 
     // Retrieve payment intent from Stripe
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId)
-
-    // use the already defined supabase client
 
     // Update subscription status based on payment intent
     if (paymentIntent.status === 'succeeded') {
@@ -199,6 +199,7 @@ export async function PUT(req: NextRequest) {
       if (!updateError) {
         // Send confirmation email
         await sendConfirmationEmail(
+          transporter,
           subscription.email,
           subscription.full_name,
           subscription.tier,
@@ -275,6 +276,7 @@ export async function PUT(req: NextRequest) {
  * Send confirmation email after successful payment
  */
 async function sendConfirmationEmail(
+  mailTransporter: any,
   email: string,
   fullName: string,
   tier: string,
@@ -320,7 +322,7 @@ async function sendConfirmationEmail(
       `,
     }
 
-    await transporter.sendMail(mailOptions)
+    await mailTransporter.sendMail(mailOptions)
     console.log(`✅ Confirmation email sent to ${email}`)
   } catch (error) {
     console.error('Email sending failed:', error)
