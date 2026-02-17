@@ -31,7 +31,7 @@ export function WhatsAppCTASection() {
 
     const formData = new FormData(e.currentTarget)
     const phone = formData.get('phone') as string
-    const firstName = formData.get('firstName') as string
+    const name = formData.get('firstName') as string
 
     // Validate phone number
     if (!validatePhone(phone)) {
@@ -43,11 +43,12 @@ export function WhatsAppCTASection() {
 
     try {
       const payload = {
-        firstName,
-        phone,
+        name,
+        whatsappNumber: phone,
+        founderType: 'founder',
       }
 
-      const res = await fetch('/api/whatsapp', {
+      const res = await fetch('/api/whatsapp/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -203,7 +204,7 @@ export function WhatsAppCTASection() {
                 No spam. High-value ecosystem updates only.
               </p>
 
-              {/* single CTA only (Join WhatsApp Community) — direct button removed */}
+              {/* single CTA only (Join WhatsApp Community) - direct button removed */}
             </form>
           ) : (
             <motion.div

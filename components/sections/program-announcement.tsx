@@ -51,7 +51,7 @@ export function ProgramAnnouncementSection() {
           {sectors.map((sector, index) => (
             <motion.div
               key={index}
-              className="px-4 py-2 rounded-full glass border border-teal-500/30 text-sm text-gray-300 hover:border-orange-500/50 hover:text-orange-400 transition-all" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}
+              className="px-4 py-2 rounded-full glass border border-orange-500/30 text-sm text-gray-300 hover:border-orange-500/50 hover:text-orange-400 transition-all" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}
               whileHover={{ scale: 1.05 }}
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}

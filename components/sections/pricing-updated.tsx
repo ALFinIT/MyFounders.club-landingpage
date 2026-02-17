@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Check, ArrowRight } from 'lucide-react'
 import { PaymentModal } from '@/components/PaymentModal'
+import { scrollRevealConfig } from '@/lib/animation-variants'
 
 const plans = [
   {
@@ -71,7 +72,7 @@ const plans = [
   {
     name: 'Enterprise',
     price: 'Custom',
-    description: 'For institutions seeking signal—not noise',
+    description: 'For institutions seeking signal not noise',
     features: [
       'Sponsorship packages',
       'Proprietary data & insights',
@@ -86,22 +87,40 @@ const plans = [
 ]
 
 const containerVariants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 1 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+  exit: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
     },
   },
 }
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 32, scale: 0.94 },
   visible: {
     opacity: 1,
     y: 0,
+    scale: 1,
     transition: {
-      duration: 0.6,
+      duration: 0.7,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: 32,
+    scale: 0.94,
+    transition: {
+      duration: 0.5,
+      ease: [0.4, 0.0, 0.2, 1],
     },
   },
 }
@@ -135,20 +154,21 @@ export function PricingSectionUpdated() {
         {/* Section header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
+          exit={{ opacity: 0, y: 24 }}
+          viewport={scrollRevealConfig}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg" style={{
             textShadow: '0 4px 12px rgba(0, 0, 0, 0.9)'
           }}>
-            Plans & Access
+            What It Costs
           </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto font-light drop-shadow-lg" style={{
+          <p className="text-lg text-white/85 max-w-2xl mx-auto font-light drop-shadow-lg" style={{
             textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
           }}>
-            Choose your entry point into the Gulf ecosystem.
+            For founders: the core is free. The Gulf doesn't need another paywall between founders and clarity.
           </p>
         </motion.div>
 
@@ -158,21 +178,22 @@ export function PricingSectionUpdated() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
+          exit="hidden"
+          viewport={scrollRevealConfig}
         >
           {plans.map((plan, index) => (
             <motion.div
               key={index}
               className="relative group"
               variants={cardVariants}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.35 } }}
             >
               {/* Card */}
               <div
                 className={`relative h-full p-8 rounded-2xl border transition-all duration-300 ${
                   plan.popular
-                    ? 'glass border-orange-500/50 bg-black/60 ring-1 ring-orange-500/20'
-                    : 'glass border-teal-500/20 bg-black/50 hover:border-teal-500/40 hover:bg-black/60'
+                    ? 'glass border-orange-500/40 bg-orange-500/5 ring-1 ring-orange-500/30'
+                    : 'glass border-white/10 bg-black/40 hover:border-white/20 hover:bg-black/50'
                 }`}
               >
                 {/* Popular badge */}
@@ -188,11 +209,11 @@ export function PricingSectionUpdated() {
 
                 {/* Plan name and price */}
                 <h3 className="text-2xl font-light text-white mb-2">{plan.name}</h3>
-                <p className="text-muted-foreground text-sm mb-6 font-light">{plan.description}</p>
+                <p className="text-white/85 text-sm mb-6 font-light">{plan.description}</p>
 
                 <div className="mb-8">
                   <span className="text-4xl font-light text-white">{plan.price}</span>
-                  {plan.period && <span className="text-muted-foreground text-sm ml-2">{plan.period}</span>}
+                  {plan.period && <span className="text-white/70 text-sm ml-2">{plan.period}</span>}
                 </div>
 
                 {/* CTA button */}
@@ -210,7 +231,7 @@ export function PricingSectionUpdated() {
                       ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-2xl hover:shadow-orange-500/50'
                       : 'glass glass-hover'
                   }`}
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.3 } }}
                   whileTap={{ scale: 0.98 }}
                 >
                   {plan.cta}

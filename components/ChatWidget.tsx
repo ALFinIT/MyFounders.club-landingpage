@@ -13,7 +13,7 @@ export default function ChatWidget({ open, onClose }: { open: boolean; onClose: 
 
   useEffect(() => {
     if (open && messages.length === 0) {
-      setMessages([{ role: 'bot', text: 'Hi — I can help with questions about My Founders Club. Ask me anything!' }])
+      setMessages([{ role: 'bot', text: 'Hi - I can help with questions about My Founders Club. Ask me anything!' }])
     }
   }, [open])
 
@@ -43,7 +43,7 @@ export default function ChatWidget({ open, onClose }: { open: boolean; onClose: 
         setMessages((m) => [...m, { role: 'bot', text: 'Sorry, I could not get a response right now.' }])
       }
     } catch (err) {
-      setMessages((m) => [...m, { role: 'bot', text: 'Network error — please try again.' }])
+      setMessages((m) => [...m, { role: 'bot', text: 'Network error - please try again.' }])
     } finally {
       setLoading(false)
     }

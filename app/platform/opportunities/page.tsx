@@ -11,7 +11,7 @@ export default function OpportunitiesPage() {
       <div className="relative z-10 max-w-4xl mx-auto py-20 px-4 sm:px-6 lg:px-8">
         <div className="glass rounded-2xl p-8 border border-orange-500/20">
           <h1 className="text-3xl font-bold text-white mb-4">Opportunities</h1>
-          <p className="text-sm text-muted-foreground mb-4">Current opportunities for founders — programs, funding and partnerships.</p>
+          <p className="text-sm text-muted-foreground mb-4">Current opportunities for founders - programs, funding and partnerships.</p>
 
           <section className="mt-6 text-white/90 space-y-4">
             <p>Here we list active opportunities curated by My Founders Club including accelerator cohorts, pitch days, and partner-funded challenges.</p>

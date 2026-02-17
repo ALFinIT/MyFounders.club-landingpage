@@ -242,7 +242,7 @@ export default function AdminDashboard() {
                           </span>
                         </td>
                         <td className="px-6 py-4 text-white">{w.first_name}</td>
-                        <td className="px-6 py-4 text-white/70">—</td>
+                        <td className="px-6 py-4 text-white/70">-</td>
                         <td className="px-6 py-4 text-white">{w.phone}</td>
                         <td className="px-6 py-4 text-white/60">Joined WhatsApp</td>
                         <td className="px-6 py-4 text-white/60 text-xs">{new Date(w.created_at).toLocaleString()}</td>
@@ -259,8 +259,8 @@ export default function AdminDashboard() {
                           </span>
                         </td>
                         <td className="px-6 py-4 text-white">{n.email}</td>
-                        <td className="px-6 py-4 text-white/70">—</td>
-                        <td className="px-6 py-4 text-white">—</td>
+                        <td className="px-6 py-4 text-white/70">-</td>
+                        <td className="px-6 py-4 text-white">-</td>
                         <td className="px-6 py-4 text-white/60">Subscribed</td>
                         <td className="px-6 py-4 text-white/60 text-xs">{new Date(n.subscribed_at).toLocaleString()}</td>
                       </tr>

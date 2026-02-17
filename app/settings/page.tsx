@@ -132,14 +132,25 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 to-black">
+    <div
+      className="min-h-screen bg-black relative overflow-hidden"
+      style={{
+        backgroundImage: 'url(/MFC%20theme.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      {/* Dark overlay */}
+      <div className="fixed inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/80 pointer-events-none" />
+
       {/* Header */}
       <div className="fixed top-6 left-6 z-50">
         <BackLink href="/" />
       </div>
 
       {/* Main Content */}
-      <div className="max-w-2xl mx-auto pt-24 pb-12 px-6">
+      <div className="relative z-10 max-w-2xl mx-auto pt-24 pb-12 px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -10,20 +10,34 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.3,
+      staggerChildren: 0.12,
+      delayChildren: 0.15,
+      duration: 0.8,
     },
   },
 }
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 32 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.8,
-      ease: 'easeOut',
+      duration: 0.9,
+      ease: [0.16, 1, 0.3, 1], // premium smooth ease
+    },
+  },
+}
+
+const headingVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 1,
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 }
@@ -52,19 +66,59 @@ export function HeroSection() {
         <div className="space-y-6 mb-6">
 
           <motion.div className="space-y-4" variants={itemVariants}>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] hero-heading font-extrabold drop-shadow-lg" style={{
-              textShadow: '0 4px 12px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6)'
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] hero-heading font-extrabold drop-shadow-xl" style={{
+              textShadow: '0 6px 20px rgba(0, 0, 0, 0.95), 0 3px 8px rgba(0, 0, 0, 0.8)'
             }}>
-              <span className="block">Build Locally</span>
-              <span className="block text-[#FF5B23]">Champion Regionally</span>
-              <span className="block">Scale Globally</span>
+              <motion.span 
+                className="block"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+              >
+                Build Locally
+              </motion.span>
+              <motion.span 
+                className="block text-[#FF5B23] font-black"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4, duration: 0.9 }}
+              >
+                Champion Regionally
+              </motion.span>
+              <motion.span 
+                className="block"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+              >
+                Scale Globally
+              </motion.span>
             </h1>
 
-            <p className="mt-4 mx-auto hero-subheading neon-subheading max-w-[900px] text-center text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-lg" style={{
-              textShadow: '0 2px 8px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.5)'
-            }}>
-              The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA and beyond.
-            </p>
+            <motion.p 
+              className="mt-4 mx-auto hero-subheading neon-subheading max-w-[900px] text-center text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-lg text-white font-medium" 
+              style={{
+                textShadow: '0 4px 12px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.7)'
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.8 }}
+            >
+              The room where Gulf founders stop guessing.
+            </motion.p>
+            
+            <motion.p 
+              className="mt-6 mx-auto text-base sm:text-lg md:text-xl max-w-[900px] text-center leading-relaxed drop-shadow-lg text-white font-medium"
+              style={{
+                textShadow: '0 4px 12px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.7)'
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.85, duration: 0.8 }}
+            >
+             Founders shouldn't build alone.
+MFC centralizes the clarity, connections, and deal flow. <span className="font-bold text-orange-300">Free for founders. Always.</span>
+            </motion.p>
           </motion.div>
 
           <motion.div className="flex flex-col sm:flex-row gap-4 mb-6 justify-center w-full px-2" variants={itemVariants}>
@@ -88,21 +142,49 @@ function HeroCTA() {
   const router = useRouter()
 
   return (
-    <motion.button
-      onClick={() => router.push('/coming-soon')}
-      className="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl font-semibold text-white transition-all duration-300 shadow-xl shadow-orange-500/40 w-full sm:w-auto max-w-[340px]"
-      whileHover={{ scale: 1.05, y: -3 }}
-      whileTap={{ scale: 0.95 }}
-      aria-label="Join the Ecosystem"
-      type="button"
-    >
-      <span className="relative flex items-center">
-        Join the Ecosystem
-        <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-          <ArrowRight className="ml-2 w-5 h-5" />
-        </motion.div>
-      </span>
-    </motion.button>
+    <>
+      <motion.button
+        onClick={() => router.push('/auth?mode=signup')}
+        className="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl font-bold text-white transition-all duration-300 shadow-xl shadow-orange-500/50 w-full sm:w-auto max-w-[340px] overflow-hidden"
+        whileHover={{ scale: 1.06, y: -4, boxShadow: '0 20px 50px rgba(255, 91, 35, 0.6)' }}
+        whileTap={{ scale: 0.94 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.0, duration: 0.6 }}
+        aria-label="Request Access"
+        type="button"
+      >
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"
+          initial={{ x: '-100%' }}
+          animate={{ x: '100%' }}
+          transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
+          style={{ opacity: 0.2 }}
+        />
+        <span className="relative flex items-center">
+          Request Access
+          <motion.div animate={{ x: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </motion.div>
+        </span>
+      </motion.button>
+
+      <motion.button
+        onClick={() => router.push('/fit')}
+        className="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 bg-white/15 border-2 border-white/40 hover:border-orange-400/80 rounded-2xl font-semibold text-white transition-all duration-300 w-full sm:w-auto max-w-[340px] backdrop-blur-sm"
+        whileHover={{ scale: 1.06, y: -4, backgroundColor: 'rgba(255, 255, 255, 0.2)', borderColor: 'rgba(255, 140, 0, 0.8)' }}
+        whileTap={{ scale: 0.94 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.15, duration: 0.6 }}
+        aria-label="Is This For You"
+        type="button"
+      >
+        <span className="relative flex items-center">
+          Is This For You?
+        </span>
+      </motion.button>
+    </>
   )
 }
 
@@ -124,16 +206,30 @@ function SocialProof() {
         ))}
       </div>
 
-      <p className="neon-subheading font-semibold text-center">Join <span className="font-semibold">500+</span> founders in the Gulf ecosystem</p>
+      <p className="neon-subheading font-bold text-center text-white drop-shadow-lg" style={{ textShadow: '0 3px 10px rgba(0, 0, 0, 0.8)' }}>Join <span className="font-black text-orange-300">500+</span> founders in the Gulf ecosystem</p>
     </motion.div>
   )
 }
 
 function ScrollIndicator() {
   return (
-    <motion.div className="relative w-full flex flex-col items-center gap-2 mt-8" animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-      <p className="text-xs slow-blink text-muted-foreground uppercase tracking-widest">Scroll to explore</p>
-      <div className="w-[2px] h-8 bg-gradient-to-b from-orange-500 to-transparent rounded-full" />
+    <motion.div 
+      className="relative w-full flex flex-col items-center gap-2 mt-8" 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, y: [0, 12, 0] }} 
+      transition={{ delay: 1.3, duration: 2.2, repeat: Infinity }}
+    >
+      <motion.p 
+        className="text-xs slow-blink text-white/90 uppercase tracking-widest font-medium drop-shadow-lg"
+        style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}
+      >
+        Scroll to explore
+      </motion.p>
+      <motion.div 
+        className="w-[2px] h-8 bg-gradient-to-b from-orange-500 via-orange-400 to-transparent rounded-full"
+        animate={{ opacity: [0.5, 1, 0.5] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      />
     </motion.div>
   )
 }

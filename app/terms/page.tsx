@@ -4,8 +4,19 @@ import { motion } from 'framer-motion'
 import HighQualityImage from '@/components/HighQualityImage'
 import Link from 'next/link'
 import SocialHomeButtons from '@/components/social-home-buttons'
+import { useState } from 'react'
+import { ChevronDown } from 'lucide-react'
 
 export default function TermsPage() {
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
+
+  const toggleSection = (sectionId: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }))
+  }
+
   return (
     <main className="min-h-screen relative bg-black overflow-x-hidden">
       <div

@@ -189,15 +189,15 @@ export function CommunityShowcase() {
           ))}
         </motion.div>
 
-        {/* Logo marquee */}
+        {/* Logo marquee - tighter spacing so it fits under the heading */}
         <motion.div
-          className="mt-12"
+          className="mt-6"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <LogoMarquee count={25} speedSeconds={40} />
+          <LogoMarquee count={25} speedSeconds={36} />
         </motion.div>
       </div>
     </section>

@@ -57,7 +57,7 @@ export default function InvestorDashboard({ userId }: { userId: string }) {
               </div>
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-white">Investor: {profile.name}</h2>
-                <p className="text-orange-300/80 text-lg font-light mt-1">{profile.fundName} — {profile.investmentStage}</p>
+                <p className="text-orange-300/80 text-lg font-light mt-1">{profile.fundName} - {profile.investmentStage}</p>
               </div>
             </div>
             <motion.button

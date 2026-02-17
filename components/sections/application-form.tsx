@@ -5,6 +5,7 @@ import { CheckCircle2, AlertCircle, XCircle } from 'lucide-react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/auth-context'
+import { scrollRevealConfig } from '@/lib/animation-variants'
 
 export function ApplicationFormSection() {
   const router = useRouter()
@@ -134,10 +135,11 @@ export function ApplicationFormSection() {
         {/* Section header */}
         <motion.div
           className="text-center mb-12 sm:mb-16"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
+          exit={{ opacity: 0, y: 24 }}
+          viewport={scrollRevealConfig}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.8)' }}>
             Secure Your Spot
@@ -151,10 +153,11 @@ export function ApplicationFormSection() {
         <motion.form
           onSubmit={handleSubmit}
           className="p-6 sm:p-8 lg:p-12 rounded-2xl glass border border-orange-500/20 space-y-5 sm:space-y-6"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+          initial={{ opacity: 0, y: 28, scale: 0.96 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 28, scale: 0.96 }}
+          viewport={scrollRevealConfig}
+          transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* Full Name */}
           <div>
@@ -251,17 +254,18 @@ export function ApplicationFormSection() {
           {/* Commitment amount info */}
           <motion.div
             className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 12 }}
+            viewport={scrollRevealConfig}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="flex gap-3">
               <AlertCircle className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
               <div className="text-sm">
                 <p className="text-white font-medium mb-1">Commitment Fee: AED 500</p>
                 <p className="text-muted-foreground text-xs font-light">
-                  Refundable—shows serious intent. You'll be refunded if not accepted into the shortlist.
+                  Refundable - shows serious intent. You'll be refunded if not accepted into the shortlist.
                 </p>
               </div>
             </div>
@@ -306,8 +310,8 @@ export function ApplicationFormSection() {
                 statusType === 'error'
                   ? 'bg-red-500/10 border border-red-500/30'
                   : statusType === 'success'
-                    ? 'bg-green-500/10 border border-green-500/30'
-                    : 'bg-blue-500/10 border border-blue-500/30'
+                    ? 'bg-orange-500/10 border border-orange-500/30'
+                    : 'bg-orange-500/10 border border-orange-500/30'
               }`}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -315,17 +319,17 @@ export function ApplicationFormSection() {
               {statusType === 'error' ? (
                 <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
               ) : statusType === 'success' ? (
-                <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
               ) : (
-                <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                <AlertCircle className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
               )}
               <p
                 className={`text-sm font-medium ${
                   statusType === 'error'
                     ? 'text-red-300'
                     : statusType === 'success'
-                      ? 'text-green-300'
-                      : 'text-blue-300'
+                      ? 'text-orange-300'
+                      : 'text-orange-300'
                 }`}
               >
                 {statusMessage}
@@ -338,7 +342,7 @@ export function ApplicationFormSection() {
             type="submit"
             disabled={isLoading || submitted}
             className="w-full py-3 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold hover:shadow-2xl hover:shadow-orange-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.3 } }}
             whileTap={{ scale: 0.98 }}
           >
             {isLoading ? (

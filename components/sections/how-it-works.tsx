@@ -1,119 +1,139 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Zap, Target, TrendingUp } from 'lucide-react'
+import { FileText, UserCheck, Users, TrendingUp } from 'lucide-react'
+import { useState } from 'react'
 import { animationVariants, scrollRevealConfig } from '@/lib/animation-variants'
 
 const steps = [
   {
-    icon: Zap,
-    number: '01',
-    title: 'Connect',
-    description: 'Join our platform and get instantly connected with founders, investors, and mentors.',
+    icon: FileText,
+    key: 'apply',
+    title: 'Apply',
+    description: 'Two minutes. Tell us who you are, where you are based, and what you are building. We review every application with care.',
   },
   {
-    icon: Target,
-    number: '02',
-    title: 'Collaborate',
-    description: 'Access resources, funding opportunities, and partnerships tailored to your stage.',
+    icon: UserCheck,
+    key: 'profile',
+    title: 'Profile & Next Step',
+    description: 'If accepted, your founder profile goes live and we suggest the best next step tailored to your stage and goals.',
+  },
+  {
+    icon: Users,
+    key: 'connect',
+    title: 'Join The Room',
+    description: 'Attend matched circles, events, and deal rooms — local track or GCC expansion depending on your plans.',
   },
   {
     icon: TrendingUp,
-    number: '03',
-    title: 'Scale',
-    description: 'Leverage regional insights and global networks to accelerate your growth.',
+    key: 'grow',
+    title: 'Build, Expand, Raise',
+    description: 'Leverage community, intelligence, and corridors to grow in the Gulf and reach the right capital at the right time.',
   },
 ]
 
+interface TiltState {
+  rotateX: number
+  rotateY: number
+}
+
+function StepCard({ step }: { step: typeof steps[0] }) {
+  const [tilt, setTilt] = useState<TiltState>({ rotateX: 0, rotateY: 0 })
+  const [isHovering, setIsHovering] = useState(false)
+  const Icon = step.icon
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const x = e.clientX - rect.left - centerX
+    const y = e.clientY - rect.top - centerY
+
+    const rotateX = (y / centerY) * 8
+    const rotateY = (x / centerX) * -8
+
+    setTilt({ rotateX, rotateY })
+  }
+
+  const handleMouseLeave = () => {
+    setTilt({ rotateX: 0, rotateY: 0 })
+    setIsHovering(false)
+  }
+
+  return (
+    <motion.div
+      className="h-full perspective"
+      style={{
+        perspective: '1200px',
+      }}
+      variants={animationVariants.staggerItem}
+    >
+      <motion.article
+        className="group h-full rounded-2xl p-6 sm:p-8 border border-white/8 bg-black/40 backdrop-blur-sm cursor-pointer will-change-transform"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={handleMouseLeave}
+        animate={{
+          rotateX: isHovering ? tilt.rotateX : 0,
+          rotateY: isHovering ? tilt.rotateY : 0,
+        }}
+        transition={{
+          rotateX: { duration: 0.2, ease: 'easeOut' },
+          rotateY: { duration: 0.2, ease: 'easeOut' },
+        }}
+        style={{
+          transformStyle: 'preserve-3d',
+          transformPerspective: '1200px',
+        }}
+        whileHover={{
+          y: -8,
+          boxShadow: '0 24px 48px rgba(0,0,0,0.6)',
+          transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+        }}
+      >
+        <div className="flex items-start gap-4 relative z-10">
+          <div className="flex-none">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center bg-gradient-to-br from-orange-500/20 to-orange-500/8 border border-white/6 group-hover:from-orange-500/30 group-hover:to-orange-500/15 transition-colors duration-300">
+              <Icon className="w-6 h-6 text-orange-300" />
+            </div>
+          </div>
+
+          <div className="flex-1">
+            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">{step.title}</h3>
+            <p className="text-sm sm:text-sm text-white/75 leading-relaxed group-hover:text-white/85 transition-colors duration-300">{step.description}</p>
+          </div>
+        </div>
+      </motion.article>
+    </motion.div>
+  )
+}
+
 export function HowItWorksSection() {
   return (
-    <section className="relative w-full py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full py-12 sm:py-16 lg:py-28 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        {/* Section header */}
         <motion.div
-          className="text-center mb-12 sm:mb-16 lg:mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
+          className="text-center mb-10 sm:mb-14 lg:mb-16"
+          variants={animationVariants.fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={scrollRevealConfig}
         >
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6)' }}>
-            How It Works
-          </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-2xl mx-auto" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
-            From joining to scaling, we guide you through every step of your journey.
-          </p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">How It Works</h2>
+          <p className="text-sm sm:text-base text-white/95 max-w-2xl mx-auto">Four premium steps — clear, deliberate, and designed for founders.</p>
         </motion.div>
 
-        {/* Steps */}
-        <div className="relative">
-          {/* Connecting line */}
-          <motion.div
-            className="absolute top-16 sm:top-24 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-orange-500/30 to-transparent hidden lg:block"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 1.2 }}
-          />
-
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
-          >
-            {steps.map((step, index) => {
-              const Icon = step.icon
-              return (
-                <motion.div
-                  key={index}
-                  className="relative group"
-                  initial={{ opacity: 0, y: 40, rotateX: -10 }}
-                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                  viewport={{ once: true, margin: '-100px' }}
-                  transition={{ duration: 0.8, delay: index * 0.15, ease: 'easeOut' }}
-                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                >
-                  {/* Card background glow */}
-                  <motion.div
-                    className="absolute -inset-2 bg-gradient-to-r from-orange-500/5 to-orange-500/0 rounded-3xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"
-                    aria-hidden="true"
-                  />
-
-                  {/* Number circle */}
-                  <div className="relative mb-6 sm:mb-8 z-10">
-                    <motion.div
-                      className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-gradient-to-br from-orange-500/25 to-orange-600/15 border border-orange-500/40 flex items-center justify-center shadow-lg shadow-orange-500/10"
-                      whileHover={{ scale: 1.15, boxShadow: '0 0 30px rgba(255, 91, 35, 0.3)' }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <motion.div
-                        className="absolute inset-0 rounded-full bg-gradient-to-br from-orange-500/20 to-transparent"
-                      />
-                      <span className="relative text-xl sm:text-2xl lg:text-3xl font-bold text-orange-500">{step.number}</span>
-                    </motion.div>
-
-                    {/* Icon */}
-                    <motion.div
-                      className="absolute top-4 right-4 w-12 h-12 bg-gradient-to-br from-orange-500/30 to-orange-600/20 rounded-2xl flex items-center justify-center border border-orange-500/40 shadow-md shadow-orange-500/10"
-                      whileHover={{ scale: 1.2, rotate: 5 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Icon className="w-6 h-6 text-orange-300" />
-                    </motion.div>
-                  </div>
-
-                  {/* Content */}
-                  <motion.div className="relative z-10">
-                    <h3 className="text-2xl font-semibold mb-3 text-white group-hover:text-orange-300 transition-colors duration-300" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>{step.title}</h3>
-                    <p className="text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>{step.description}</p>
-                  </motion.div>
-                </motion.div>
-              )
-            })}
-          </motion.div>
-        </div>
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10"
+          variants={animationVariants.staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={scrollRevealConfig}
+        >
+          {steps.map((step) => (
+            <StepCard key={step.key} step={step} />
+          ))}
+        </motion.div>
       </div>
     </section>
   )

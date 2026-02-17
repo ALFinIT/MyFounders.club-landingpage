@@ -20,8 +20,8 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  /* Soft gray site-wide text color requested by design */
-  color: #CCCCCC;
+  /* Stronger site-wide text color for maximum contrast */
+  color: #FFFFFF;
   overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -36,7 +36,7 @@ body::-webkit-scrollbar {
 
 @layer components {
   .glass {
-    @apply bg-black/70 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg relative overflow-hidden;
+    @apply bg-black/60 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg relative overflow-hidden;
   }
 
   .glass::before {
@@ -87,7 +87,7 @@ body::-webkit-scrollbar {
   }
 
   .neon-heading {
-    color: #CCCCCC;
+    color: #FFFFFF;
     /* plain bold heading without glow */
     text-shadow: none;
     font-weight: 800;
@@ -106,9 +106,9 @@ body::-webkit-scrollbar {
   }
 
   .neon-subheading {
-    color: #CCCCCC;
+    color: #F2F2F2;
     text-shadow: none;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
   }
 
   /* Hero heading override to ensure stronger contrast and extra bold weight */
@@ -156,8 +156,8 @@ body::-webkit-scrollbar {
   /* Typography overrides: keep body light but make headings/subheadings bold & brighter */
   /* Headings (primary) */
   h1, h2, h3 {
-    font-weight: 700;
-    color: #CCCCCC;
+    font-weight: 800;
+    color: #FFFFFF;
     letter-spacing: 0.01em;
   }
 
@@ -171,7 +171,7 @@ body::-webkit-scrollbar {
   /* Body text and inline elements: optimized for accessibility and contrast */
   p, li, span, button {
     font-weight: 400 !important;
-    color: var(--foreground);
+    color: #F7F7F7 !important;
     letter-spacing: 0.01em;
   }
 
@@ -186,6 +186,25 @@ body::-webkit-scrollbar {
   a:focus {
     color: #FF5B23 !important;
     outline: none;
+  }
+
+  /* Theme native selects to match project inputs */
+  select {
+    @apply w-full rounded-md border border-white/10 bg-white/5 text-white px-3 py-2 text-sm focus:outline-none;
+  }
+  select:focus {
+    @apply ring-1 ring-orange-500/30;
+  }
+
+  /* Native option dropdown styling where supported */
+  select option {
+    background-color: rgba(0,0,0,0.9);
+    color: #FFFFFF;
+  }
+
+  /* For WebKit-based browsers, attempt to theme the dropdown */
+  select::-webkit-dropdown-button {
+    background-color: transparent;
   }
   /* Keep Tailwind `text-white` utility unchanged (do not force color) */
   /* Enhanced animations */
@@ -297,11 +316,26 @@ body::-webkit-scrollbar {
 
   /* Background styling matching landing page */
   .bg-page {
-    background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('/MFC%20theme.png');
+    position: relative;
+    background: url('/MFC%20theme.png');
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+  }
+
+  /* Dim overlay only affects the background, not content */
+  .bg-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* dim background while keeping content bright */
+    background: linear-gradient(var(--bg-overlay), var(--bg-overlay));
+    pointer-events: none;
+    z-index: 0;
   }
 }
 
@@ -313,8 +347,8 @@ body::-webkit-scrollbar {
 
 @layer base {
   :root {
-    /* Global background overlay color (adjust to change dimming across the site) */
-    --bg-overlay: rgba(0,0,0,0.8);
+    /* Global background overlay color - light overlay to show background image */
+    --bg-overlay: rgba(0,0,0,0.5);
     --background: 0 0% 1.5%;
     --foreground: 0 0% 80%;
     --card: 0 0% 8%;

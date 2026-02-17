@@ -6,12 +6,13 @@ interface User {
   id: string
   email: string
   name: string
+  role?: 'founder' | 'investor' | 'both'
 }
 
 interface AuthContextType {
   user: User | null
   isLoading: boolean
-  signup: (email: string, password: string, name: string) => Promise<void>
+  signup: (email: string, password: string, name: string, role?: string) => Promise<void>
   login: (email: string, password: string) => Promise<void>
   logout: () => void
   deleteAccount?: () => void
@@ -37,7 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(false)
   }, [])
 
-  const signup = async (email: string, password: string, name: string) => {
+  const signup = async (email: string, password: string, name: string, role?: string) => {
     // Check if user already exists
     const users = JSON.parse(localStorage.getItem('users') || '[]')
     if (users.some((u: any) => u.email === email)) {
@@ -49,6 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       id: Date.now().toString(),
       email,
       name,
+      role: (role as 'founder' | 'investor' | 'both') || 'founder',
     }
 
     // Store password (in production, this should be hashed on the server)

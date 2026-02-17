@@ -5,8 +5,10 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/auth-context'
 import { Logo } from '@/components/logo'
-import { ChevronRight, MessageCircle, Linkedin, Twitter, Instagram, Home, Youtube } from 'lucide-react'
+import { MessageCircle, Linkedin, Twitter, Instagram, Home, Youtube } from 'lucide-react'
 import Link from 'next/link'
+import { FounderProfileForm } from '@/components/founder-profile-form'
+import { InvestorProfileForm } from '@/components/investor-profile-form'
 
 export default function SetupProfilePage() {
   const router = useRouter()
@@ -26,10 +28,15 @@ export default function SetupProfilePage() {
 
     // Check if user already has a profile - if so, redirect to dashboard
     const profiles = JSON.parse(localStorage.getItem('profiles') || '[]')
-    const existingProfile = profiles.find((p: any) => p.userId === user.id)
+    const founderProfiles = JSON.parse(localStorage.getItem('founder_profiles') || '[]')
+    const investorProfiles = JSON.parse(localStorage.getItem('investor_profiles') || '[]')
     
-    if (existingProfile) {
-      router.push('/dashboard')
+    const hasProfile = profiles.find((p: any) => p.userId === user.id) || 
+                       founderProfiles.find((p: any) => p.user_id === user.id) ||
+                       investorProfiles.find((p: any) => p.user_id === user.id)
+    
+    if (hasProfile) {
+      router.push(`/dashboard/${user.role === 'investor' ? 'investor' : 'founder'}`)
       return
     }
 
@@ -72,6 +79,12 @@ export default function SetupProfilePage() {
     }
   }
 
+  const handleProfileComplete = () => {
+    // Redirect to dashboard based on role
+    const dashboardPath = user?.role === 'investor' ? '/dashboard/investor' : '/dashboard/founder'
+    router.push(dashboardPath)
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
@@ -90,8 +103,8 @@ export default function SetupProfilePage() {
         backgroundAttachment: 'fixed',
       }}
     >
-      {/* Light overlay */}
-      <div className="absolute inset-0 bg-black/20" />
+      {/* Dim overlay matching landing page contrast */}
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url(/MFC%20theme.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }} />
 
       {/* Content */}
       <div className="max-w-2xl mx-auto relative z-10">
@@ -104,12 +117,15 @@ export default function SetupProfilePage() {
           <div className="flex justify-center mb-6">
             <Logo />
           </div>
-          <h1 className="text-4xl font-light text-gray-100 mb-8 drop-shadow-2xl" style={{ textShadow: '0 4px 16px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.8)' }}>Welcome to My Founders Club</h1>
+          <h1 className="text-4xl font-light text-gray-100 mb-2 drop-shadow-2xl" style={{ textShadow: '0 4px 16px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.8)' }}>Complete Your Profile</h1>
+          <p className="text-gray-400 drop-shadow-lg" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.9)' }}>
+            {user?.role === 'investor' ? 'As an investor, help us understand your investment criteria' : 'As a founder, tell us about your startup'}
+          </p>
         </motion.div>
 
-        {/* Quick Start Message */}
+        {/* Dynamic Profile Form */}
         <motion.div
-          className="rounded-2xl p-8 text-center"
+          className="rounded-2xl p-8"
           style={{
             background: 'linear-gradient(145deg, rgba(25, 25, 25, 1), rgba(12, 12, 12, 1))',
             border: '1px solid rgba(255, 255, 255, 0.12)',
@@ -118,16 +134,11 @@ export default function SetupProfilePage() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
         >
-          <p className="text-gray-200 mb-6 drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)' }}>You're all set! Go to your dashboard to manage your account and connect with the community.</p>
-          <motion.a
-            href="/dashboard"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-orange-500/30 transition-all"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Go to Dashboard
-            <ChevronRight size={18} />
-          </motion.a>
+          {user?.role === 'investor' ? (
+            <InvestorProfileForm user={user} onComplete={handleProfileComplete} />
+          ) : (
+            <FounderProfileForm user={user} onComplete={handleProfileComplete} />
+          )}
         </motion.div>
       </div>
 

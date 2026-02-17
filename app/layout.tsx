@@ -15,12 +15,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://myfoundersclub.com'),
   title: 'MY FOUNDERS CLUB',
   description:
-    "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA and beyond.",
+    "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity globally.",
   generator: 'vite',
   openGraph: {
     title: 'MY FOUNDERS CLUB',
     description:
-      "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA and beyond.",
+      "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity globally.",
     images: [
       {
         url: '/Main Logo Icon.svg',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'MY FOUNDERS CLUB',
     description:
-      "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity across MENA and beyond.",
+      "Build Locally. Champion Regionally. Scale Globally. The Gulf's ecosystem operating system connecting founders, capital, and opportunity globally.",
     images: ['/Main Logo Icon.svg'],
   },
 }
@@ -58,7 +58,9 @@ export default function RootLayout({
         <AuthProvider>
           <ProfileProvider>
             <SmoothScrollProvider>
-              {children}
+              <div className="bg-page relative min-h-screen">
+                <div className="relative z-10 bg-transparent">{children}</div>
+              </div>
             </SmoothScrollProvider>
           </ProfileProvider>
         </AuthProvider>

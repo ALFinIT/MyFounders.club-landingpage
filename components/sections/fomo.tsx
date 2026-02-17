@@ -8,7 +8,7 @@ export function FOMOSection() {
     'Founder-led company (tech-agnostic)',
     'Revenue or funding traction',
     'Team in place or building',
-    'Vision for MENA expansion or regional impact',
+    'Vision for Gulf/Global expansion or regional impact',
     'Coachable and committed long-term',
   ]
 

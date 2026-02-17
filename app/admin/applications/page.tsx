@@ -60,7 +60,7 @@ export default async function ApplicationsPage() {
                       {app.proof_of_work ? (
                         <a href={app.proof_of_work} target="_blank" rel="noreferrer" className="text-orange-400 underline">Link</a>
                       ) : (
-                        <span className="text-muted-foreground">—</span>
+                        <span className="text-muted-foreground">-</span>
                       )}
                     </td>
                     <td className="px-4 py-3 align-top">{app.agree_commitment ? 'Yes' : 'No'}</td>

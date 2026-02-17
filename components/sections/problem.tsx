@@ -1,103 +1,100 @@
-'use client'
+"use client"
 
 import { motion } from 'framer-motion'
-import { AlertCircle, TrendingDown, Users } from 'lucide-react'
+import { scrollRevealConfig } from '@/lib/animation-variants'
+import { useRef, useState } from 'react'
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
+function TiltCard({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const [style, setStyle] = useState({ transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)' })
+
+  const handleMove = (e: React.MouseEvent) => {
+    if (!ref.current) return
+    const rect = ref.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const cx = rect.width / 2
+    const cy = rect.height / 2
+    const dx = (x - cx) / cx
+    const dy = (y - cy) / cy
+    const rotateY = dx * 8 // degrees
+    const rotateX = -dy * 8
+    const translateZ = 8
+    setStyle({ transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(${translateZ}px)` })
+  }
+
+  const handleLeave = () => setStyle({ transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)' })
+
+  return (
+    <motion.div
+      ref={ref}
+      className="rounded-2xl p-6 bg-[#0b0b0b] border border-white/8 shadow-2xl"
+      style={style}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 28 }}
+      viewport={scrollRevealConfig}
+      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ scale: 1.02 }}
+    >
+      {children}
+    </motion.div>
+  )
 }
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: 'easeOut',
-    },
-  },
-  hover: {
-    y: -10,
-    transition: {
-      duration: 0.3,
-    },
-  },
-}
-
-const problems = [
-  {
-    icon: Users,
-    title: 'Fragmented Ecosystem',
-    description: 'Founders, investors, and resources scattered across multiple platforms with no central hub.',
-  },
-  {
-    icon: TrendingDown,
-    title: 'Limited Capital Access',
-    description: 'Difficulty connecting with regional investors and accessing Gulf-specific funding opportunities.',
-  },
-  {
-    icon: AlertCircle,
-    title: 'Knowledge Gaps',
-    description: 'Lack of curated insights on regional market dynamics and ecosystem best practices.',
-  },
-]
 
 export function ProblemSection() {
+  const cards = [
+    {
+      title: '$4.5 billion',
+      subtitle: 'flowed into GCC startups in Q3 2025 alone',
+      body: 'Founders are still figuring it out alone.',
+    },
+    {
+      title: 'Signal Overload',
+      subtitle: 'New programmes and events every week',
+      body: "64% of Gulf founders say the noise actively impairs their decision-making.",
+    },
+    {
+      title: 'Missing Room',
+      subtitle: 'Actionable clarity is rare',
+      body: "The problem isn't access to information. It's the absence of a room where someone who's actually done this tells you what matters now for your stage, your sector, and your market.",
+    },
+  ]
+
   return (
     <section className="relative w-full py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        {/* Section header */}
+        {/* Section header - Premium bi-directional fade */}
         <motion.div
           className="text-center mb-10 sm:mb-16"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
+          exit={{ opacity: 0, y: 24 }}
+          viewport={scrollRevealConfig}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6)' }}>
-            The Challenge
+            The Problem
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-2xl mx-auto" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
-            Gulf founders face fragmentation and barriers that slow growth. We're changing that.
+          <p className="text-sm sm:text-base lg:text-lg text-white/80 max-w-3xl mx-auto font-light drop-shadow-lg" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
+            The Gulf is awash with capital and programmes, yet founders still lack a simple room that provides clear, stage-appropriate guidance.
           </p>
         </motion.div>
 
-        {/* Problem cards */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-        >
-          {problems.map((problem, index) => {
-            const Icon = problem.icon
-            return (
-              <motion.div
-                key={index}
-                className="glass glass-hover group p-4 sm:p-6 lg:p-8"
-                variants={cardVariants}
-                whileHover="hover"
-              >
-                <motion.div
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br from-orange-500/20 to-orange-600/10 flex items-center justify-center mb-4 sm:mb-6 group-hover:from-orange-500/30 group-hover:to-orange-600/20 transition-all"
-                  whileHover={{ rotate: 10 }}
-                >
-                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />
-                </motion.div>
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-2 sm:mb-3 text-white" style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.7)' }}>{problem.title}</h3>
-                <p className="text-gray-300 leading-relaxed text-xs sm:text-sm" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>{problem.description}</p>
-              </motion.div>
-            )
-          })}
-        </motion.div>
+        {/* Cards grid with tilt */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
+          {cards.map((c, i) => (
+            <TiltCard key={i} delay={i * 0.12}>
+              <div className="flex flex-col h-full">
+                  <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">{c.title}</h3>
+                  <p className="text-sm text-white/90 mb-4 font-medium">{c.subtitle}</p>
+                  <p className="text-sm text-white font-light mt-auto">{c.body}</p>
+                </div>
+            </TiltCard>
+          ))}
+        </div>
       </div>
     </section>
   )

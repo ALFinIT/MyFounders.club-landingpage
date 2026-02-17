@@ -326,8 +326,8 @@ interface InvestorProfile {
 - `middleware.ts` - Root middleware that handles user session persistence
 
 **API Routes (Form Submissions):**
-- `POST /api/whatsapp` — receives `{ firstName, phone }` and inserts into `whatsapp_signups` table
-- `POST /api/applications` — receives application form data and inserts into `applications` table
+-- `POST /api/whatsapp` - receives `{ firstName, phone }` and inserts into `whatsapp_signups` table
+-- `POST /api/applications` - receives application form data and inserts into `applications` table
 - Both routes use the server-side Supabase client for secure database operations
 
 **Database Schema:**

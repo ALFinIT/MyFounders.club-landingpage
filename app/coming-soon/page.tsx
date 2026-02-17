@@ -125,7 +125,7 @@ export default function ComingSoonPage() {
           <ul className="text-sm text-gray-300 space-y-2 text-left">
             <li className="flex items-start gap-3">
               <span className="text-orange-400 font-bold text-lg leading-none">✓</span>
-              <span>Unified ecosystem platform connecting founders across MENA</span>
+              <span>Gulf-based ecosystem platform connecting founders globally</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-orange-400 font-bold text-lg leading-none">✓</span>
@@ -156,7 +156,7 @@ export default function ComingSoonPage() {
             const email = input?.value || ''
             try {
               await fetch('/api/notify-contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ page: '/coming-soon', email }) })
-              alert('Thanks — we will notify you')
+              alert('Thanks, we will notify you')
               input.value = ''
             } catch (err) {
               alert('Failed to submit')
