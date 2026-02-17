@@ -69,7 +69,7 @@ function StepCard({ step }: { step: typeof steps[0] }) {
       variants={animationVariants.staggerItem}
     >
       <motion.article
-        className="group h-full rounded-2xl p-6 sm:p-8 border border-white/8 bg-black/40 backdrop-blur-sm cursor-pointer will-change-transform"
+        className="group h-full rounded-2xl p-8 sm:p-12 lg:p-14 border border-white/8 bg-black/40 backdrop-blur-sm cursor-pointer will-change-transform"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={handleMouseLeave}
@@ -86,21 +86,25 @@ function StepCard({ step }: { step: typeof steps[0] }) {
           transformPerspective: '1200px',
         }}
         whileHover={{
-          y: -8,
+          y: -12,
           boxShadow: '0 24px 48px rgba(0,0,0,0.6)',
           transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
         }}
       >
-        <div className="flex items-start gap-4 relative z-10">
+        <div className="flex items-start gap-6 relative z-10">
           <div className="flex-none">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center bg-gradient-to-br from-orange-500/20 to-orange-500/8 border border-white/6 group-hover:from-orange-500/30 group-hover:to-orange-500/15 transition-colors duration-300">
-              <Icon className="w-6 h-6 text-orange-300" />
+            <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-xl flex items-center justify-center bg-gradient-to-br from-orange-500/20 to-orange-500/8 border border-white/6 group-hover:from-orange-500/30 group-hover:to-orange-500/15 transition-colors duration-300">
+              <Icon className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-orange-300" />
             </div>
           </div>
 
           <div className="flex-1">
-            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">{step.title}</h3>
-            <p className="text-sm sm:text-sm text-white/75 leading-relaxed group-hover:text-white/85 transition-colors duration-300">{step.description}</p>
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 drop-shadow-lg" style={{
+              textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
+            }}>{step.title}</h3>
+            <p className="text-base sm:text-lg lg:text-lg text-white/80 leading-relaxed group-hover:text-white/90 transition-colors duration-300 drop-shadow-lg" style={{
+              textShadow: '0 1px 4px rgba(0, 0, 0, 0.8)'
+            }}>{step.description}</p>
           </div>
         </div>
       </motion.article>
@@ -110,21 +114,25 @@ function StepCard({ step }: { step: typeof steps[0] }) {
 
 export function HowItWorksSection() {
   return (
-    <section className="relative w-full py-12 sm:py-16 lg:py-28 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          className="text-center mb-10 sm:mb-14 lg:mb-16"
+          className="text-center mb-16 sm:mb-20 lg:mb-24"
           variants={animationVariants.fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={scrollRevealConfig}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">How It Works</h2>
-          <p className="text-sm sm:text-base text-white/95 max-w-2xl mx-auto">Four premium steps — clear, deliberate, and designed for founders.</p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 drop-shadow-lg" style={{
+            textShadow: '0 4px 12px rgba(0, 0, 0, 0.9)'
+          }}>How It Works</h2>
+          <p className="text-sm sm:text-base lg:text-lg text-white/90 max-w-2xl mx-auto drop-shadow-lg" style={{
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
+          }}>Four premium steps — clear, deliberate, and designed for founders.</p>
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-14"
           variants={animationVariants.staggerContainer}
           initial="hidden"
           whileInView="visible"

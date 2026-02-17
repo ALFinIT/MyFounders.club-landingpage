@@ -146,6 +146,57 @@ export function WhoItForSection() {
             )
           })}
         </div>
+
+        {/* Stats Section Below Cards */}
+        <motion.div
+          className="mt-16 sm:mt-20 lg:mt-24 pt-16 sm:pt-20 lg:pt-24 border-t border-white/10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-14">
+            {[
+              { number: '500+', label: 'Active Founders' },
+              { number: '150+', label: 'Angel Investors' },
+              { number: '25+', label: 'Venture Funds' },
+              { number: '1000+', label: 'Monthly Opportunities' },
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                className="text-center"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
+              >
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-orange-400 mb-2 drop-shadow-lg" style={{
+                  textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
+                }}>
+                  {stat.number}
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-300 font-medium drop-shadow-lg" style={{
+                  textShadow: '0 1px 4px rgba(0, 0, 0, 0.8)'
+                }}>
+                  {stat.label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.p
+            className="text-center text-base sm:text-lg text-gray-200 font-medium max-w-2xl mx-auto drop-shadow-lg"
+            style={{
+              textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
+            }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.7, duration: 0.6 }}
+          >
+            Join thousands of builders in the Gulf startup ecosystem
+          </motion.p>
+        </motion.div>
       </div>
     </section>
   )

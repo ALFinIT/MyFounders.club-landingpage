@@ -4,7 +4,6 @@ import { ProblemSection } from '@/components/sections/problem'
 import { HowItWorksSection } from '@/components/sections/how-it-works'
 import { FeaturesSection } from '@/components/sections/features'
 import { SocialProofSection } from '@/components/sections/social-proof'
-import { StatsSection } from '@/components/sections/stats'
 import { PricingSectionUpdated } from '@/components/sections/pricing-updated'
 import { JoinCommunitySection } from '@/components/sections/join-community'
 import { CommunityShowcase } from '@/components/sections/community-showcase'
@@ -27,7 +26,6 @@ export default function Home() {
         <ProblemSection />
         <FeaturesSection />
         <HowItWorksSection />
-        <StatsSection />
         <WhyJoinSection />
         <WhosInTheRoomSection />
         <CommunityShowcase />
