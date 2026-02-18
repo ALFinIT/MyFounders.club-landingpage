@@ -4,6 +4,7 @@ import { Inter, Space_Mono, Montserrat } from 'next/font/google'
 
 import './globals.css'
 import { SmoothScrollProvider } from '@/providers/smooth-scroll'
+import { MotionProvider } from '@/providers/motion-provider'
 import { AuthProvider } from '@/context/auth-context'
 import { ProfileProvider } from '@/context/profile-context'
 
@@ -57,11 +58,13 @@ export default function RootLayout({
         <body className="font-sans antialiased bg-background text-foreground" suppressHydrationWarning>
         <AuthProvider>
           <ProfileProvider>
-            <SmoothScrollProvider>
-              <div className="bg-page relative min-h-screen">
-                <div className="relative z-10 bg-transparent">{children}</div>
-              </div>
-            </SmoothScrollProvider>
+            <MotionProvider>
+              <SmoothScrollProvider>
+                <div className="bg-page relative min-h-screen">
+                  <div className="relative z-10 bg-transparent">{children}</div>
+                </div>
+              </SmoothScrollProvider>
+            </MotionProvider>
           </ProfileProvider>
         </AuthProvider>
       </body>

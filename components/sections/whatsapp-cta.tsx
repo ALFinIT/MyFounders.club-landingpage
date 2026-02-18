@@ -14,40 +14,22 @@ const benefits = [
 ]
 
 export function WhatsAppCTASection() {
-  const [submitted, setSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
   const [phoneError, setPhoneError] = useState('')
-
-  // Validate phone number format
-  const validatePhone = (phone: string): boolean => {
-    // Accept formats like: +971501234567, +971 50 123 4567, 0501234567, etc.
-    const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/
-    return phoneRegex.test(phone.replace(/\s/g, ''))
-  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsLoading(true)
     setPhoneError('')
 
     const formData = new FormData(e.currentTarget)
-    const phone = formData.get('phone') as string
-    const name = formData.get('firstName') as string
-
-    // Validate phone number
-    if (!validatePhone(phone)) {
-      setPhoneError('Please enter a valid phone number (e.g., +971 50 123 4567)')
-      return
+    const payload = {
+      firstName: formData.get('firstName'),
+      phone: formData.get('phone'),
     }
 
-    setIsLoading(true)
-
     try {
-      const payload = {
-        name,
-        whatsappNumber: phone,
-        founderType: 'founder',
-      }
-
       const res = await fetch('/api/whatsapp/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -98,16 +80,16 @@ export function WhatsAppCTASection() {
       <div className="relative z-10 max-w-2xl mx-auto px-4">
         <motion.div
           className="glass glass-hover p-6 sm:p-10 lg:p-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7 }}
+          initial={{ opacity: 0, y: 28, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 28, scale: 0.97 }}
+          viewport={{ once: false, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* Header */}
           <motion.div
             className="flex items-center justify-center w-16 h-16 mx-auto mb-8 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/30"
-            whileHover={{ scale: 1.15 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
           >
             <MessageCircle className="w-8 h-8 text-orange-400" />
           </motion.div>
@@ -121,27 +103,22 @@ export function WhatsAppCTASection() {
           </p>
 
           {/* Benefits */}
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ delay: 0.15, staggerChildren: 0.08 }}
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
             {benefits.map((benefit, index) => (
               <motion.div
                 key={index}
                 className="flex items-start gap-3 p-2 sm:p-3 rounded-lg bg-white/5 border border-white/10"
                 initial={{ opacity: 0, x: -12 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: 0.25 + index * 0.06 }}
+                exit={{ opacity: 0, x: -12 }}
+                viewport={{ once: false }}
+                transition={{ delay: 0.1 + index * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
                 <Check className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
                 <span className="text-sm text-gray-300" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>{benefit}</span>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
 
           {/* Form */}
           {!submitted ? (
@@ -155,8 +132,9 @@ export function WhatsAppCTASection() {
                   className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-muted-foreground focus:outline-none focus:border-orange-500/50 focus:bg-white/10 transition-all"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  viewport={{ once: false }}
+                  transition={{ delay: 0.3, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 />
                 <motion.input
                   type="tel"
@@ -168,8 +146,9 @@ export function WhatsAppCTASection() {
                   }`}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ delay: 0.45 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  viewport={{ once: false }}
+                  transition={{ delay: 0.35, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 />
               </div>
 
@@ -181,8 +160,8 @@ export function WhatsAppCTASection() {
                 type="submit"
                 disabled={isLoading}
                 className="w-full py-3 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold hover:shadow-2xl hover:shadow-orange-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.03, y: -2, transition: { duration: 0.3 } }}
+                whileTap={{ scale: 0.97 }}
               >
                 {isLoading ? (
                   <>
@@ -203,19 +182,17 @@ export function WhatsAppCTASection() {
               <p className="text-center text-xs text-muted-foreground">
                 No spam. High-value ecosystem updates only.
               </p>
-
-              {/* single CTA only (Join WhatsApp Community) - direct button removed */}
             </form>
           ) : (
             <motion.div
               className="text-center py-8"
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ type: 'spring', stiffness: 200 }}
             >
               <motion.div
                 className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/30 flex items-center justify-center"
-                animate={{ scale: [1, 1.2, 1] }}
+                animate={{ scale: [1, 1.15, 1] }}
                 transition={{ duration: 0.5 }}
               >
                 <Check className="w-8 h-8 text-orange-400" />

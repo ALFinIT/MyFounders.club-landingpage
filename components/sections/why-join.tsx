@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { scrollRevealConfig } from '@/lib/animation-variants'
+import { Rocket, TrendingUp, DollarSign, Building2, Zap, CheckCircle2 } from 'lucide-react'
+import { scrollRevealVariants, containerVariants, itemVariants } from '@/lib/motion-system'
 
 const reasons = [
   {
@@ -21,6 +22,14 @@ const reasons = [
       'Build trust faster in a region where relationships are the infrastructure'
     ]
   }
+]
+
+const whoThisIsFor = [
+  { icon: Rocket, label: 'Startups seeking Gulf capital or market entry' },
+  { icon: TrendingUp, label: 'SMEs expanding regionally or seeking corporate contracts' },
+  { icon: DollarSign, label: 'Investors looking for vetted GCC deal flow' },
+  { icon: Building2, label: 'Family Offices seeking strategic Gulf exposure' },
+  { icon: Zap, label: 'Service Providers wanting qualified startup/SME clients' }
 ]
 
 interface TiltState {
@@ -54,14 +63,14 @@ function WhyJoinCard({ reason }: { reason: typeof reasons[0] }) {
     <motion.div
       className="h-full perspective"
       style={{ perspective: '1200px' }}
-      initial={{ opacity: 0, y: 32, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: 32, scale: 0.95 }}
-      viewport={scrollRevealConfig}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      variants={scrollRevealVariants}
+      initial="hidden"
+      whileInView="visible"
+      exit="exit"
+      viewport={{ once: false, margin: '-100px' }}
     >
       <motion.div
-        className="group h-full rounded-2xl p-8 border border-white/10 bg-[#0b0b0b] cursor-pointer will-change-transform"
+        className="group h-full rounded-2xl p-8 border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-orange-600/5 cursor-pointer will-change-transform hover:border-orange-500/50 transition-colors"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={handleMouseLeave}
@@ -78,12 +87,12 @@ function WhyJoinCard({ reason }: { reason: typeof reasons[0] }) {
           transformPerspective: '1200px',
         }}
         whileHover={{
-          y: -12,
-          boxShadow: '0 32px 64px rgba(0,0,0,0.7)',
+          y: -8,
+          boxShadow: '0 20px 48px rgba(255, 91, 35, 0.15)',
           transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
         }}
       >
-        <h3 className="text-2xl font-bold text-white mb-6">{reason.title}</h3>
+        <h3 className="text-2xl font-bold text-orange-400 mb-6">{reason.title}</h3>
         
         <ul className="space-y-4">
           {reason.points.map((point, idx) => (
@@ -92,11 +101,11 @@ function WhyJoinCard({ reason }: { reason: typeof reasons[0] }) {
               className="flex gap-4 text-white/95"
               initial={{ opacity: 0, x: -12 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={scrollRevealConfig}
+              viewport={{ once: false }}
               transition={{ delay: idx * 0.1 }}
             >
-              <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400 text-sm font-bold">
-                ✓
+              <span className="flex-shrink-0 w-5 h-5 flex items-center justify-center rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400 mt-0.5">
+                <CheckCircle2 size={16} />
               </span>
               <span className="leading-relaxed">{point}</span>
             </motion.li>
@@ -106,7 +115,6 @@ function WhyJoinCard({ reason }: { reason: typeof reasons[0] }) {
     </motion.div>
   )
 }
-
 export function WhyJoinSection() {
   return (
     <section className="relative w-full py-16 lg:py-32 px-4 sm:px-6 lg:px-8">
@@ -117,91 +125,108 @@ export function WhyJoinSection() {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 24 }}
-          viewport={scrollRevealConfig}
+          viewport={{ once: false, margin: '-100px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="text-4xl lg:text-5xl font-bold mb-4 text-white" style={{
             textShadow: '0 4px 12px rgba(0, 0, 0, 0.9)'
           }}>
-            Why Founders Join
+            Build Locally. Champion Regionally. Scale Globally.
           </h2>
-          <p className="text-sm lg:text-base text-white/95 max-w-2xl mx-auto font-light">
-            Two paths. Same destination. Clarity.
-          </p>
         </motion.div>
 
-        {/* Cards grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
-          initial="hidden"
-          whileInView="visible"
-          exit="hidden"
-          viewport={scrollRevealConfig}
-          variants={{
-            hidden: { opacity: 1 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.2,
-                delayChildren: 0.05,
-              },
-            },
-          }}
-        >
-          {reasons.map((reason, index) => (
-            <WhyJoinCard key={index} reason={reason} />
-          ))}
-        </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* Why Join Cards */}
+          <motion.div
+            className="space-y-6"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, margin: '-100px' }}
+          >
+            {reasons.map((reason, idx) => (
+              <WhyJoinCard key={idx} reason={reason} />
+            ))}
+          </motion.div>
 
-        {/* Stats Section Below Cards */}
+          {/* Who This Is For */}
+          <motion.div
+            className="space-y-6"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, margin: '-100px' }}
+          >
+            <h3 className="text-2xl font-bold text-orange-400 mb-6">Who This Is For:</h3>
+            {whoThisIsFor.map((item, idx) => {
+              const IconComponent = item.icon
+              return (
+                <motion.div
+                  key={idx}
+                  className="flex items-start gap-4 p-4 rounded-lg border border-orange-500/30 bg-gradient-to-r from-orange-500/5 to-orange-600/5 hover:border-orange-500/50 transition-colors"
+                  variants={itemVariants}
+                  whileHover={{ x: 8, transition: { duration: 0.2 } }}
+                >
+                  <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400 mt-0.5">
+                    <IconComponent size={18} />
+                  </div>
+                  <span className="text-white/95 leading-relaxed">{item.label}</span>
+                </motion.div>
+              )
+            })}
+          </motion.div>
+        </div>
+
+        {/* What You Get */}
         <motion.div
-          className="mt-16 sm:mt-20 lg:mt-24 pt-16 sm:pt-20 lg:pt-24 border-t border-white/10"
+          className="mt-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: false, margin: '-100px' }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-14">
+          <h3 className="text-2xl font-bold text-orange-400 mb-6 text-center">What You Get:</h3>
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, margin: '-100px' }}
+          >
             {[
-              { number: '500+', label: 'Active Founders' },
-              { number: '150+', label: 'Angel Investors' },
-              { number: '25+', label: 'Venture Funds' },
-              { number: '1000+', label: 'Monthly Opportunities' },
-            ].map((stat, index) => (
+              'Validated Profile in our Gulf ecosystem database',
+              'WhatsApp Community Access with founders, investors, and partners',
+              'Direct Introductions based on your needs',
+              'Government Program Alerts (Vision 2030/2071 opportunities)',
+              'Event Invitations (Demo Days, investor meetups)',
+              'Priority Access to capital, partnerships, and regional expansion support'
+            ].map((item, idx) => (
               <motion.div
-                key={index}
-                className="text-center"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
+                key={idx}
+                className="flex items-start gap-3 p-3 rounded-lg border border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-orange-600/5"
+                variants={itemVariants}
               >
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-orange-400 mb-2 drop-shadow-lg" style={{
-                  textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
-                }}>
-                  {stat.number}
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-300 font-medium drop-shadow-lg" style={{
-                  textShadow: '0 1px 4px rgba(0, 0, 0, 0.8)'
-                }}>
-                  {stat.label}
-                </p>
+                <CheckCircle2 className="flex-shrink-0 w-5 h-5 text-orange-400 mt-0.5" />
+                <span className="text-white/90 text-sm leading-relaxed">{item}</span>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
+        </motion.div>
 
-          <motion.p
-            className="text-center text-base sm:text-lg text-gray-200 font-medium max-w-2xl mx-auto drop-shadow-lg"
-            style={{
-              textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
-            }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-          >
-            Join thousands of builders in the Gulf startup ecosystem
-          </motion.p>
+        {/* Investment Details */}
+        <motion.div
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: '-100px' }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 backdrop-blur-sm border border-orange-500/30 rounded-xl p-8 max-w-2xl mx-auto hover:border-orange-500/50 transition-colors">
+            <h3 className="text-2xl font-bold text-orange-400 mb-4">Investment: $120/year</h3>
+            <p className="text-white/90 mb-2">(one-time payment, annual renewal)</p>
+            <p className="text-white/90 mb-2">Decision: 48-72 hours after application</p>
+            <p className="text-white/90">Access: Immediate WhatsApp group invite upon approval</p>
+          </div>
         </motion.div>
       </div>
     </section>

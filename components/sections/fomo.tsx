@@ -17,10 +17,11 @@ export function FOMOSection() {
       <div className="max-w-4xl mx-auto">
         {/* Main narrative */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
+          exit={{ opacity: 0, y: 24 }}
+          viewport={{ once: false, margin: '-100px' }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-8 text-left"
         >
           {/* First paragraph */}
@@ -43,10 +44,11 @@ export function FOMOSection() {
         {/* Qualification checklist */}
         <motion.div
           className="mt-16 p-8 rounded-2xl glass border border-orange-500/20"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          exit={{ opacity: 0, y: 24 }}
+          viewport={{ once: false, margin: '-100px' }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
           <h3 className="text-lg sm:text-xl lg:text-2xl font-light text-white mb-6 sm:mb-8 drop-shadow-lg" style={{ textShadow: '0 3px 10px rgba(0, 0, 0, 0.8)' }}>You Should Apply If...</h3>
           <div className="space-y-3 sm:space-y-4">
@@ -54,10 +56,11 @@ export function FOMOSection() {
               <motion.div
                 key={index}
                 className="flex items-start gap-4"
-                initial={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, x: -16 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 + index * 0.05 }}
+                exit={{ opacity: 0, x: -16 }}
+                viewport={{ once: false }}
+                transition={{ delay: 0.08 + index * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
                 <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400 flex-shrink-0 mt-0.5" />
                 <span className="text-xs sm:text-sm lg:text-base text-gray-300 leading-relaxed" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>{qualification}</span>
@@ -69,10 +72,11 @@ export function FOMOSection() {
         {/* Who shouldn't apply */}
         <motion.div
           className="mt-8 p-8 rounded-2xl glass border border-orange-500/20"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          exit={{ opacity: 0, y: 24 }}
+          viewport={{ once: false, margin: '-100px' }}
+          transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
         >
           <h3 className="text-lg sm:text-xl lg:text-2xl font-light text-white mb-4 sm:mb-6 flex items-center gap-2 drop-shadow-lg" style={{ textShadow: '0 3px 10px rgba(0, 0, 0, 0.8)' }}>
             <AlertCircle className="w-6 h-6 text-orange-400" />
@@ -89,10 +93,11 @@ export function FOMOSection() {
         {/* Closing statement */}
         <motion.p
           className="text-lg text-white font-light text-center mt-12 leading-relaxed"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 16 }}
+          viewport={{ once: false }}
+          transition={{ delay: 0.2, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
           The shortlist closes when it's full. <span className="text-orange-400 font-semibold">Don't wait.</span>
         </motion.p>

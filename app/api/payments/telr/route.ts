@@ -172,6 +172,8 @@ async function processCardPayment(
   billingCycle: string,
   supabase: any
 ) {
+  const { TELR_STORE_ID, TELR_AUTHKEY } = initializeClients()
+
   // Create payment data for Telr card processing
   const paymentData = {
     store: TELR_STORE_ID,
@@ -196,6 +198,7 @@ async function processCardPayment(
   }
 
   // Generate Telr authentication signature
+  const crypto = require('crypto')
   const signatureString = `${TELR_STORE_ID}${paymentData.amount}${paymentData.currency}${TELR_AUTHKEY}`
   const authSignature = crypto.createHash('sha256').update(signatureString).digest('hex')
   ;(paymentData as any).signature = authSignature
@@ -252,6 +255,8 @@ async function processTelrWalletPayment(
   billingCycle: string,
   supabase: any
 ) {
+  const { TELR_STORE_ID, TELR_AUTHKEY } = initializeClients()
+
   // Telr wallet payment configuration
   const paymentData = {
     store: TELR_STORE_ID,
@@ -275,6 +280,7 @@ async function processTelrWalletPayment(
     cancel: `${process.env.NEXT_PUBLIC_APP_URL}/payment-failed`,
   }
 
+  const crypto = require('crypto')
   const signatureString = `${TELR_STORE_ID}${paymentData.amount}${paymentData.currency}${TELR_AUTHKEY}`
   const authSignature = crypto.createHash('sha256').update(signatureString).digest('hex')
   ;(paymentData as any).signature = authSignature
@@ -330,6 +336,8 @@ async function processGooglePayPayment(
   billingCycle: string,
   supabase: any
 ) {
+  const { TELR_STORE_ID, TELR_AUTHKEY } = initializeClients()
+
   // Google Pay configuration
   const paymentData = {
     store: TELR_STORE_ID,
@@ -352,6 +360,7 @@ async function processGooglePayPayment(
     cancel: `${process.env.NEXT_PUBLIC_APP_URL}/payment-failed`,
   }
 
+  const crypto = require('crypto')
   const signatureString = `${TELR_STORE_ID}${paymentData.amount}${paymentData.currency}${TELR_AUTHKEY}`
   const authSignature = crypto.createHash('sha256').update(signatureString).digest('hex')
   ;(paymentData as any).signature = authSignature
@@ -407,6 +416,8 @@ async function processApplePayPayment(
   billingCycle: string,
   supabase: any
 ) {
+  const { TELR_STORE_ID, TELR_AUTHKEY } = initializeClients()
+
   // Apple Pay configuration
   const paymentData = {
     store: TELR_STORE_ID,
@@ -429,6 +440,7 @@ async function processApplePayPayment(
     cancel: `${process.env.NEXT_PUBLIC_APP_URL}/payment-failed`,
   }
 
+  const crypto = require('crypto')
   const signatureString = `${TELR_STORE_ID}${paymentData.amount}${paymentData.currency}${TELR_AUTHKEY}`
   const authSignature = crypto.createHash('sha256').update(signatureString).digest('hex')
   ;(paymentData as any).signature = authSignature
@@ -602,6 +614,7 @@ async function sendConfirmationEmail(
   amountAED: number
 ): Promise<void> {
   try {
+    const { transporter } = initializeClients()
     const tierName = tier.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
     
     const mailOptions = {

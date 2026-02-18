@@ -11,8 +11,10 @@ import { WhatsAppCTASection } from '@/components/sections/whatsapp-cta'
 import { ApplicationFormSection } from '@/components/sections/application-form'
 import { FAQSection } from '@/components/sections/faq'
 import { Footer } from '@/components/sections/footer'
-import { WhyJoinSection } from '@/components/sections/why-join'
+import { FinalCTASection } from '@/components/sections/final-cta'
 import { WhosInTheRoomSection } from '@/components/sections/whos-in-the-room'
+import { GCCCountriesSection } from '@/components/sections/gcc-countries'
+import { WhyJoinSection } from '@/components/sections/why-join'
 import SocialHomeButtons from '@/components/social-home-buttons'
 
 export default function Home() {
@@ -22,6 +24,7 @@ export default function Home() {
       <SocialHomeButtons />
       <main className="w-full">
         <HeroSection />
+        <GCCCountriesSection />
         <JoinCommunitySection />
         <ProblemSection />
         <FeaturesSection />
@@ -34,6 +37,7 @@ export default function Home() {
         <PricingSectionUpdated />
         <ApplicationFormSection />
         <FAQSection />
+        <FinalCTASection />
         <Footer />
       </main>
     </>

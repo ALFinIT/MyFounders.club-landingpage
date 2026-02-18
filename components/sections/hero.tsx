@@ -104,11 +104,11 @@ export function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.8 }}
             >
-              The room where Gulf founders stop guessing.
+              Get validated access to investors, partners, customers, and government programs across all six GCC nations—aligned with Vision 2030, 2040, and 2071.
             </motion.p>
             
             <motion.p 
-              className="mt-6 mx-auto text-base sm:text-lg md:text-xl max-w-[900px] text-center leading-relaxed drop-shadow-lg text-white font-medium"
+              className="mt-2 mx-auto text-base sm:text-lg md:text-xl max-w-[900px] text-center leading-relaxed drop-shadow-lg text-white font-medium"
               style={{
                 textShadow: '0 4px 12px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.7)'
               }}
@@ -116,17 +116,12 @@ export function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.85, duration: 0.8 }}
             >
-             Founders shouldn't build alone.
-MFC centralizes the clarity, connections, and deal flow. <span className="font-bold text-orange-300">Free for founders. Always.</span>
+             One application. One payment. Unlimited connections.
             </motion.p>
           </motion.div>
 
           <motion.div className="flex flex-col sm:flex-row gap-4 mb-6 justify-center w-full px-2" variants={itemVariants}>
             <HeroCTA />
-            {/* Example secondary CTA - commented out for now */}
-            {/* <motion.button className="group relative inline-flex items-center justify-center px-10 py-4 glass glass-hover font-semibold text-white rounded-2xl overflow-hidden" whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }}>
-              <span className="relative flex items-center">Explore the Platform<Zap className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" /></span>
-            </motion.button> */}
           </motion.div>
         </div>
 
@@ -144,7 +139,7 @@ function HeroCTA() {
   return (
     <>
       <motion.button
-        onClick={() => router.push('/auth?mode=signup')}
+        onClick={() => document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' })}
         className="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl font-bold text-white transition-all duration-300 shadow-xl shadow-orange-500/50 w-full sm:w-auto max-w-[340px] overflow-hidden"
         whileHover={{ scale: 1.06, y: -4, boxShadow: '0 20px 50px rgba(255, 91, 35, 0.6)' }}
         whileTap={{ scale: 0.94 }}
@@ -162,9 +157,9 @@ function HeroCTA() {
           style={{ opacity: 0.2 }}
         />
         <span className="relative flex items-center">
-          Request Access
-          <motion.div animate={{ x: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
-            <ArrowRight className="ml-2 w-5 h-5" />
+          Apply Now
+          <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
+            ↓
           </motion.div>
         </span>
       </motion.button>
@@ -189,24 +184,11 @@ function HeroCTA() {
 }
 
 function SocialProof() {
-  const avatars = [
-    '/founders/user1.jpg',
-    '/founders/user2.jpg',
-    '/founders/user3.jpg',
-    '/founders/user4.jpg',
-  ]
-
   return (
-    <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm -mt-2" variants={itemVariants}>
-      <div className="flex -space-x-2 items-center">
-        {avatars.map((src, i) => (
-          <motion.div key={i} className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-background bg-muted" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.1, type: 'spring', stiffness: 200 }} whileHover={{ scale: 1.1, zIndex: 10 }}>
-            <HighQualityImage src={src} alt={`Founder ${i + 1}`} fill className="object-cover" sizes="32px" />
-          </motion.div>
-        ))}
-      </div>
-
-      <p className="neon-subheading font-bold text-center text-white drop-shadow-lg" style={{ textShadow: '0 3px 10px rgba(0, 0, 0, 0.8)' }}>Join <span className="font-black text-orange-300">500+</span> founders in the Gulf ecosystem</p>
+    <motion.div className="flex flex-col items-center justify-center gap-4 text-sm -mt-2" variants={itemVariants}>
+      <p className="neon-subheading font-bold text-center text-white drop-shadow-lg" style={{ textShadow: '0 3px 10px rgba(0, 0, 0, 0.8)' }}>
+        🇸🇦 Vision 2030 | 🇦🇪 Centennial 2071 | 🇶🇦 QNV 2030 | 🇴🇲 Vision 2040 | 🇰🇼 Vision 2035 | 🇧🇭 EV 2030
+      </p>
     </motion.div>
   )
 }

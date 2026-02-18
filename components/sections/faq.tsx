@@ -3,40 +3,44 @@
 import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
-import { scrollRevealConfig } from '@/lib/animation-variants'
+import { scrollRevealVariants, containerVariants, itemVariants } from '@/lib/motion-system'
 
 const faqs = [
   {
-    question: 'Is acceptance into the shortlist guaranteed?',
-    answer: "No. We're selective by design. We receive more applications than we can accommodate, and we carefully vet each founder. However, if you meet our core criteria (founder-led, traction, coachable), your chances are strong.",
+    question: 'Who gets approved?',
+    answer: "~75% of applicants. We look for quality (proven traction or clear value), Gulf alignment (serious about the region), and contribution mindset (willing to help others).",
   },
   {
-    question: 'What happens after I apply?',
-    answer: "We review your application within 3-5 business days. If you're a fit, one of our team members will reach out to schedule a brief call. We'll discuss your goals, answer questions, and either welcome you to the shortlist or provide feedback.",
+    question: 'What if I\'m rejected?',
+    answer: "We'll explain why and suggest next steps. You can reapply when you've addressed the gaps (no limit on attempts).",
   },
   {
-    question: 'Who should not apply?',
-    answer: "If you're in the ideation phase, looking only for validation, not ready to commit 12+ months, or just seeking a discount this isn't for you. We prioritize founders who are execution driven.",
+    question: 'What\'s included in the $120/year?',
+    answer: "WhatsApp community access, warm introductions (based on your needs), event invitations, government program alerts, member directory access, and personalized support.",
   },
   {
-    question: 'Is the AED 500 commitment fee refundable?',
-    answer: "Yes, it's fully refundable if you're not accepted. This isn't a payment it's a signal of serious intent. If you don't make the shortlist, you get your money back.",
+    question: 'Can I cancel?',
+    answer: "Annual commitment, but you can cancel before renewal. No refunds mid-year unless we fail to deliver promised value.",
   },
   {
-    question: 'Can I apply if I\'m outside the Gulf?',
-    answer: "Short answer: Yes. We're Gulf-based, globally open. If you're building for the Gulf market or expanding regionally, we support you.",
+    question: 'Is there a free trial?',
+    answer: "No trial, but we only charge after approval. If you're unhappy within first 30 days, contact us for consideration.",
   },
   {
-    question: 'How long is my access valid?',
-    answer: 'Founder Access Pass (WhatsApp) is month to month with no lock in contract. Scale and Enterprise plans are project based and customized to your needs.',
+    question: 'I\'m not in the Gulf yet—can I still join?',
+    answer: "Yes! 60% of members are international. We help you navigate from wherever you are.",
   },
   {
-    question: 'Do you offer money back guarantees?',
-    answer: "We don't promise outcomes, but we do promise transparency. If we're not delivering value within the first 30 days, we'll refund 100% of your fee.",
+    question: 'How many introductions will I get?',
+    answer: "3 personalized warm intros immediately upon joining, then ongoing introductions based on activity and needs (typically 2-5 per month for active members).",
   },
   {
-    question: 'How is this different from other founder communities?',
-    answer: "We're not a large, open community. We're a curated shortlist designed for signal not noise. Every member is vetted. Your network here is smaller, higher quality, and more actionable.",
+    question: 'What\'s the WhatsApp group like?',
+    answer: "Daily posts of opportunities (investor intros, partnerships, events, market intel), member questions/offers, and community discussions. Moderated for quality. ~20-50 messages/day.",
+  },
+  {
+    question: 'Do you take equity in my company?',
+    answer: "No. Membership fee only. (Grant program recipients give 2% equity on exit, but that's a separate competitive program.)",
   },
 ]
 
@@ -49,13 +53,13 @@ export function FAQSection() {
         {/* Section header */}
         <motion.div
           className="text-center mb-10 sm:mb-16"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 24 }}
-          viewport={scrollRevealConfig}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          variants={scrollRevealVariants}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: false, margin: '-100px' }}
         >
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 drop-shadow-lg" style={{
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 drop-shadow-lg text-orange-400" style={{
             textShadow: '0 4px 12px rgba(0, 0, 0, 0.9)'
           }}>
             Questions?
@@ -68,16 +72,18 @@ export function FAQSection() {
         </motion.div>
 
         {/* FAQ items */}
-        <div className="space-y-4">
+        <motion.div 
+          className="space-y-4"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, margin: '-100px' }}
+        >
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
-              className="rounded-lg border border-orange-500/20 overflow-hidden"
-              initial={{ opacity: 0, y: 16, scale: 0.96 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 16, scale: 0.96 }}
-              viewport={scrollRevealConfig}
-              transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="rounded-lg border border-orange-500/30 bg-gradient-to-r from-orange-500/5 to-orange-600/5 overflow-hidden hover:border-orange-500/50 transition-colors"
+              variants={itemVariants}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
@@ -90,7 +96,7 @@ export function FAQSection() {
                   animate={{ rotate: openIndex === index ? 180 : 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <ChevronDown className="w-5 h-5 text-white/70" />
+                  <ChevronDown className="w-5 h-5 text-orange-400" />
                 </motion.div>
               </button>
 
@@ -101,7 +107,7 @@ export function FAQSection() {
                   opacity: openIndex === index ? 1 : 0,
                 }}
                 transition={{ duration: 0.3 }}
-                className="overflow-hidden"
+                className="overflow-hidden border-t border-orange-500/20"
               >
                 <div className="px-6 pb-6 text-white/85 leading-relaxed font-light drop-shadow-lg" style={{
                   textShadow: '0 1px 4px rgba(0, 0, 0, 0.8)'
@@ -111,19 +117,19 @@ export function FAQSection() {
               </motion.div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Still have questions */}
         <motion.div
           className="mt-16 text-center"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 24 }}
-          viewport={scrollRevealConfig}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          variants={scrollRevealVariants}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: false, margin: '-100px' }}
         >
           <p className="text-white/85 mb-4 font-light">Still have questions?</p>
-          <a href="mailto:hello@myfounderclub.com" className="text-orange-400 hover:text-orange-300 font-medium transition">
+          <a href="mailto:hello@myfounderclub.com" className="inline-block px-6 py-2 rounded-lg border border-orange-500/30 bg-gradient-to-r from-orange-500/10 to-orange-600/5 text-orange-400 hover:text-orange-300 hover:border-orange-500/50 font-medium transition">
             Get in touch with our team
           </a>
         </motion.div>

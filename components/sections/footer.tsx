@@ -224,10 +224,21 @@ export function Footer() {
         </motion.div>
 
         {/* PART 4: Footer bottom - 3 column layout */}
-        <motion.div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50 tracking-wider">
-          <p className="font-light">© 2026 My Founders Club. All rights reserved.</p>
-          <p className="font-light hidden sm:block">Platform · Explore Network · Opportunities</p>
-          <a href="https://alfinit.vercel.app/" target="_blank" rel="noopener noreferrer" className="font-light text-white hover:text-orange-500 transition-colors duration-300">Made by ALFINIT</a>
+        <motion.div className="text-center">
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-white mb-2">My Founders Club</h3>
+            <p className="text-white/80 text-sm">Your Gateway to Gulf Opportunities</p>
+          </div>
+          <div className="mb-4 text-lg">
+            🇸🇦 Vision 2030 | 🇦🇪 Centennial 2071 | 🇶🇦 QNV 2030 | 🇴🇲 Vision 2040 | 🇰🇼 Vision 2035 | 🇧🇭 EV 2030
+          </div>
+          <div className="flex justify-center gap-6 mb-4 text-sm">
+            <Link href="/about" className="text-white/70 hover:text-orange-400 transition-colors">About</Link>
+            <Link href="/privacy" className="text-white/70 hover:text-orange-400 transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-white/70 hover:text-orange-400 transition-colors">Terms of Service</Link>
+            <Link href="/contact" className="text-white/70 hover:text-orange-400 transition-colors">Contact</Link>
+          </div>
+          <p className="text-xs text-white/50">© 2025 My Founders Club. All Rights Reserved.</p>
         </motion.div>
       </div>
     </footer>

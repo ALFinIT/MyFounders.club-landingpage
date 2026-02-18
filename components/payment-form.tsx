@@ -347,7 +347,6 @@ export function PaymentForm({
                     }
                   }
                 }}
-                disabled={loading}
               />
             </div>
           </div>

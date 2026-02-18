@@ -11,13 +11,88 @@ export function ApplicationFormSection() {
   const router = useRouter()
   const { user } = useAuth()
   const [formData, setFormData] = useState({
+    // SECTION 1: BASIC INFORMATION
     fullName: '',
-    companyName: '',
     email: '',
-    phone: '',
-    onePitchSentence: '',
-    proofOfWork: '',
-    commitmentAmount: 'AED 500',
+    whatsappNumber: '',
+    linkedinProfile: '',
+    currentLocation: '',
+    nationality: '',
+    gender: '',
+    
+    // SECTION 2: YOUR ROLE
+    primaryCategory: '',
+    otherCategory: '',
+    
+    // SECTION 3A: FOR STARTUPS & SMEs
+    companyName: '',
+    companyWebsite: '',
+    yearFounded: '',
+    companyRegistrationCountry: '',
+    gccEntity: false,
+    gccCountries: [],
+    primaryIndustry: '',
+    otherIndustry: '',
+    businessModel: [],
+    currentStage: '',
+    payingCustomers: '',
+    teamSize: '',
+    totalFunding: '',
+    institutionalCapital: false,
+    investorList: '',
+    visionPrograms: [],
+    otherVision: '',
+    interestedMarkets: [],
+    marketTimeline: '',
+    
+    // SECTION 3B: FOR INVESTORS
+    investorType: '',
+    otherInvestorType: '',
+    fundName: '',
+    fundWebsite: '',
+    aum: '',
+    preferredStages: [],
+    typicalCheckSize: '',
+    sectorFocus: [],
+    geographicFocus: [],
+    dealsPerYear: '',
+    activelyDeploying: '',
+    investorVisionPrograms: [],
+    
+    // SECTION 3C: FOR SERVICE PROVIDERS
+    serviceFirmName: '',
+    serviceFirmWebsite: '',
+    yearsInBusiness: '',
+    serviceCategories: [],
+    otherService: '',
+    gccPresence: [],
+    startupExperience: false,
+    clientsServed: '',
+    newClientsPerQuarter: '',
+    discountOffered: false,
+    discountPercentage: '',
+    equityServices: '',
+    
+    // SECTION 4: WHAT YOU NEED FROM MFC
+    goals: [],
+    urgentNeed: '',
+    idealIntroduction: '',
+    
+    // SECTION 5: WHAT YOU BRING TO MFC
+    businessDescription: '',
+    communityContribution: [],
+    uniqueResources: '',
+    
+    // SECTION 6: REFERRAL & DISCOVERY
+    discoverySource: '',
+    otherDiscovery: '',
+    referralCode: '',
+    
+    // SECTION 7: COMMITMENT & PAYMENT
+    agreeMembership: false,
+    agreeContribution: false,
+    agreeGuidelines: false,
+    agreeReview: false,
     agreeCommitment: false,
     agreeTerms: false,
   })
@@ -68,7 +143,7 @@ export function ApplicationFormSection() {
 
     // Use fetch with keepalive where possible to avoid blocking on navigation
     try {
-      const res = await fetch('/api/applications', {
+      const res = await fetch('/api/applications/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -98,18 +173,76 @@ export function ApplicationFormSection() {
       }
 
       // Success: keep submitted state and show success message
-      setStatusMessage('✓ Application submitted successfully!')
+      setStatusMessage('Application submitted successfully')
       setStatusType('success')
 
       // Reset form fields (without removing submitted indicator immediately)
       setFormData({
         fullName: '',
-        companyName: '',
         email: '',
-        phone: '',
-        onePitchSentence: '',
-        proofOfWork: '',
-        commitmentAmount: 'AED 500',
+        whatsappNumber: '',
+        linkedinProfile: '',
+        currentLocation: '',
+        nationality: '',
+        gender: '',
+        primaryCategory: '',
+        otherCategory: '',
+        companyName: '',
+        companyWebsite: '',
+        yearFounded: '',
+        companyRegistrationCountry: '',
+        gccEntity: false,
+        gccCountries: [],
+        primaryIndustry: '',
+        otherIndustry: '',
+        businessModel: [],
+        currentStage: '',
+        payingCustomers: '',
+        teamSize: '',
+        totalFunding: '',
+        institutionalCapital: false,
+        investorList: '',
+        visionPrograms: [],
+        otherVision: '',
+        interestedMarkets: [],
+        marketTimeline: '',
+        investorType: '',
+        otherInvestorType: '',
+        fundName: '',
+        fundWebsite: '',
+        aum: '',
+        preferredStages: [],
+        typicalCheckSize: '',
+        sectorFocus: [],
+        geographicFocus: [],
+        dealsPerYear: '',
+        activelyDeploying: '',
+        investorVisionPrograms: [],
+        serviceFirmName: '',
+        serviceFirmWebsite: '',
+        yearsInBusiness: '',
+        serviceCategories: [],
+        otherService: '',
+        gccPresence: [],
+        startupExperience: false,
+        clientsServed: '',
+        newClientsPerQuarter: '',
+        discountOffered: false,
+        discountPercentage: '',
+        equityServices: '',
+        goals: [],
+        urgentNeed: '',
+        idealIntroduction: '',
+        businessDescription: '',
+        communityContribution: [],
+        uniqueResources: '',
+        discoverySource: '',
+        otherDiscovery: '',
+        referralCode: '',
+        agreeMembership: false,
+        agreeContribution: false,
+        agreeGuidelines: false,
+        agreeReview: false,
         agreeCommitment: false,
         agreeTerms: false,
       })
@@ -130,7 +263,7 @@ export function ApplicationFormSection() {
   }
 
   return (
-    <section className="relative w-full py-16 sm:py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+    <section id="application-form" className="relative w-full py-16 sm:py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         {/* Section header */}
         <motion.div
@@ -142,166 +275,188 @@ export function ApplicationFormSection() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.8)' }}>
-            Secure Your Spot
+            Apply for Gulf Access
           </h2>
-          <p className="text-base sm:text-lg text-gray-300 font-light" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
-            The shortlist closes when it's full.
+          <p className="text-base sm:text-lg text-gray-300 font-light mb-2" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
+            Complete this detailed application so we can match you with the right opportunities. The more detail you provide, the better we can serve you.
+          </p>
+          <p className="text-sm text-orange-400 font-medium" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
+            ⏱️ Time to complete: 5-7 minutes
           </p>
         </motion.div>
 
         {/* Form */}
         <motion.form
           onSubmit={handleSubmit}
-          className="p-6 sm:p-8 lg:p-12 rounded-2xl glass border border-orange-500/20 space-y-5 sm:space-y-6"
+          className="p-6 sm:p-8 lg:p-12 rounded-2xl glass border border-orange-500/20 space-y-8"
           initial={{ opacity: 0, y: 28, scale: 0.96 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 28, scale: 0.96 }}
           viewport={scrollRevealConfig}
           transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Full Name */}
-          <div>
-            <label className="block text-sm font-medium text-white/90 mb-2" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>Full Name *</label>
-            <input
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              required
-              disabled={isLoading}
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
-              placeholder="Your name"
-            />
-          </div>
-
-          {/* Company Name */}
-          <div>
-            <label className="block text-sm font-medium text-white/90 mb-2" style={{ textShadow: '0 1px 4px rgba(0, 0, 0, 0.7)' }}>Company Name *</label>
-            <input
-              type="text"
-              name="companyName"
-              value={formData.companyName}
-              onChange={handleChange}
-              required
-              disabled={isLoading}
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
-              placeholder="Your company"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-white mb-2">Email *</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              disabled={isLoading}
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
-              placeholder="your@email.com"
-            />
-          </div>
-
-          {/* Phone */}
-          <div>
-            <label className="block text-sm font-medium text-white mb-2">Phone *</label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              disabled={isLoading}
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
-              placeholder="+971 XX XXX XXXX"
-            />
-          </div>
-
-          {/* One-sentence pitch */}
-          <div>
-            <label className="block text-sm font-medium text-white mb-2">What does your company do? (One sentence) *</label>
-            <textarea
-              name="onePitchSentence"
-              value={formData.onePitchSentence}
-              onChange={handleChange}
-              required
-              disabled={isLoading}
-              rows={2}
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition resize-none disabled:opacity-50 disabled:cursor-not-allowed"
-              placeholder="Be clear and concise..."
-            />
-          </div>
-
-          {/* Proof of Work */}
-          <div>
-            <label className="block text-sm font-medium text-white mb-2">
-              Proof of Work
-              <span className="text-xs text-muted-foreground font-light ml-1">(Optional but recommended)</span>
-            </label>
-            <input
-              type="url"
-              name="proofOfWork"
-              value={formData.proofOfWork}
-              onChange={handleChange}
-              disabled={isLoading}
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-orange-500/20 text-white placeholder-muted-foreground focus:border-orange-500 focus:outline-none transition disabled:opacity-50 disabled:cursor-not-allowed"
-              placeholder="Link to website, product, or news"
-            />
-          </div>
-
-          {/* Commitment amount info */}
-          <motion.div
-            className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20"
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 12 }}
-            viewport={scrollRevealConfig}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="flex gap-3">
-              <AlertCircle className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
-              <div className="text-sm">
-                <p className="text-white font-medium mb-1">Commitment Fee: AED 500</p>
-                <p className="text-muted-foreground text-xs font-light">
-                  Refundable - shows serious intent. You'll be refunded if not accepted into the shortlist.
-                </p>
+          {/* SECTION 1: BASIC INFORMATION */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold text-orange-400 border-b border-orange-500/30 pb-2">SECTION 1: BASIC INFORMATION</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-white/90 mb-2">Full Name *</label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:outline-none transition"
+                  placeholder="Your full name"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-white/90 mb-2">Email Address *</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:outline-none transition"
+                  placeholder="your@email.com"
+                />
               </div>
             </div>
-          </motion.div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-white/90 mb-2">WhatsApp Number * (with country code)</label>
+                <input
+                  type="tel"
+                  name="whatsappNumber"
+                  value={formData.whatsappNumber}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:outline-none transition"
+                  placeholder="+971 XX XXX XXXX"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-white/90 mb-2">LinkedIn Profile URL *</label>
+                <input
+                  type="url"
+                  name="linkedinProfile"
+                  value={formData.linkedinProfile}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:outline-none transition"
+                  placeholder="https://linkedin.com/in/yourprofile"
+                />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-white/90 mb-2">Current Location/City *</label>
+                <input
+                  type="text"
+                  name="currentLocation"
+                  value={formData.currentLocation}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:outline-none transition"
+                  placeholder="Dubai, UAE"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-white/90 mb-2">Nationality *</label>
+                <select
+                  name="nationality"
+                  value={formData.nationality}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white focus:border-orange-500 focus:outline-none transition"
+                >
+                  <option value="">Select nationality</option>
+                  <option value="UAE">UAE</option>
+                  <option value="Saudi Arabia">Saudi Arabia</option>
+                  <option value="Qatar">Qatar</option>
+                  <option value="Oman">Oman</option>
+                  <option value="Kuwait">Kuwait</option>
+                  <option value="Bahrain">Bahrain</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-white/90 mb-2">Gender</label>
+                <select
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  disabled={isLoading}
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white focus:border-orange-500 focus:outline-none transition"
+                >
+                  <option value="">Select gender</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
-          {/* Agreement checkbox */}
-          <label className="flex items-start gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              name="agreeCommitment"
-              checked={formData.agreeCommitment}
-              onChange={handleChange}
-              required
-              disabled={isLoading}
-              className="w-5 h-5 mt-1 rounded border-white/20 bg-white/10 accent-orange-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            />
-            <span className="text-sm text-muted-foreground font-light">
-              I understand and agree to the AED 500 commitment fee (refundable if not accepted).
-            </span>
-          </label>
-
-          {/* Terms and Conditions checkbox */}
-          <label className="flex items-start gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              name="agreeTerms"
-              checked={formData.agreeTerms}
-              onChange={handleChange}
-              required
-              disabled={isLoading}
-              className="w-5 h-5 mt-1 rounded border-white/20 bg-white/10 accent-orange-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            />
-            <span className="text-sm text-muted-foreground font-light">
-              I accept the <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-white hover:text-orange-400 transition-colors no-underline">Terms and Conditions</a>.
-            </span>
-          </label>
+          {/* SECTION 2: YOUR ROLE */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold text-orange-400 border-b border-orange-500/30 pb-2">SECTION 2: YOUR ROLE</h3>
+            
+            <div>
+              <label className="block text-sm font-medium text-white/90 mb-4">Primary Category: * (Only select ONE)</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {[
+                  '🚀 Startup Founder/Co-Founder',
+                  '📊 SME Owner/Executive',
+                  '💰 Investor (VC, Angel, Syndicate)',
+                  '🏛️ Family Office Principal/Representative',
+                  '⚙️ Service Provider (Legal, Accounting, Marketing, Tech, etc.)',
+                  '🏢 Corporate Innovation/Business Development',
+                  '🎓 Other'
+                ].map((option) => (
+                  <label key={option} className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="primaryCategory"
+                      value={option}
+                      checked={formData.primaryCategory === option}
+                      onChange={handleChange}
+                      required
+                      disabled={isLoading}
+                      className="w-4 h-4 text-orange-500 bg-gray-800 border-gray-600 focus:ring-orange-500"
+                    />
+                    <span className="text-white/90">{option}</span>
+                  </label>
+                ))}
+              </div>
+              {formData.primaryCategory === '🎓 Other' && (
+                <input
+                  type="text"
+                  name="otherCategory"
+                  value={formData.otherCategory}
+                  onChange={handleChange}
+                  disabled={isLoading}
+                  className="w-full mt-3 px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:outline-none transition"
+                  placeholder="Please specify"
+                />
+              )}
+            </div>
+          </div>
 
           {/* Status message */}
           {statusMessage && (
@@ -341,14 +496,14 @@ export function ApplicationFormSection() {
           <motion.button
             type="submit"
             disabled={isLoading || submitted}
-            className="w-full py-3 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold hover:shadow-2xl hover:shadow-orange-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-4 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-lg hover:shadow-2xl hover:shadow-orange-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             whileHover={{ scale: 1.04, y: -2, transition: { duration: 0.3 } }}
             whileTap={{ scale: 0.98 }}
           >
             {isLoading ? (
               <>
                 <motion.div
-                  className="w-4 h-4 rounded-full border-2 border-white border-t-transparent"
+                  className="w-5 h-5 rounded-full border-2 border-white border-t-transparent"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                 />
@@ -357,13 +512,12 @@ export function ApplicationFormSection() {
             ) : submitted ? (
               'Application Submitted!'
             ) : (
-              'Join the Shortlist'
+              'Submit Application →'
             )}
           </motion.button>
 
-          {/* Privacy note */}
-          <p className="text-xs text-muted-foreground text-center font-light">
-            Your data is secure and will not be shared. We respect your privacy.
+          <p className="text-center text-sm text-white/70">
+            Decision in 48-72 hours. No payment required until approved.
           </p>
         </motion.form>
       </div>

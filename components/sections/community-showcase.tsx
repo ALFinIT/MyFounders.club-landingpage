@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/navigation'
 import { Users, Zap, Globe, Check } from 'lucide-react'
 import HighQualityImage from '@/components/HighQualityImage'
 import LogoMarquee from '@/components/LogoMarquee'
@@ -22,10 +21,11 @@ export function CommunityShowcase() {
         {/* Main heading */}
         <motion.div
           className="text-center mb-20"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
+          exit={{ opacity: 0, y: 24 }}
+          viewport={{ once: false, margin: '-100px' }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg" style={{ textShadow: '0 4px 12px rgba(0, 0, 0, 0.8)' }}>
             Join{' '}
@@ -33,7 +33,7 @@ export function CommunityShowcase() {
               500+ Founders
             </span>
             {' '}in the Gulf Ecosystem
-          </h2> 
+          </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
             Be part of a thriving community revolutionizing the startup landscape across the Middle East
           </p>
@@ -44,10 +44,11 @@ export function CommunityShowcase() {
           {/* Left side - Large image */}
           <motion.div
             className="relative rounded-3xl overflow-hidden h-96 lg:h-full min-h-[500px] group"
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -28 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8 }}
+            exit={{ opacity: 0, x: -28 }}
+            viewport={{ once: false, margin: '-100px' }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <HighQualityImage
               src="/images/MFC-community.png"
@@ -68,10 +69,11 @@ export function CommunityShowcase() {
           {/* Right side - Stats and content */}
           <motion.div
             className="flex flex-col justify-between"
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 28 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            exit={{ opacity: 0, x: 28 }}
+            viewport={{ once: false, margin: '-100px' }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           >
             {/* Stats cards */}
             <div className="space-y-4 mb-8">
@@ -81,13 +83,17 @@ export function CommunityShowcase() {
                   <motion.div
                     key={index}
                     className="glass rounded-2xl p-6 group hover:border-orange-500/50 transition-all duration-300"
-                    whileHover={{ x: 8, boxShadow: '0 0 30px rgba(255, 91, 35, 0.2)' }}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    viewport={{ once: false }}
+                    transition={{ delay: index * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    whileHover={{ x: 8, boxShadow: '0 0 30px rgba(255, 91, 35, 0.2)', transition: { duration: 0.3 } }}
                   >
                     <div className="flex items-center gap-4">
                       <motion.div
                         className="w-14 h-14 rounded-full bg-orange-500/20 flex items-center justify-center"
-                        whileHover={{ scale: 1.2 }}
-                        transition={{ duration: 0.3 }}
+                        whileHover={{ scale: 1.15, transition: { duration: 0.3 } }}
                       >
                         <Icon className="w-7 h-7 text-orange-400" />
                       </motion.div>
@@ -104,7 +110,12 @@ export function CommunityShowcase() {
             {/* Features list */}
             <motion.div
               className="glass rounded-2xl p-8 space-y-4"
-              whileHover={{ y: -5 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              viewport={{ once: false }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -4, transition: { duration: 0.3 } }}
             >
               <h3 className="text-2xl font-bold text-white mb-6">What You Get</h3>
               {[
@@ -116,10 +127,11 @@ export function CommunityShowcase() {
                 <motion.div
                   key={index}
                   className="flex items-start gap-3"
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -16 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  exit={{ opacity: 0, x: -16 }}
+                  viewport={{ once: false }}
+                  transition={{ delay: index * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-1">
                     <Check className="w-3 h-3 text-white" />
@@ -136,8 +148,9 @@ export function CommunityShowcase() {
           className="grid md:grid-cols-3 gap-10"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ staggerChildren: 0.2 }}
+          exit={{ opacity: 0 }}
+          viewport={{ once: false, margin: '-100px' }}
+          transition={{ staggerChildren: 0.12 }}
         >
           {[
             {
@@ -162,11 +175,12 @@ export function CommunityShowcase() {
             <motion.div
               key={index}
               className="group mb-8"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.15 }}
-              whileHover={{ y: -8 }}
+              exit={{ opacity: 0, y: 24 }}
+              viewport={{ once: false }}
+              transition={{ delay: index * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -8, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } }}
             >
               <div className="relative rounded-2xl overflow-hidden h-64 mb-6 group">
                 <HighQualityImage
@@ -189,13 +203,14 @@ export function CommunityShowcase() {
           ))}
         </motion.div>
 
-        {/* Logo marquee - tighter spacing so it fits under the heading */}
+        {/* Logo marquee */}
         <motion.div
           className="mt-6"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 16 }}
+          viewport={{ once: false }}
+          transition={{ delay: 0.2, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
           <LogoMarquee count={25} speedSeconds={36} />
         </motion.div>
@@ -203,4 +218,3 @@ export function CommunityShowcase() {
     </section>
   )
 }
-
