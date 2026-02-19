@@ -27,7 +27,7 @@ const members = [
   {
     icon: Globe,
     category: 'Operators',
-    description: 'Across Dubai, Abu Dhabi, Riyadh, and Doha – with impact',
+    description: 'Across Dubai, Abu Dhabi, Riyadh, and Doha. With impact.',
     color: 'from-orange-500/20 to-orange-600/10'
   }
 ]
@@ -89,7 +89,7 @@ function RoomCard({ member }: { member: typeof members[0] }) {
         }}
         whileHover={{
           y: -10,
-          boxShadow: '0 24px 48px rgba(0,0,0,0.65)',
+          boxShadow: '0 24px 48px rgba(255, 91, 35, 0.35)',
           transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
         }}
       >

@@ -17,7 +17,7 @@ export function FinalCTASection() {
             Ready to Access Gulf Opportunities?
           </h2>
           <p className="text-lg text-white/90 mb-8">
-            Submit your application now. Decision in 48-72 hours.
+            Submit your application now. Decision in 48 to 72 hours.
           </p>
 
           <motion.button
@@ -37,9 +37,9 @@ export function FinalCTASection() {
             viewport={{ once: false }}
             transition={{ delay: 0.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p>📧 Questions? Email: apply@myfounders.club</p>
-            <p>💬 WhatsApp: +971-XX-XXX-XXXX</p>
-            <p>📅 Book a Call: [Calendly link] (for qualified prospects only)</p>
+            <p>Questions? Email: apply@myfounders.club</p>
+            <p>WhatsApp: +971-XX-XXX-XXXX</p>
+            <p>Book a Call: [Calendly link] (for qualified prospects only)</p>
           </motion.div>
         </motion.div>
       </div>

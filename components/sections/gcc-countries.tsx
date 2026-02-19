@@ -12,6 +12,7 @@ const IconComponent = ({ type }: { type: number }) => {
 
 const countries = [
   {
+    flag: '🇦🇪',
     name: 'Abu Dhabi & Dubai, UAE',
     details: [
       '8-hour flight to 4 billion people',
@@ -21,6 +22,7 @@ const countries = [
     ],
   },
   {
+    flag: '🇸🇦',
     name: 'Riyadh, Saudi Arabia',
     details: [
       '500 billion plus mega-projects (NEOM, Red Sea, Qiddiya)',
@@ -30,6 +32,7 @@ const countries = [
     ],
   },
   {
+    flag: '🇶🇦',
     name: 'Doha, Qatar',
     details: [
       'Highest GDP per capita globally',
@@ -39,6 +42,7 @@ const countries = [
     ],
   },
   {
+    flag: '🇴🇲',
     name: 'Muscat, Oman',
     details: [
       'Duqm Port: Indian Ocean trade gateway',
@@ -48,6 +52,7 @@ const countries = [
     ],
   },
   {
+    flag: '🇰🇼',
     name: 'Kuwait City, Kuwait',
     details: [
       'Kuwait Investment Authority: 738 billion (oldest sovereign fund)',
@@ -57,6 +62,7 @@ const countries = [
     ],
   },
   {
+    flag: '🇧🇭',
     name: 'Manama, Bahrain',
     details: [
       'MENA financial hub, 100+ international banks',
@@ -101,7 +107,7 @@ export function GCCCountriesSection() {
               className="group bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-500/30 rounded-xl p-6 hover:border-orange-500/50 transition-all duration-300 cursor-pointer"
             >
               <h3 className="text-xl font-semibold text-orange-500 mb-4 flex items-center gap-2">
-                <MapPin className="w-5 h-5 flex-shrink-0" />
+                <span className="text-2xl leading-none">{country.flag}</span>
                 {country.name}
               </h3>
               <ul className="space-y-3">

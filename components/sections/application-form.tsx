@@ -278,11 +278,9 @@ export function ApplicationFormSection() {
             Apply for Gulf Access
           </h2>
           <p className="text-base sm:text-lg text-gray-300 font-light mb-2" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
-            Complete this detailed application so we can match you with the right opportunities. The more detail you provide, the better we can serve you.
+            Complete your application to get matched with the most relevant opportunities.
           </p>
-          <p className="text-sm text-orange-400 font-medium" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)' }}>
-            ⏱️ Time to complete: 5-7 minutes
-          </p>
+          
         </motion.div>
 
         {/* Form */}
@@ -297,7 +295,7 @@ export function ApplicationFormSection() {
         >
           {/* SECTION 1: BASIC INFORMATION */}
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold text-orange-400 border-b border-orange-500/30 pb-2">SECTION 1: BASIC INFORMATION</h3>
+            <h3 className="text-xl font-semibold text-orange-400 border-b border-orange-500/30 pb-2"> SECTION 1 : BASIC INFORMATION</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -415,19 +413,19 @@ export function ApplicationFormSection() {
 
           {/* SECTION 2: YOUR ROLE */}
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold text-orange-400 border-b border-orange-500/30 pb-2">SECTION 2: YOUR ROLE</h3>
+            <h3 className="text-xl font-semibold text-orange-400 border-b border-orange-500/30 pb-2">SECTION 2 : YOUR ROLE</h3>
             
             <div>
               <label className="block text-sm font-medium text-white/90 mb-4">Primary Category: * (Only select ONE)</label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
-                  '🚀 Startup Founder/Co-Founder',
-                  '📊 SME Owner/Executive',
-                  '💰 Investor (VC, Angel, Syndicate)',
-                  '🏛️ Family Office Principal/Representative',
-                  '⚙️ Service Provider (Legal, Accounting, Marketing, Tech, etc.)',
-                  '🏢 Corporate Innovation/Business Development',
-                  '🎓 Other'
+                  'Startup Founder/Co-Founder',
+                  'SME Owner/Executive',
+                  'Investor (VC, Angel, Syndicate)',
+                  'Family Office Principal/Representative',
+                  'Service Provider (Legal, Accounting, Marketing, Tech, etc.)',
+                  'Corporate Innovation/Business Development',
+                  'Other'
                 ].map((option) => (
                   <label key={option} className="flex items-center gap-3 cursor-pointer">
                     <input
@@ -444,7 +442,7 @@ export function ApplicationFormSection() {
                   </label>
                 ))}
               </div>
-              {formData.primaryCategory === '🎓 Other' && (
+              {formData.primaryCategory === 'Other' && (
                 <input
                   type="text"
                   name="otherCategory"
@@ -454,6 +452,62 @@ export function ApplicationFormSection() {
                   className="w-full mt-3 px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:outline-none transition"
                   placeholder="Please specify"
                 />
+              )}
+            </div>
+          </div>
+
+          {/* Terms & Conditions Checkbox */}
+          <div className="pt-2 pb-1 space-y-4">
+            <div>
+              <label className={`flex items-start gap-3 cursor-pointer group ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                <input
+                  type="checkbox"
+                  name="agreeTerms"
+                  checked={formData.agreeTerms}
+                  onChange={handleChange}
+                  disabled={isLoading}
+                  className="w-5 h-5 mt-0.5 flex-shrink-0 rounded text-orange-500 bg-gray-800 border-2 border-gray-500 focus:ring-2 focus:ring-orange-500 focus:ring-offset-0 checked:bg-orange-500 checked:border-orange-500 transition-colors cursor-pointer"
+                />
+                <span className="text-sm text-white/80 leading-relaxed group-hover:text-white/100 transition-colors">
+                  I have read and accept the{' '}
+                  <a
+                    href="/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-orange-400 underline underline-offset-2 hover:text-orange-300 font-medium transition-colors"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Terms &amp; Conditions
+                  </a>
+                  {' '}of My Founders Club membership. *
+                </span>
+              </label>
+              {!formData.agreeTerms && submitted === false && statusType === 'error' && statusMessage.toLowerCase().includes('terms') && (
+                <p className="mt-2 ml-8 text-xs text-red-400 flex items-center gap-1">
+                  <XCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                  You must accept the Terms &amp; Conditions to proceed.
+                </p>
+              )}
+            </div>
+            <div>
+              <label className={`flex items-start gap-3 cursor-pointer group ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                <input
+                  type="checkbox"
+                  name="agreeCommitment"
+                  checked={formData.agreeCommitment}
+                  onChange={handleChange}
+                  disabled={isLoading}
+                  className="w-5 h-5 mt-0.5 flex-shrink-0 rounded text-orange-500 bg-gray-800 border-2 border-gray-500 focus:ring-2 focus:ring-orange-500 focus:ring-offset-0 checked:bg-orange-500 checked:border-orange-500 transition-colors cursor-pointer"
+                />
+                <span className="text-sm text-white/80 leading-relaxed group-hover:text-white/100 transition-colors">
+                  Please agree to the commitment fee terms. *
+                </span>
+              </label>
+              {!formData.agreeCommitment && submitted === false && statusType === 'error' && statusMessage.toLowerCase().includes('commitment') && (
+                <p className="mt-2 ml-8 text-xs text-red-400 flex items-center gap-1">
+                  <XCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                  You must agree to the commitment fee terms to proceed.
+                </p>
               )}
             </div>
           </div>
@@ -517,7 +571,7 @@ export function ApplicationFormSection() {
           </motion.button>
 
           <p className="text-center text-sm text-white/70">
-            Decision in 48-72 hours. No payment required until approved.
+            Decision in 48 to 72 hours. No payment required until approved.
           </p>
         </motion.form>
       </div>

@@ -17,6 +17,12 @@ export function FounderProfileForm({ user, onComplete }: { user: any; onComplete
     companyDescription: '',
     fundingStage: 'seed',
     selectedIndustries: [] as string[],
+    otherIndustry: '',
+    companyWebsite: '',
+    productDemoLink: '',
+    pitchDeckFile: null as File | null,
+    financialModelFile: null as File | null,
+    capTableFile: null as File | null,
     
     // Step 2: Funding & Needs
     amountRaised: '',
@@ -215,7 +221,124 @@ export function FounderProfileForm({ user, onComplete }: { user: any; onComplete
                 </button>
               ))}
             </div>
+            {form.selectedIndustries.includes('Other') && (
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+                className="mt-3"
+              >
+                <input
+                  type="text"
+                  value={form.otherIndustry}
+                  onChange={(e) => handleChange('otherIndustry', e.target.value)}
+                  placeholder="Please specify your industry"
+                  className="w-full px-3 py-2 bg-white/5 border border-orange-500/40 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500"
+                />
+              </motion.div>
+            )}
           </div>
+
+          {/* Company Website URL - Required */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Company Website URL <span className="text-orange-400">*</span>
+            </label>
+            <input
+              type="url"
+              value={form.companyWebsite}
+              onChange={(e) => handleChange('companyWebsite', e.target.value)}
+              placeholder="https://yourcompany.com"
+              required
+              className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500"
+            />
+          </div>
+
+          {/* Product Demo Link - Optional */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Product Demo Link <span className="text-gray-500 text-xs">(Optional)</span>
+            </label>
+            <input
+              type="url"
+              value={form.productDemoLink}
+              onChange={(e) => handleChange('productDemoLink', e.target.value)}
+              placeholder="Demo link (Loom, YouTube, product walkthrough, etc.)"
+              className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-orange-500"
+            />
+          </div>
+
+          {/* Pitch Deck Upload - Required */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Pitch Deck <span className="text-orange-400">*</span>
+              <span className="text-gray-500 text-xs ml-1">(PDF only)</span>
+            </label>
+            <div className="relative">
+              <input
+                type="file"
+                accept=".pdf"
+                onChange={(e) => handleChange('pitchDeckFile', e.target.files?.[0] || null)}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              />
+              <div className={`w-full px-3 py-3 bg-white/5 border rounded-lg flex items-center gap-3 transition ${form.pitchDeckFile ? 'border-orange-500/60 bg-orange-500/5' : 'border-white/10 border-dashed'}`}>
+                <svg className="w-5 h-5 text-orange-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                <span className={`text-sm ${form.pitchDeckFile ? 'text-orange-300' : 'text-gray-500'}`}>
+                  {form.pitchDeckFile ? form.pitchDeckFile.name : 'Upload your latest pitch deck (PDF format)'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Financial Model Upload - Optional */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Financial Model <span className="text-gray-500 text-xs">(Optional)</span>
+            </label>
+            <div className="relative">
+              <input
+                type="file"
+                accept=".pdf,.xlsx,.xls,.csv"
+                onChange={(e) => handleChange('financialModelFile', e.target.files?.[0] || null)}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              />
+              <div className={`w-full px-3 py-3 bg-white/5 border rounded-lg flex items-center gap-3 transition ${form.financialModelFile ? 'border-orange-500/60 bg-orange-500/5' : 'border-white/10 border-dashed'}`}>
+                <svg className="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                <span className={`text-sm ${form.financialModelFile ? 'text-orange-300' : 'text-gray-500'}`}>
+                  {form.financialModelFile ? form.financialModelFile.name : 'Optional: Upload financial projections/model'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Cap Table Upload - Optional Private */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Cap Table <span className="text-gray-500 text-xs">(Optional — Private)</span>
+            </label>
+            <div className="relative">
+              <input
+                type="file"
+                accept=".pdf,.xlsx,.xls,.csv"
+                onChange={(e) => handleChange('capTableFile', e.target.files?.[0] || null)}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              />
+              <div className={`w-full px-3 py-3 bg-white/5 border rounded-lg flex items-center gap-3 transition ${form.capTableFile ? 'border-orange-500/60 bg-orange-500/5' : 'border-white/10 border-dashed'}`}>
+                <svg className="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <span className={`text-sm ${form.capTableFile ? 'text-orange-300' : 'text-gray-500'}`}>
+                  {form.capTableFile ? form.capTableFile.name : 'Optional: Cap table (visible to approved institutions only)'}
+                </span>
+              </div>
+            </div>
+            <p className="text-xs text-gray-500 mt-1">This file is private and only shared with approved institutional investors.</p>
+          </div>
+
         </motion.div>
       )}
 

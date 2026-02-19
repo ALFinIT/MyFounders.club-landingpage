@@ -8,7 +8,7 @@ import { scrollRevealVariants, containerVariants, itemVariants } from '@/lib/mot
 const faqs = [
   {
     question: 'Who gets approved?',
-    answer: "~75% of applicants. We look for quality (proven traction or clear value), Gulf alignment (serious about the region), and contribution mindset (willing to help others).",
+    answer: "Around 75% of applicants. We look for quality (proven traction or clear value), Gulf alignment (serious about the region), and contribution mindset (willing to help others).",
   },
   {
     question: 'What if I\'m rejected?',
@@ -27,16 +27,16 @@ const faqs = [
     answer: "No trial, but we only charge after approval. If you're unhappy within first 30 days, contact us for consideration.",
   },
   {
-    question: 'I\'m not in the Gulf yet—can I still join?',
+    question: 'I\'m not in the Gulf yet. Can I still join?',
     answer: "Yes! 60% of members are international. We help you navigate from wherever you are.",
   },
   {
     question: 'How many introductions will I get?',
-    answer: "3 personalized warm intros immediately upon joining, then ongoing introductions based on activity and needs (typically 2-5 per month for active members).",
+    answer: "3 personalized warm intros immediately upon joining, then ongoing introductions based on activity and needs (typically 2 to 5 per month for active members).",
   },
   {
     question: 'What\'s the WhatsApp group like?',
-    answer: "Daily posts of opportunities (investor intros, partnerships, events, market intel), member questions/offers, and community discussions. Moderated for quality. ~20-50 messages/day.",
+    answer: "Daily posts of opportunities (investor intros, partnerships, events, market intel), member questions/offers, and community discussions. Moderated for quality. Around 20 to 50 messages per day.",
   },
   {
     question: 'Do you take equity in my company?',
@@ -121,18 +121,63 @@ export function FAQSection() {
 
         {/* Still have questions */}
         <motion.div
-          className="mt-16 text-center"
-          variants={scrollRevealVariants}
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: false, margin: '-100px' }}
-        >
-          <p className="text-white/85 mb-4 font-light">Still have questions?</p>
-          <a href="mailto:hello@myfounderclub.com" className="inline-block px-6 py-2 rounded-lg border border-orange-500/30 bg-gradient-to-r from-orange-500/10 to-orange-600/5 text-orange-400 hover:text-orange-300 hover:border-orange-500/50 font-medium transition">
-            Get in touch with our team
-          </a>
-        </motion.div>
+  className="mt-16 max-w-3xl mx-auto px-4 flex flex-col items-center text-center space-y-6"
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  exit={{ opacity: 0, y: 20 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+>
+  {/* Headline */}
+  <h2 className="text-3xl md:text-4xl font-bold text-white">
+    Ready to access Gulf opportunities?
+  </h2>
+
+  {/* Subtext */}
+  <p className="text-gray-300 text-base md:text-lg">
+    Apply now and get a decision within 48 to 72 hours.
+  </p>
+
+  {/* Primary Button */}
+  <motion.button
+    onClick={() => document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' })}
+    whileHover={{ scale: 1.05, y: -2, boxShadow: '0 15px 30px rgba(255,91,35,0.35)' }}
+    whileTap={{ scale: 0.96 }}
+    className="inline-block bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold px-8 py-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+  >
+    Apply Now →
+  </motion.button>
+
+  {/* Divider */}
+  <div className="w-full border-t border-white/20 my-4"></div>
+
+  {/* Subtle contact info */}
+  <h4>
+    Have questions?
+  </h4>
+  <p className="text-white/90 text-lg space-y-2">
+   Contact : 
+  <a 
+    href="mailto:apply@myfounders.club" 
+    className="text-orange-400 font-semibold hover:text-orange-500 transition-colors"
+  >
+     &nbsp;Get in touch with our team
+  </a>
+  <br />
+  Or schedule a meeting : 
+  <a 
+    href="[Your Calendly Link]" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="text-orange-400 font-semibold hover:text-orange-500 transition-colors"
+  >
+     &nbsp;Book a call
+  </a>
+</p>
+
+</motion.div>
+
+        
       </div>
     </section>
   )

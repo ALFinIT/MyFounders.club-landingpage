@@ -84,28 +84,31 @@ export async function POST(req: Request) {
       }
 
       try {
-        const apiKey = process.env.BEEHIV_API_KEY
-        const newsletterId = process.env.BEEHIV_NEWSLETTER_ID
-        const apiUrl =
-          process.env.BEEHIV_API_URL ||
-          (newsletterId ? `https://api.beehiiv.com/v1/newsletters/${newsletterId}/subscribers` : null)
+  const tryBeehiv = async (apiUrl: string | undefined, apiKey: string | undefined) => {
+    if (!apiUrl || !apiKey) return false
+    const res = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({ email: trimmedEmail }),
+    })
+    return res.ok
+  }
 
-        if (!apiKey || !apiUrl) {
-          console.warn('Beehiv config missing - skipping background sync')
-          return
-        }
+  // Try V2 first
+  const v2Success = await tryBeehiv(process.env.BEEHIV_API_URL_V2, process.env.BEEHIV_API_KEY_V2)
 
-        await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${apiKey}`,
-          },
-          body: JSON.stringify({ email: trimmedEmail }),
-        })
-      } catch (beehivErr) {
-        console.warn('Background Beehiv sync failed (non-blocking):', beehivErr)
-      }
+  // If V2 fails, try V1
+  if (!v2Success) {
+    const v1Success = await tryBeehiv(process.env.BEEHIV_API_URL_V1, process.env.BEEHIV_API_KEY_V1)
+    if (!v1Success) console.warn('Both Beehiv V1 and V2 failed for', trimmedEmail)
+  }
+} catch (beehivErr) {
+  console.warn('Beehiv sync error:', beehivErr)
+}
+
     })()
 
     return response

@@ -1,8 +1,13 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
+import { appendLocalRecord } from '@/utils/localDb'
 
 export async function POST(req: NextRequest) {
   try {
+    const body = await req.json()
+    // Save to local DB first
+    await appendLocalRecord('applications.json', body)
+
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
@@ -15,7 +20,6 @@ export async function POST(req: NextRequest) {
 
     const supabase = createClient(supabaseUrl, supabaseKey)
 
-    const body = await req.json()
     const {
       fullName,
       email,

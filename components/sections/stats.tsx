@@ -121,7 +121,7 @@ export function StatsSection() {
               viewport={scrollRevealConfig}
               transition={{ duration: 0.6, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="font-semibold">International founders expanding into the GCC join to:</span> Skip 12–18 months of wandering conferences and cold coffee chats. Land with a clear sequence of moves and the warm introductions that make them real. Build trust faster in a region where relationships are the infrastructure.
+              <span className="font-semibold">International founders expanding into the GCC join to:</span> Skip 12 to 18 months of wandering conferences and cold coffee chats. Land with a clear sequence of moves and the warm introductions that make them real. Build trust faster in a region where relationships are the infrastructure.
             </motion.p>
           </motion.div>
         </motion.div>

@@ -348,7 +348,7 @@ body::-webkit-scrollbar {
 @layer base {
   :root {
     /* Global background overlay color - light overlay to show background image */
-    --bg-overlay: rgba(0,0,0,0.5);
+    --bg-overlay: rgba(0,0,0,0.8);
     --background: 0 0% 1.5%;
     --foreground: 0 0% 80%;
     --card: 0 0% 8%;

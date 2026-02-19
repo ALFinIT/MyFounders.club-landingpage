@@ -27,7 +27,7 @@ export function JoinCommunitySection() {
       id: 'investor',
       title: "If you're expanding into the GCC",
       subtitle: "You've proven your model elsewhere. The Gulf is the next move.",
-      description: "But you're asking the right questions: Which GCC market first? Who can you trust? How do deals really work here? How do you avoid 12–18 months of expensive cold starts?",
+      description: "But you're asking the right questions: Which GCC market first? Who can you trust? How do deals really work here? How do you avoid 12 to 18 months of expensive cold starts?",
       features: [
         "Market Entry Navigation from founders who've chosen between UAE and Saudi.",
         "On-the-Ground Network for immediate pilots, hires, and partnerships.",

@@ -1,6 +1,7 @@
 import React from "react"
 import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Mono, Montserrat } from 'next/font/google'
+import 'flag-icons/css/flag-icons.min.css'
 
 import './globals.css'
 import { SmoothScrollProvider } from '@/providers/smooth-scroll'

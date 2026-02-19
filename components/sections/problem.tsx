@@ -28,8 +28,8 @@ function TiltCard({ children, delay = 0 }: { children: React.ReactNode; delay?: 
   return (
     <motion.div
       ref={ref}
-      className="rounded-2xl p-6 bg-[#0b0b0b] border border-white/8 shadow-2xl"
-      style={style}
+      className="rounded-2xl p-6 bg-[#0b0b0b] border border-white/8"
+      style={{ ...style, boxShadow: '0 8px 32px rgba(255, 91, 35, 0.15)' }}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       initial={{ opacity: 0, y: 28 }}
@@ -37,7 +37,7 @@ function TiltCard({ children, delay = 0 }: { children: React.ReactNode; delay?: 
       exit={{ opacity: 0, y: 28 }}
       viewport={scrollRevealConfig}
       transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ scale: 1.02, boxShadow: '0 16px 40px rgba(255, 91, 35, 0.3)' }}
     >
       {children}
     </motion.div>

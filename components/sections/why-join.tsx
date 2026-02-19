@@ -17,7 +17,7 @@ const reasons = [
   {
     title: 'International Founders',
     points: [
-      'Skip 12–18 months of wandering conferences and cold coffee chats',
+      'Skip 12 to 18 months of wandering conferences and cold coffee chats',
       'Land with a clear sequence of moves and the warm introductions that make them real',
       'Build trust faster in a region where relationships are the infrastructure'
     ]
@@ -135,10 +135,10 @@ export function WhyJoinSection() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* Why Join Cards */}
           <motion.div
-            className="space-y-6"
+            className="flex flex-col gap-6"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -151,23 +151,23 @@ export function WhyJoinSection() {
 
           {/* Who This Is For */}
           <motion.div
-            className="space-y-6"
+            className="flex flex-col gap-4"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, margin: '-100px' }}
           >
-            <h3 className="text-2xl font-bold text-orange-400 mb-6">Who This Is For:</h3>
+            <h3 className="text-2xl font-bold text-orange-400 mb-2">Who This Is For:</h3>
             {whoThisIsFor.map((item, idx) => {
               const IconComponent = item.icon
               return (
                 <motion.div
                   key={idx}
-                  className="flex items-start gap-4 p-4 rounded-lg border border-orange-500/30 bg-gradient-to-r from-orange-500/5 to-orange-600/5 hover:border-orange-500/50 transition-colors"
+                  className="flex items-center gap-4 p-4 rounded-lg border border-orange-500/30 bg-gradient-to-r from-orange-500/5 to-orange-600/5 hover:border-orange-500/50 transition-colors"
                   variants={itemVariants}
                   whileHover={{ x: 8, transition: { duration: 0.2 } }}
                 >
-                  <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400 mt-0.5">
+                  <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400">
                     <IconComponent size={18} />
                   </div>
                   <span className="text-white/95 leading-relaxed">{item.label}</span>
@@ -224,7 +224,7 @@ export function WhyJoinSection() {
           <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 backdrop-blur-sm border border-orange-500/30 rounded-xl p-8 max-w-2xl mx-auto hover:border-orange-500/50 transition-colors">
             <h3 className="text-2xl font-bold text-orange-400 mb-4">Investment: $120/year</h3>
             <p className="text-white/90 mb-2">(one-time payment, annual renewal)</p>
-            <p className="text-white/90 mb-2">Decision: 48-72 hours after application</p>
+            <p className="text-white/90 mb-2">Decision: 48 to 72 hours after application</p>
             <p className="text-white/90">Access: Immediate WhatsApp group invite upon approval</p>
           </div>
         </motion.div>

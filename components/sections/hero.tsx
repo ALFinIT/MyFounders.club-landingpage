@@ -75,7 +75,7 @@ export function HeroSection() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.8 }}
               >
-                Build Locally
+                Build in the Gulf
               </motion.span>
               <motion.span 
                 className="block text-[#FF5B23] font-black"
@@ -83,7 +83,7 @@ export function HeroSection() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4, duration: 0.9 }}
               >
-                Champion Regionally
+                Wired to the world.
               </motion.span>
               <motion.span 
                 className="block"
@@ -91,7 +91,6 @@ export function HeroSection() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
               >
-                Scale Globally
               </motion.span>
             </h1>
 
@@ -104,7 +103,7 @@ export function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.8 }}
             >
-              Get validated access to investors, partners, customers, and government programs across all six GCC nations—aligned with Vision 2030, 2040, and 2071.
+              MyFounders.Club is the startup intelligence layer for Gulf founders and the institutions that back them  bringing together a local founder community with AI-powered ecosystem data so the right founders and capital find each other faster.
             </motion.p>
             
             <motion.p 
@@ -157,9 +156,9 @@ function HeroCTA() {
           style={{ opacity: 0.2 }}
         />
         <span className="relative flex items-center">
-          Apply Now
-          <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
-            ↓
+          Apply Now &nbsp;
+          <motion.div animate={{ y: [1, 0, 1] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
+             →
           </motion.div>
         </span>
       </motion.button>
@@ -176,7 +175,7 @@ function HeroCTA() {
         type="button"
       >
         <span className="relative flex items-center">
-          Is This For You?
+          Is This For You ?
         </span>
       </motion.button>
     </>
@@ -187,7 +186,7 @@ function SocialProof() {
   return (
     <motion.div className="flex flex-col items-center justify-center gap-4 text-sm -mt-2" variants={itemVariants}>
       <p className="neon-subheading font-bold text-center text-white drop-shadow-lg" style={{ textShadow: '0 3px 10px rgba(0, 0, 0, 0.8)' }}>
-        🇸🇦 Vision 2030 | 🇦🇪 Centennial 2071 | 🇶🇦 QNV 2030 | 🇴🇲 Vision 2040 | 🇰🇼 Vision 2035 | 🇧🇭 EV 2030
+        <span title="Saudi Arabia">🇸🇦</span> Vision 2030 &nbsp;|&nbsp; <span title="UAE">🇦🇪</span> Centennial 2071 &nbsp;|&nbsp; <span title="Qatar">🇶🇦</span> QNV 2030 &nbsp;|&nbsp; <span title="Oman">🇴🇲</span> Vision 2040 &nbsp;|&nbsp; <span title="Kuwait">🇰🇼</span> Vision 2035 &nbsp;|&nbsp; <span title="Bahrain">🇧🇭</span> EV 2030
       </p>
     </motion.div>
   )

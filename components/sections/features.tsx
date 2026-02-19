@@ -15,7 +15,7 @@ const features = [
   {
     icon: Users,
     title: "Curated Founder Circles",
-    description: "Small groups of 8–10 founders at your level. Confidential. The kind of room where people tell you what they actually think.",
+    description: "Small groups of 8 to 10 founders at your level. Confidential. The kind of room where people tell you what they actually think.",
     image: '/images/investor-directory.JPG',
   },
   {

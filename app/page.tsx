@@ -37,7 +37,7 @@ export default function Home() {
         <PricingSectionUpdated />
         <ApplicationFormSection />
         <FAQSection />
-        <FinalCTASection />
+        {/* <FinalCTASection /> */}
         <Footer />
       </main>
     </>

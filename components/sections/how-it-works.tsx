@@ -22,7 +22,7 @@ const steps = [
     icon: Users,
     key: 'connect',
     title: 'Join The Room',
-    description: 'Attend matched circles, events, and deal rooms — local track or GCC expansion depending on your plans.',
+    description: 'Attend matched circles, events, and deal rooms. Local track or GCC expansion depending on your plans.',
   },
   {
     icon: TrendingUp,
@@ -69,7 +69,7 @@ function StepCard({ step }: { step: typeof steps[0] }) {
       variants={animationVariants.staggerItem}
     >
       <motion.article
-        className="group h-full rounded-2xl p-8 sm:p-12 lg:p-14 border border-white/8 bg-black/40 backdrop-blur-sm cursor-pointer will-change-transform"
+        className="group h-full rounded-2xl p-8 sm:p-12 lg:p-14 border border-white/10 bg-[#0b0b0b] cursor-pointer will-change-transform"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={handleMouseLeave}
@@ -87,7 +87,7 @@ function StepCard({ step }: { step: typeof steps[0] }) {
         }}
         whileHover={{
           y: -12,
-          boxShadow: '0 24px 48px rgba(0,0,0,0.6)',
+          boxShadow: '0 24px 48px rgba(255, 91, 35, 0.35)',
           transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
         }}
       >
@@ -128,7 +128,7 @@ export function HowItWorksSection() {
           }}>How It Works</h2>
           <p className="text-sm sm:text-base lg:text-lg text-white/90 max-w-2xl mx-auto drop-shadow-lg" style={{
             textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
-          }}>Four premium steps — clear, deliberate, and designed for founders.</p>
+          }}>Four premium steps. Clear, deliberate, and designed for founders.</p>
         </motion.div>
 
         <motion.div
