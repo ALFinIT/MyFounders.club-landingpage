@@ -5,6 +5,7 @@ import { Plus, X, Settings, LogOut, Layout } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useLocale } from 'next-intl'
 import { Logo } from './logo'
 import { useAuth } from '@/context/auth-context'
 
@@ -15,6 +16,7 @@ export function Navbar() {
   const [isLoading, setIsLoading] = useState(true)
   const { user, logout } = useAuth()
   const router = useRouter()
+  const locale = useLocale()
   const dropdownRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
@@ -97,34 +99,62 @@ export function Navbar() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div className="glass rounded-full px-4 sm:px-6 py-3 w-full max-w-3xl flex items-center justify-between">
+        <div className="glass rounded-full px-4 sm:px-6 py-3 w-full max-w-5xl flex items-center justify-between">
 
-          {/* Logo (clicking navigates to hero) */}
-          <a href="#hero" onClick={handleNavClick} onMouseEnter={(e) => prefetchRoute(e.currentTarget.getAttribute('href'))} onTouchStart={(e) => prefetchRoute((e.currentTarget as any).getAttribute('href'))} className="inline-block flex-shrink-0">
+          {/* Left: Logo + Text */}
+          <a href="#hero" onClick={handleNavClick} className="inline-flex items-center gap-3 flex-shrink-0">
             <Logo />
+            <span className="hidden sm:inline font-bold text-white text-lg">MyFounders.Club</span>
           </a>
 
-          {/* Desktop Menu - Horizontal Layout */}
-          <div className="hidden md:flex items-center gap-2 md:gap-3 lg:gap-4 flex-shrink-0">
-            <a href="#features" onClick={handleNavClick} onMouseEnter={(e) => prefetchRoute(e.currentTarget.getAttribute('href'))} onTouchStart={(e) => prefetchRoute((e.currentTarget as any).getAttribute('href'))} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
-              Features
-            </a>
-            <a href="#pricing" onClick={handleNavClick} onMouseEnter={(e) => prefetchRoute(e.currentTarget.getAttribute('href'))} onTouchStart={(e) => prefetchRoute((e.currentTarget as any).getAttribute('href'))} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
-              Pricing
-            </a>
-            <a href="/events" onClick={handleNavClick} onMouseEnter={(e) => prefetchRoute(e.currentTarget.getAttribute('href'))} onTouchStart={(e) => prefetchRoute((e.currentTarget as any).getAttribute('href'))} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
-              Events
-            </a>
-            <a href="#community" onClick={handleNavClick} onMouseEnter={(e) => prefetchRoute(e.currentTarget.getAttribute('href'))} onTouchStart={(e) => prefetchRoute((e.currentTarget as any).getAttribute('href'))} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
-              Community
-            </a>
-          </div>
+          {/* Right: Desktop Menu + Language + CTA */}
+          <div className="hidden md:flex items-center gap-6 flex-shrink-0">
+            {/* Menu Items */}
+            <div className="flex items-center gap-4">
+              <a href="#founders" onClick={handleNavClick} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+                For Founders
+              </a>
+              <a href="#international" onClick={handleNavClick} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+                International Entry
+              </a>
+              <a href="#how" onClick={handleNavClick} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+                How It Works
+              </a>
+              <a href="/survey" onClick={handleNavClick} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">
+                Survey
+              </a>
+            </div>
 
-          {/* CTA Button / Auth Buttons - Fixed width to prevent layout shift */}
-          <div className="hidden md:flex items-center gap-2 md:gap-3 flex-shrink-0">
-            {user && !isLoading ? (
-               <div className="relative">
-      <motion.button
+            {/* Language Toggle */}
+            <div className="flex items-center gap-2 border-l border-white/20 pl-6">
+              <button
+                onClick={() => router.push(`/${locale === 'ar' ? 'en' : 'ar'}`)}
+                className="px-3 py-1 rounded-lg text-xs uppercase tracking-widest font-medium transition-all"
+                style={{
+                  backgroundColor: locale === 'ar' ? 'rgba(255, 165, 0, 0.2)' : 'transparent',
+                  color: locale === 'ar' ? '#FFA500' : '#9CA3AF',
+                  borderRight: '1px solid rgba(255, 165, 0, 0.2)'
+                }}
+              >
+                عربي
+              </button>
+              <button
+                onClick={() => router.push(`/${locale === 'en' ? 'ar' : 'en'}`)}
+                className="px-3 py-1 rounded-lg text-xs uppercase tracking-widest font-medium transition-all"
+                style={{
+                  backgroundColor: locale === 'en' ? 'rgba(255, 165, 0, 0.2)' : 'transparent',
+                  color: locale === 'en' ? '#FFA500' : '#9CA3AF'
+                }}
+              >
+                EN
+              </button>
+            </div>
+
+            {/* Join Beta / User Menu */}
+            <div className="flex items-center gap-2 md:gap-3">
+              {user && !isLoading ? (
+                <div className="relative">
+                  <motion.button
                     ref={buttonRef}
                     onClick={() => setIsUserMenuOpen(prev => !prev)}
                     className="h-10 w-10 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg hover:shadow-orange-500/50 transition-all overflow-hidden border border-orange-400/30"
@@ -140,37 +170,63 @@ export function Navbar() {
                       />
                     )}
                   </motion.button>
-                  
-              </div>
-            ) : (
-              <Link
-                href="/auth"
-                className="px-8 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full text-sm font-semibold shadow-lg shadow-orange-500/30 hover:shadow-orange-500/60 transition-all overflow-hidden group relative flex-shrink-0"
-              >
-                <motion.span
-                  whileHover={{ scale: 1.08, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="relative z-10 inline-block"
+                </div>
+              ) : (
+                <Link
+                  href="/auth?mode=signup"
+                  className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full text-sm font-semibold shadow-lg shadow-orange-500/30 hover:shadow-orange-500/60 transition-all overflow-hidden group relative flex-shrink-0"
                 >
-                  Join
-                </motion.span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 -z-10"
-                  initial={{ x: '100%' }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </Link>
-            )}
+                  <motion.span
+                    whileHover={{ scale: 1.08, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="relative z-10 inline-block"
+                  >
+                    Join Beta
+                  </motion.span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 -z-10"
+                    initial={{ x: '100%' }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </Link>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white flex-shrink-0"
-          >
-            {isOpen ? <X size={24} /> : <Plus size={24} />}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            {/* Mobile Language Toggle */}
+            <div className="flex items-center gap-1 text-xs">
+              <button
+                onClick={() => router.push(`/${locale === 'ar' ? 'en' : 'ar'}`)}
+                className="px-2 py-1 rounded text-xs font-medium transition-all"
+                style={{
+                  backgroundColor: locale === 'ar' ? 'rgba(255, 165, 0, 0.3)' : 'transparent',
+                  color: locale === 'ar' ? '#FFA500' : '#9CA3AF'
+                }}
+              >
+                عربي
+              </button>
+              <span className="text-white/30">/</span>
+              <button
+                onClick={() => router.push(`/${locale === 'en' ? 'ar' : 'en'}`)}
+                className="px-2 py-1 rounded text-xs font-medium transition-all"
+                style={{
+                  backgroundColor: locale === 'en' ? 'rgba(255, 165, 0, 0.3)' : 'transparent',
+                  color: locale === 'en' ? '#FFA500' : '#9CA3AF'
+                }}
+              >
+                EN
+              </button>
+            </div>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-white flex-shrink-0 ml-2"
+            >
+              {isOpen ? <X size={24} /> : <Plus size={24} />}
+            </button>
+          </div>
         </div>
       </motion.nav>
 
@@ -253,46 +309,46 @@ export function Navbar() {
           onClick={() => setIsOpen(false)}
         >
           <motion.div
-            className="mt-20 mx-4 glass rounded-2xl p-4 w-full max-w-xs self-center"
+            className="mt-20 mx-4 glass rounded-2xl p-6 w-full max-w-xs self-center"
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             onClick={(e) => e.stopPropagation()}
           >
-          <div className="flex flex-col gap-3">
-            <a href="#features" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
-              Features
-            </a>
-            <a href="#pricing" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
-              Pricing
-            </a>
-            <a href="/events" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
-              Events
-            </a>
-            <a href="#community" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
-              Community
-            </a>
+            <div className="flex flex-col gap-4">
+              <a href="#founders" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+                For Founders
+              </a>
+              <a href="#international" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+                International Entry
+              </a>
+              <a href="#how" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+                How It Works
+              </a>
+              <a href="/survey" onClick={handleNavClick} className="text-sm text-gray-300 hover:text-orange-400 transition-colors px-3 py-2">
+                Survey
+              </a>
 
-            {user ? (
-              <>
-                <Link href="/dashboard" onClick={() => setIsOpen(false)} className="w-full block text-center px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold text-sm mt-2">
-                  Dashboard
+              {user ? (
+                <>
+                  <Link href="/dashboard" onClick={() => setIsOpen(false)} className="w-full block text-center px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold text-sm mt-2">
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={() => {
+                      logout()
+                      setIsOpen(false)
+                    }}
+                    className="w-full px-4 py-2.5 bg-red-500/20 border border-red-500 text-red-400 rounded-lg font-semibold text-sm"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link href="/auth?mode=signup" onClick={() => setIsOpen(false)} className="w-full block text-center px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold text-sm mt-2">
+                  Join Beta
                 </Link>
-                <button
-                  onClick={() => {
-                    logout()
-                    setIsOpen(false)
-                  }}
-                  className="w-full px-4 py-2.5 bg-red-500/20 border border-red-500 text-red-400 rounded-lg font-semibold text-sm"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <Link href="/auth" onClick={() => setIsOpen(false)} className="w-full block text-center px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold text-sm mt-2">
-                Join
-              </Link>
-            )}
-          </div>
+              )}
+            </div>
           </motion.div>
         </motion.div>
       )}

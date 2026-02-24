@@ -1,6 +1,9 @@
 import { Suspense } from 'react'
 import AuthContent from './auth-content'
 
+// Mark this route as dynamic to prevent static generation
+export const dynamic = 'force-dynamic'
+
 // Server component that wraps the client component in Suspense
 export default function AuthPage() {
   return (
@@ -17,4 +20,5 @@ function AuthLoadingFallback() {
     </div>
   )
 }
+
 

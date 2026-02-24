@@ -1,0 +1,193 @@
+{
+  "nav": {
+    "founders": "For Founders",
+    "international": "International Entry",
+    "how": "How It Works",
+    "cta": "Join Beta"
+  },
+  "hero": {
+    "eyebrow": "The Gulf's Private Founder & Investor Network",
+    "headline": "Build in the Gulf.<br><span class='accent'>Wired to</span><br>the World.",
+    "sub": "One platform. Every program, grant, free zone, accelerator, and investor across six GCC countries — AI-powered, free for founders, built from inside the Gulf.",
+    "cta_primary": "Get Early Access — Free",
+    "cta_ghost": "See how it works →",
+    "stat1": "GCC Startups",
+    "stat2": "Programs & Grants",
+    "stat3": "Raised Q3 2025",
+    "stat4": "Countries. One Platform."
+  },
+  "founder": {
+    "label": "Why MFC Exists",
+    "quote": "\"I built and failed in the UK. I arrived in Riyadh in 2022 — and saw everything that was missing.\"",
+    "body1": "Laws changing weekly. No single source of truth. Founders arriving with genuine ambition but zero map. And almost no women in the room.",
+    "body2": "After building ventures in the UK — including ones that failed — Katerina Hayes landed in Saudi Arabia and saw the gap clearly. Founders were stuck. International companies were lost. Everyone needed a trusted, verified, always-on intelligence layer for the Gulf.",
+    "body3": "MFC is the platform she wished existed. Not a directory. Not a matchmaker. The operating system for Gulf founders — free to use, impossible to replace.",
+    "name": "Katerina Hayes",
+    "title": "Founder & CEO, MyFounders.Club · Riyadh, Saudi Arabia",
+    "card_tag": "Founded in Riyadh, 2022",
+    "card_sub": "The room that matters. Built in the Gulf. Wired to the world.",
+    "badge1": "of Gulf founders build alone",
+    "badge2_num": "Free",
+    "badge2_lbl": "for every founder",
+    "badge3": "clear next step"
+  },
+  "problems": {
+    "eyebrow": "The Problem We Solve",
+    "headline": "The Gulf has the capital.\nFounders just can't find the door.",
+    "items": [
+      { "num": "01", "title": "Fragmented Intelligence", "desc": "400+ accelerators, grants, and programs across six countries — each with different rules, deadlines, and eligibility. No single source of truth." },
+      { "num": "02", "title": "Laws That Move Fast", "desc": "Saudi Arabia fundamentally changed its business regulations in 2025. Most founders are still acting on outdated information." },
+      { "num": "03", "title": "No Map for Entry", "desc": "International startups spend months trying to understand which free zone, which jurisdiction, which bank — without a trusted guide." },
+      { "num": "04", "title": "Wrong Rooms", "desc": "Founders attend the wrong events, apply to mismatched accelerators, and cold-pitch investors who will never fund their stage or sector." },
+      { "num": "05", "title": "Isolation at Scale", "desc": "80% of MENA founders report building alone. Isolated founders are 50% more likely to delay critical business decisions." },
+      { "num": "06", "title": "The Diversity Gap", "desc": "Female-led Gulf startups raised just $17.6M in H1 2025. The community infrastructure to change this simply didn't exist — until now." }
+    ]
+  },
+  "audience": {
+    "eyebrow": "Who MFC Is Built For",
+    "headline": "The right room\nfor the right builder.",
+    "tab_gulf": "Gulf Founders",
+    "tab_intl": "International Startups",
+    "tab_inv": "Investors",
+    "tabs": {
+      "gulf": {
+        "h": "Local roots.\nRegional scale.\nGlobal ambition.",
+        "body": "You're building something real in the Gulf. MFC gives you one platform to find the right program, apply to the right grant, and match with the right investor — and connect with founders who are a week ahead of where you are.",
+        "features": [
+          { "strong": "AI Next-Step Engine", "text": " — one clear next move, not 300 options", "tag": "Free" },
+          { "strong": "Grant & Program Matcher", "text": " — Hub71, Misk, Flat6Labs, Monsha'at, and 400+ more" },
+          { "strong": "Investor Matching", "text": " — warm introductions matched by stage, sector, and thesis" },
+          { "strong": "Curated Mastermind Groups", "text": " — 8–10 founders, confidential, facilitated" },
+          { "strong": "Demo Day Access", "text": " — pitch to 30+ curated investors in one room" },
+          { "strong": "Global Corridors", "text": " — ecosystem trips to London, Helsinki, Tokyo, San Francisco" }
+        ],
+        "cards": [
+          { "icon": "🧭", "title": "AI Next-Step Engine", "desc": "Tell us your stage and sector. Get your one clear next step — instantly, free." },
+          { "icon": "💰", "title": "Grant & Program Matcher", "desc": "AI scans 400+ GCC programs and ranks them by your profile. Stop missing deadlines." },
+          { "icon": "🤝", "title": "Investor Matching", "desc": "Warm introductions to investors already aligned with your stage, sector, and geography." },
+          { "icon": "🌐", "title": "Global Expansion Corridors", "desc": "Once you've built locally — MFC connects you to the world's key startup hubs." }
+        ]
+      },
+      "intl": {
+        "h": "Expanding to\nthe Gulf? Skip\nthe two-year cold start.",
+        "body": "Six countries. Six legal frameworks. Dozens of free zones. MFC navigates the complexity so you enter the Gulf as an insider — not a tourist.",
+        "features": [
+          { "strong": "Gulf Entry Navigator", "text": " — compare free zones, licensing, and incentives across UAE, KSA, Qatar, Bahrain, Oman, Kuwait" },
+          { "strong": "Jurisdiction Matching", "text": " — ADGM, DMCC, DIFC, Dubai Silicon Oasis — ranked by your fit" },
+          { "strong": "Trusted Supplier Network", "text": " — vetted local legal, finance, HR, and logistics partners" },
+          { "strong": "Local Community Access", "text": " — founders who've done your exact entry journey" },
+          { "strong": "Program & Accelerator Matching", "text": " — pre-screened for your stage and sector" },
+          { "strong": "Regulatory Intelligence", "text": " — live updates when Gulf laws change (they do, often)" }
+        ],
+        "cards": [
+          { "icon": "🗺️", "title": "Gulf Entry Navigator", "desc": "Compare all 6 GCC countries. Get a recommended launch stack: zone + bank + program." },
+          { "icon": "⚖️", "title": "Regulatory Intelligence", "desc": "Real-time updates on licensing, visa rules, and free zone changes — before they trip you up." },
+          { "icon": "🔗", "title": "Trusted Supplier Network", "desc": "Vetted legal, banking, and operational partners. No more cold searches." },
+          { "icon": "🏗️", "title": "Local Founder Community", "desc": "Connect with founders who landed before you — and open the doors they know." }
+        ]
+      },
+      "inv": {
+        "h": "Signal before\nnoise. See deals\nbefore the market.",
+        "body": "3,027 investors participated in GCC funding rounds in 2025. MFC gives you AI-scored deal flow from a living community — not just self-reported pitch decks.",
+        "features": [
+          { "strong": "AI-Scored Deal Flow", "text": " — ranked by community engagement, milestones, and peer validation" },
+          { "strong": "Investor Circle", "text": " — private deal rooms and co-investment coordination" },
+          { "strong": "Due Diligence Packs", "text": " — pre-compiled profiles, market data, competitive intel" },
+          { "strong": "Private Founder Dinners", "text": " — 12-person curated evenings. Real conversation, no decks." },
+          { "strong": "Gulf Startup Pulse Reports", "text": " — quarterly deep dives on GCC capital flows" },
+          { "strong": "Demo Day Priority Access", "text": " — first look at the Gulf's most prepared founders" }
+        ],
+        "cards": [
+          { "icon": "📊", "title": "AI-Scored Deal Flow", "desc": "See which founders are actually building — not just pitching." },
+          { "icon": "🔒", "title": "Private Deal Rooms", "desc": "Co-invest with investors who've already done the first layer of due diligence." },
+          { "icon": "📋", "title": "Due Diligence Packs", "desc": "Cut DD time in half. The hard data is already assembled." },
+          { "icon": "📈", "title": "Gulf Startup Pulse", "desc": "Quarterly deep dives on GCC capital flows, sector health, and founder trends." }
+        ]
+      }
+    }
+  },
+  "how": {
+    "eyebrow": "How It Works",
+    "headline": "One platform.\nOne clear next step.",
+    "steps": [
+      { "num": "Step 01", "title": "Build Your Profile", "desc": "5 questions. Stage, sector, geography, funding status, and goal. Under two minutes. Instantly useful." },
+      { "num": "Step 02", "title": "Get Your Next Step", "desc": "The AI engine scans every GCC program, grant, investor, and free zone — and gives you one clear recommendation." },
+      { "num": "Step 03", "title": "Connect & Apply", "desc": "Match with the right accelerator, apply to the right grant, get a warm introduction to the right investor — all inside the platform." },
+      { "num": "Step 04", "title": "Scale With the Room", "desc": "Join masterminds, attend events, go on ecosystem trips. Your next step updates automatically as your milestones evolve." }
+    ]
+  },
+  "beta": {
+    "tag": "Now Accepting Beta Applications",
+    "headline": "Get early access.\nBuild with us.",
+    "sub": "We're opening the platform to a first cohort of Gulf founders and international companies expanding to the Gulf. Free. No credit card. Just signal.",
+    "fname_label": "First Name",
+    "fname_ph": "Katerina",
+    "lname_label": "Last Name",
+    "lname_ph": "Hayes",
+    "email_label": "Email Address",
+    "email_ph": "you@company.com",
+    "company_label": "Company / Startup Name",
+    "company_ph": "Your startup",
+    "country_label": "Based In",
+    "country_default": "Select your country",
+    "stage_label": "Startup Stage",
+    "stage_default": "Select your stage",
+    "stage1": "Idea / Pre-Revenue",
+    "stage2": "Pre-Seed",
+    "stage3": "Seed",
+    "stage4": "Series A",
+    "stage5": "Series B+",
+    "stage6": "Scaling / Revenue-generating",
+    "stage7": "Investor / Ecosystem Partner",
+    "sector_label": "Primary Sector",
+    "sector_default": "Select your sector",
+    "sector1": "Fintech",
+    "sector2": "Energy / CleanTech",
+    "sector3": "Logistics",
+    "sector4": "HealthTech",
+    "sector5": "AI / Deep Tech",
+    "sector6": "E-commerce / Retail",
+    "sector7": "EdTech",
+    "sector8": "PropTech",
+    "sector9": "Other",
+    "challenge_label": "What's your biggest challenge right now? (optional)",
+    "challenge_ph": "e.g. Finding the right free zone, connecting with Saudi investors…",
+    "submit": "Join the Beta — Free Access",
+    "note": "By submitting you agree to our",
+    "privacy": "Privacy Policy",
+    "and": "and",
+    "terms": "Terms & Conditions",
+    "success_h": "You're in.",
+    "success_p": "Your first step isn't 'explore the platform.' It's meeting a founder building something you'll care about. We'll be in touch very soon."
+  },
+  "nl": {
+    "title": "The Gulf Pulse",
+    "desc": "Weekly intelligence on GCC startup funding, program deadlines, and ecosystem signals. Free. Every Tuesday morning.",
+    "placeholder": "Your email address",
+    "btn": "Subscribe"
+  },
+  "footer": {
+    "desc": "The private founders & investors network for the Gulf. Free for founders. Built in Riyadh. Wired to the world.",
+    "col1_title": "Platform",
+    "col1_l1": "For Gulf Founders",
+    "col1_l2": "International Entry",
+    "col1_l3": "For Investors",
+    "col1_l4": "How It Works",
+    "col1_l5": "Join Beta",
+    "col2_title": "Community",
+    "col2_l1": "Compass (Free)",
+    "col2_l2": "Navigator",
+    "col2_l3": "Captain",
+    "col2_l4": "Investor Circle",
+    "col2_l5": "Events & Demo Days",
+    "col3_title": "Company",
+    "col3_l1": "Our Story",
+    "col3_l2": "Contact Us",
+    "col3_l3": "Press & Media",
+    "col3_l4": "Privacy Policy",
+    "col3_l5": "Terms & Conditions",
+    "copy": "© 2022–2025 MyFounders.Club. All rights reserved. Registered in Saudi Arabia & UAE.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions"
+  }
+}

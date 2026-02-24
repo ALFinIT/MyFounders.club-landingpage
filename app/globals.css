@@ -2,10 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --x: 50vw;
+  --y: 50vh;
+}
+
 html {
   scroll-behavior: smooth;
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+html[lang="ar"] {
+  direction: rtl;
 }
 
 html::-webkit-scrollbar {
@@ -13,21 +22,22 @@ html::-webkit-scrollbar {
 }
 
 body {
-  font-family: 'Neue Montreal', var(--font-montserrat), var(--font-inter), system-ui, sans-serif;
-  /* Matte black overlay to improve text contrast over the MFC theme background */
-  background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('/MFC%20theme.png');
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  background: #000000;
   /* Stronger site-wide text color for maximum contrast */
-  color: #FFFFFF;
+  color: #ffffff;
   overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
   min-height: 100vh;
   font-weight: 300;
   letter-spacing: 0.02em;
+  cursor: none;
+}
+
+html[lang="ar"] body {
+  font-family: var(--font-cairo, "Cairo"), system-ui, sans-serif;
+  letter-spacing: 0;
 }
 
 body::-webkit-scrollbar {
@@ -40,36 +50,173 @@ body::-webkit-scrollbar {
   }
 
   .glass::before {
-    content: '';
+    content: "";
     @apply absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none;
   }
 
   .glass-hover {
     @apply glass transition-all duration-300 hover:bg-black/80 hover:border-white/30;
   }
+  /* ========================================
+     TYPOGRAPHY SYSTEM
+     ======================================== */
 
-  /* Neon / shining heading utilities */
+  /* Font Family Utilities */
+  .font-syne {
+    font-family: var(--font-syne, sans-serif);
+  }
+
+  .font-dm-sans {
+    font-family: var(--font-dm-sans, sans-serif);
+  }
+
+  /* ========================================
+     SYNE TYPOGRAPHY - Headings, UI, Buttons
+     ======================================== */
+
+  /* Hero Headings - 800 weight, tight line-height, negative letter spacing */
+  .hero-heading {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+
+  /* Section Titles - 700 weight */
+  .section-title {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+  }
+
+  /* Buttons and UI Labels - 600 weight */
+  .button-text {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  .ui-label {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+  }
+
+  /* ========================================
+     DM SANS TYPOGRAPHY - Body, Inputs, Tabs
+     ======================================== */
+
+  /* Body Text - 400 weight, normal line-height */
+  .body-text {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0;
+    color: #d1d5db;
+  }
+
+  /* Secondary/Light Text - 300-400 weight */
+  .body-light {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #9ca3af;
+  }
+
+  .body-secondary {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #6b7280;
+  }
+
+  /* Form Inputs and Tab Labels - 400-500 weight */
+  .form-input {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  .tab-label {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  /* ========================================
+     SEMANTIC HEADING ALIASES
+     ======================================== */
+
+  .heading-display {
+    @apply hero-heading;
+  }
+
+  .heading-lg {
+    @apply section-title;
+  }
+
+  .heading-md {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #ffffff;
+  }
+
+  .heading-sm {
+    font-family: var(--font-syne, sans-serif);
+    font-weight: 600;
+    line-height: 1.2;
+    color: #ffffff;
+  }
+
+  /* ========================================
+     NEON / SHINING UTILITIES
+     ======================================== */
+
   @keyframes neonGlow {
-    0%, 100% {
+    0%,
+    100% {
       /* softer, low-intensity glow */
-      text-shadow: 0 0 4px rgba(255,165,0,0.35), 0 0 10px rgba(255,140,0,0.18), 0 0 20px rgba(255,120,0,0.12);
+      text-shadow:
+        0 0 4px rgba(255, 165, 0, 0.35),
+        0 0 10px rgba(255, 140, 0, 0.18),
+        0 0 20px rgba(255, 120, 0, 0.12);
       opacity: 0.95;
     }
     50% {
       /* gentle peak glow */
-      text-shadow: 0 0 8px rgba(255,200,100,0.6), 0 0 20px rgba(255,140,0,0.35), 0 0 36px rgba(255,100,0,0.18);
+      text-shadow:
+        0 0 8px rgba(255, 200, 100, 0.6),
+        0 0 20px rgba(255, 140, 0, 0.35),
+        0 0 36px rgba(255, 100, 0, 0.18);
       opacity: 1;
     }
   }
 
   @keyframes shimmer {
-    0% { background-position: -150% 0; }
-    100% { background-position: 250% 0; }
+    0% {
+      background-position: -150% 0;
+    }
+    100% {
+      background-position: 250% 0;
+    }
   }
 
   /* Slow, minimal blink used only for small UI hints (e.g., 'Scroll to explore') */
   @keyframes slowBlink {
-    0%, 20% {
+    0%,
+    20% {
       opacity: 1;
     }
     50% {
@@ -86,8 +233,18 @@ body::-webkit-scrollbar {
     will-change: opacity;
   }
 
+  /* Neon border running animation */
+  @keyframes neonBorderRun {
+    0% {
+      background-position: 0% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
   .neon-heading {
-    color: #FFFFFF;
+    color: #ffffff;
     /* plain bold heading without glow */
     text-shadow: none;
     font-weight: 800;
@@ -96,7 +253,7 @@ body::-webkit-scrollbar {
 
   .neon-highlight {
     /* simple highlight color without shining/glow effects */
-    color: #FF5B23;
+    color: #ff5b23;
     text-shadow: none;
     background: none;
     -webkit-background-clip: unset;
@@ -106,25 +263,18 @@ body::-webkit-scrollbar {
   }
 
   .neon-subheading {
-    color: #F2F2F2;
+    color: #f2f2f2;
     text-shadow: none;
     font-weight: 600 !important;
   }
 
-  /* Hero heading override to ensure stronger contrast and extra bold weight */
-  .hero-heading {
-  font-family: var(--font-inter);
-  font-weight: 800;
-  color: #FFFFFF;
-  letter-spacing: -0.02em;
-}
-
-  /* Controlled hero subheading to wrap into two lines at desktop widths */
+  /* Hero subheading - using DM Sans */
   .hero-subheading {
-    color: #CCCCCC;
-    font-weight: 500;
-    font-family: var(--font-montserrat), var(--font-inter), system-ui, sans-serif;
+    font-family: var(--font-dm-sans, sans-serif);
+    font-weight: 400;
+    color: #cccccc;
     font-size: 1.125rem; /* 18px */
+    line-height: 1.6;
     line-height: 1.5; /* ensure wrap into two lines */
   }
 
@@ -155,36 +305,43 @@ body::-webkit-scrollbar {
 
   /* Typography overrides: keep body light but make headings/subheadings bold & brighter */
   /* Headings (primary) */
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     font-weight: 800;
-    color: #FFFFFF;
+    color: #ffffff;
     letter-spacing: 0.01em;
   }
 
   /* Subheadings */
-  h4, h5, h6 {
+  h4,
+  h5,
+  h6 {
     font-weight: 600 !important;
     color: #ffffff;
     letter-spacing: 0.01em;
   }
 
   /* Body text and inline elements: optimized for accessibility and contrast */
-  p, li, span, button {
+  p,
+  li,
+  span,
+  button {
     font-weight: 400 !important;
-    color: #F7F7F7 !important;
+    color: #f7f7f7 !important;
     letter-spacing: 0.01em;
   }
 
   /* Default links: white; hover to hot orange to match theme */
   a {
-    color: #FFFFFF;
+    color: #ffffff;
     font-weight: 500;
     transition: color 200ms ease;
   }
 
   a:hover,
   a:focus {
-    color: #FF5B23 !important;
+    color: #ff5b23 !important;
     outline: none;
   }
 
@@ -198,8 +355,8 @@ body::-webkit-scrollbar {
 
   /* Native option dropdown styling where supported */
   select option {
-    background-color: rgba(0,0,0,0.9);
-    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #ffffff;
   }
 
   /* For WebKit-based browsers, attempt to theme the dropdown */
@@ -220,7 +377,8 @@ body::-webkit-scrollbar {
   }
 
   @keyframes pulse-glow {
-    0%, 100% {
+    0%,
+    100% {
       box-shadow: 0 0 20px rgba(255, 91, 35, 0.2);
     }
     50% {
@@ -229,11 +387,12 @@ body::-webkit-scrollbar {
   }
 
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0px);
     }
     50% {
-      transform: translateY(-10px);
+      transform: translateY(-6px);
     }
   }
 
@@ -246,7 +405,11 @@ body::-webkit-scrollbar {
   }
 
   .animate-float {
-    animation: float 3s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 9s ease-in-out infinite;
   }
 
   /* Smooth transitions */
@@ -268,7 +431,8 @@ body::-webkit-scrollbar {
 
   /* Premium royal touch animations */
   @keyframes shimmer {
-    0%, 100% {
+    0%,
+    100% {
       background-position: 200% center;
     }
     50% {
@@ -277,11 +441,16 @@ body::-webkit-scrollbar {
   }
 
   @keyframes soft-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px rgba(255, 91, 35, 0.15), inset 0 0 20px rgba(255, 91, 35, 0.05);
+    0%,
+    100% {
+      box-shadow:
+        0 0 20px rgba(255, 91, 35, 0.15),
+        inset 0 0 20px rgba(255, 91, 35, 0.05);
     }
     50% {
-      box-shadow: 0 0 40px rgba(255, 91, 35, 0.25), inset 0 0 20px rgba(255, 91, 35, 0.1);
+      box-shadow:
+        0 0 40px rgba(255, 91, 35, 0.25),
+        inset 0 0 20px rgba(255, 91, 35, 0.1);
     }
   }
 
@@ -300,7 +469,7 @@ body::-webkit-scrollbar {
   }
 
   .btn-luxury::before {
-    content: '';
+    content: "";
     @apply absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-300;
     transform: translateX(-100%);
   }
@@ -317,7 +486,7 @@ body::-webkit-scrollbar {
   /* Background styling matching landing page */
   .bg-page {
     position: relative;
-    background: url('/MFC%20theme.png');
+    background: url("/MFC%20theme.png");
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
@@ -326,7 +495,7 @@ body::-webkit-scrollbar {
 
   /* Dim overlay only affects the background, not content */
   .bg-page::before {
-    content: '';
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
@@ -348,7 +517,7 @@ body::-webkit-scrollbar {
 @layer base {
   :root {
     /* Global background overlay color - light overlay to show background image */
-    --bg-overlay: rgba(0,0,0,0.8);
+    --bg-overlay: rgba(0, 0, 0, 0.8);
     --background: 0 0% 1.5%;
     --foreground: 0 0% 80%;
     --card: 0 0% 8%;
@@ -428,10 +597,11 @@ body::-webkit-scrollbar {
   }
 }
 
-
 /* prefers-reduced-motion fallback */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
