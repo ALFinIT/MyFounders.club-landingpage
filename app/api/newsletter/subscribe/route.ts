@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
+import { appendLocalRecord } from '@/utils/localDb'
 import { cookies } from 'next/headers'
 
 export const dynamic = 'force-dynamic'
@@ -17,48 +18,89 @@ export async function POST(request: Request) {
       )
     }
 
-    const cookieStore = await cookies()
-    const supabase = await createClient(cookieStore)
+    let supabaseSaved = false
+    let supabaseError = null
+    let supabaseDuplicate = false
+    let supabase = null
 
-    // Check if already subscribed
-    const { data: existing } = await supabase
-      .from('newsletter_signups')
-      .select('*')
-      .eq('email', email.toLowerCase())
-      .single()
+    // Try Supabase first
+    try {
+      const cookieStore = await cookies()
+      supabase = await createClient(cookieStore)
 
-    if (existing) {
+      // Check if already subscribed
+      const { data: existing } = await supabase
+        .from('newsletter_signups')
+        .select('*')
+        .eq('email', email.toLowerCase())
+        .single()
+
+      if (existing) {
+        supabaseDuplicate = true
+      } else {
+        // Insert new subscriber
+        const { data, error } = await supabase
+          .from('newsletter_signups')
+          .insert({
+            email: email.toLowerCase(),
+            subscribed_at: new Date().toISOString()
+          })
+          .select()
+          .single()
+
+        if (error) {
+          supabaseError = error.message
+          console.error('Newsletter subscription error:', error)
+        } else {
+          supabaseSaved = true
+        }
+      }
+    } catch (e) {
+      supabaseError = String(e)
+      console.error('Supabase connection error:', e)
+    }
+
+    // If duplicate in Supabase, return error
+    if (supabaseDuplicate) {
       return NextResponse.json(
         { error: 'Already subscribed', message: 'This email is already on our newsletter list' },
         { status: 409 }
       )
     }
 
-    // Insert new subscriber
-    const { data, error } = await supabase
-      .from('newsletter_signups')
-      .insert({
+    // Always try local fallback
+    let localSaved = false
+    try {
+      await appendLocalRecord('newsletter_signups.json', {
         email: email.toLowerCase(),
-        subscribed_at: new Date().toISOString()
+        subscribedAt: new Date().toISOString(),
+        _savedAt: new Date().toISOString(),
+        _source: 'newsletter_subscribe'
       })
-      .select()
-      .single()
+      localSaved = true
+    } catch (e) {
+      console.error('Local persist failed:', e)
+    }
 
-    if (error) {
-      console.error('Newsletter subscription error:', error)
+    // Return success if either storage worked
+    if (supabaseSaved || localSaved) {
       return NextResponse.json(
-        { error: 'Failed to subscribe' },
-        { status: 400 }
+        { 
+          success: true, 
+          message: 'Successfully subscribed to newsletter',
+          savedTo: {
+            supabase: supabaseSaved,
+            local: localSaved
+          }
+        },
+        { status: 201 }
       )
     }
 
+    // Only fail if both storages failed
     return NextResponse.json(
-      { 
-        success: true, 
-        message: 'Successfully subscribed to newsletter',
-        data 
-      },
-      { status: 201 }
+      { error: 'Failed to subscribe', details: supabaseError },
+      { status: 500 }
     )
   } catch (err) {
     console.error('Newsletter subscribe error:', err)

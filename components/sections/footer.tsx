@@ -177,24 +177,18 @@ export function Footer() {
 
   {/* Left: Logo + Branding */}
   <div className="flex items-start gap-4">
-    <div className="w-20 h-20 rounded-lg overflow-hidden bg-white/10 flex items-center justify-center flex-shrink-0">
-      <HighQualityImage
-        src="/App Icon Orange.svg"
-        alt="My Founders Club Logo"
-        width={80}
-        height={80}
-        className="object-contain p-2"
-        quality={100}
-      />
-    </div>
-
-    <div>
-      <p className="text-2xl md:text-3xl font-bold tracking-wide text-white">
-        MY FOUNDER CLUBS
-      </p>
-      <p className="mt-1 text-sm md:text-base text-gray-300 font-light">
-        Your Gateway to Gulf Opportunities
-      </p>
+    <div className="flex items-center gap-3 flex-shrink-0">
+      <div className="w-16 h-16 flex items-center justify-center flex-shrink-0">
+        <div className="text-3xl font-bold text-orange-500">★</div>
+      </div>
+      <div>
+        <p className="text-2xl md:text-3xl font-bold tracking-wide text-white">
+          MY FOUNDER CLUBS
+        </p>
+        <p className="mt-1 text-sm md:text-base text-gray-300 font-light">
+          Your Gateway to Gulf Opportunities
+        </p>
+      </div>
     </div>
   </div>
 

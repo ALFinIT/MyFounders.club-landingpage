@@ -92,14 +92,14 @@ export function Navbar() {
 
   return (
     <>
-      {/* Floating Navbar - Truly Centered on Screen */}
+      {/* Floating Navbar - Centered */}
       <motion.nav
-        className="fixed top-6 inset-x-0 z-[9999] flex justify-center px-4"
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-[9999] px-4"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div className="glass rounded-full px-4 sm:px-6 py-3 w-full max-w-5xl flex items-center justify-between">
+        <div className="glass rounded-full px-4 sm:px-6 py-3 w-full max-w-4xl flex items-center justify-between">
 
           {/* Left: Logo + Text */}
           <a href="#hero" onClick={handleNavClick} className="inline-flex items-center gap-3 flex-shrink-0">
@@ -108,7 +108,7 @@ export function Navbar() {
           </a>
 
           {/* Right: Desktop Menu + Language + CTA */}
-          <div className="hidden md:flex items-center gap-6 flex-shrink-0">
+          <div className="hidden md:flex items-center gap-4 flex-shrink-0">
             {/* Menu Items */}
             <div className="flex items-center gap-4">
               <a href="#founders" onClick={handleNavClick} className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white transition-colors font-light whitespace-nowrap">

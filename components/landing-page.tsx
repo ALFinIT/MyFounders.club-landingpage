@@ -2,18 +2,51 @@
 
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { LanguageSwitcher } from '@/components/language-switcher'
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import ChatWidget from '@/components/ChatWidget'
+import { Menu, X } from 'lucide-react'
 
 export default function LandingPage() {
   const t = useTranslations()
   const router = useRouter()
   const locale = useLocale()
   const [activeTab, setActiveTab] = useState('gulf')
-  const [chatOpen, setChatOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [navbarScrolled, setNavbarScrolled] = useState(false)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [prevLocale, setPrevLocale] = useState(locale)
+
+  // Handle language change with smooth transition
+  useEffect(() => {
+    if (locale !== prevLocale) {
+      setIsTransitioning(false)
+      setPrevLocale(locale)
+    }
+  }, [locale, prevLocale])
+
+  const handleLanguageSwitch = (newLocale: string) => {
+    setIsTransitioning(true)
+    setTimeout(() => {
+      router.push(`/${newLocale}`)
+    }, 150)
+  }
+
+  // Handle navbar scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setNavbarScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const pageTransition = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+    transition: { duration: 0.3 }
+  }
 
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
@@ -22,7 +55,9 @@ export default function LandingPage() {
   }
 
   const staggerContainer = {
-    animate: {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
       transition: {
         staggerChildren: 0.1
       }
@@ -30,43 +65,43 @@ export default function LandingPage() {
   }
 
   return (
-    <>
-      <LanguageSwitcher />
-
-      {/* NAV - REDESIGNED WITH HOT ORANGE FRAME */}
-      <motion.nav
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] w-[95vw] max-w-7xl"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        {/* Hot Orange Neon Frame */}
-        <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl border border-orange-500/50 
-                        shadow-[0_0_20px_rgba(255,90,0,0.4),inset_0_0_20px_rgba(255,90,0,0.1)]
-                        before:absolute before:inset-0 before:rounded-2xl 
-                        before:bg-gradient-to-r before:from-orange-500 before:via-transparent before:to-orange-500
-                        before:p-[1px] before:opacity-0 before:animate-pulse
-                        after:absolute after:inset-0 after:rounded-2xl
-                        after:bg-[linear-gradient(90deg,transparent,rgba(255,90,0,0.6),transparent)]
-                        after:-z-10 after:blur-lg after:opacity-40">
+    <AnimatePresence mode="wait">
+      <motion.div key={locale} {...pageTransition}>
+        {isTransitioning && (
+          <div className="fixed inset-0 bg-black/50 z-[99999] pointer-events-none" />
+        )}
+        {/* NAV - FULL WIDTH AT TOP */}
+        <motion.nav
+          className={`fixed top-0 left-0 right-0 z-[9999] w-full px-4 py-4 transition-all duration-300 ${
+            navbarScrolled ? 'shadow-2xl backdrop-blur-xl' : ''
+          }`}
+          initial={{ y: -120, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+        {/* Hot Orange Neon Frame - Full Width Container */}
+        <div className={`mx-auto max-w-full rounded-2xl border transition-all duration-300 ${
+          navbarScrolled
+            ? 'bg-black/95 border-orange-500/50 shadow-[0_0_20px_rgba(255,91,35,0.4)]'
+            : 'bg-black/90 border-orange-500/70 shadow-[0_0_40px_rgba(255,91,35,0.6),inset_0_0_20px_rgba(255,91,35,0.15)]'
+        }`}>
           
-          <div className="flex items-center justify-between px-8 py-4 relative z-10">
+          <div className="flex items-center justify-between px-4 md:px-8 py-3 relative z-10">
             
-            {/* LEFT: LOGO */}
-            <a href="#" className="flex items-center gap-2 flex-shrink-0">
-              <div className="grid place-items-center w-8 h-8">
-                <svg viewBox="0 0 28 28" fill="none" className="w-full h-full">
-                  <path d="M14 4L24 10V18L14 24L4 18V10L14 4Z" fill="none" stroke="#FF5B23" strokeWidth="1.5"/>
-                  <path d="M8 12L14 8L20 12" stroke="#FF5B23" strokeWidth="1.5" strokeLinecap="round"/>
-                  <path d="M8 16L14 20L20 16" stroke="#FF5B23" strokeWidth="1.5" strokeLinecap="round"/>
-                  <path d="M14 8V20" stroke="#FF5B23" strokeWidth="1" strokeDasharray="2 2"/>
-                </svg>
+            {/* LEFT: LOGO + BRAND NAME */}
+            <motion.a 
+              href="/"
+              className="flex items-center gap-2 md:gap-3 flex-shrink-0"
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0">
+                <img src="/images/App%20Icon%20Orange.svg" alt="MFC" className="w-full h-full" />
               </div>
-              <span className="hidden sm:inline font-syne font-bold text-white text-lg">MFC</span>
-            </a>
+              <span className="hidden sm:inline font-syne font-bold text-white text-sm md:text-base">MyFounders</span>
+            </motion.a>
 
-            {/* CENTER: NAVIGATION LINKS */}
-            <div className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+            {/* CENTER: NAVIGATION LINKS - HIDDEN ON MOBILE */}
+            <div className="hidden lg:flex items-center gap-4 xl:gap-6">
               <a href="#founders" className="text-xs uppercase tracking-widest text-gray-300 hover:text-orange-400 transition-colors font-medium">
                 {t('nav.founders')}
               </a>
@@ -81,26 +116,26 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            {/* RIGHT: LANGUAGE TOGGLE + CTA BUTTON */}
-            <div className="flex items-center gap-3 flex-shrink-0">
-              {/* Language Toggle */}
-              <div className="hidden md:flex items-center gap-1 border-l border-orange-500/30 pl-3">
+            {/* RIGHT: LANGUAGE TOGGLE + CTA + HAMBURGER - ALL VISIBLE */}
+            <div className="flex items-center gap-2 md:gap-4">
+              {/* Language Toggle - INSIDE NAVBAR */}
+              <div className="flex items-center gap-1 px-2 md:px-3 border-l border-orange-500/30 py-1">
                 <button
-                  onClick={() => router.push(`/${locale === 'ar' ? 'en' : 'ar'}`)}
-                  className="px-2 py-1 rounded text-xs uppercase font-semibold transition-all"
+                  onClick={() => handleLanguageSwitch('ar')}
+                  className="px-2 py-1 rounded text-xs font-semibold transition-all whitespace-nowrap hover:scale-105"
                   style={{
-                    backgroundColor: locale === 'ar' ? 'rgba(255, 90, 0, 0.2)' : 'transparent',
+                    backgroundColor: locale === 'ar' ? 'rgba(255, 91, 35, 0.3)' : 'transparent',
                     color: locale === 'ar' ? '#FF5B23' : '#9CA3AF',
                   }}
                 >
                   عربي
                 </button>
-                <span className="text-white/20">/</span>
+                <span className="text-white/20 mx-1">/</span>
                 <button
-                  onClick={() => router.push(`/${locale === 'en' ? 'ar' : 'en'}`)}
-                  className="px-2 py-1 rounded text-xs uppercase font-semibold transition-all"
+                  onClick={() => handleLanguageSwitch('en')}
+                  className="px-2 py-1 rounded text-xs font-semibold transition-all whitespace-nowrap hover:scale-105"
                   style={{
-                    backgroundColor: locale === 'en' ? 'rgba(255, 90, 0, 0.2)' : 'transparent',
+                    backgroundColor: locale === 'en' ? 'rgba(255, 91, 35, 0.3)' : 'transparent',
                     color: locale === 'en' ? '#FF5B23' : '#9CA3AF',
                   }}
                 >
@@ -108,92 +143,179 @@ export default function LandingPage() {
                 </button>
               </div>
 
-              {/* CTA Button */}
+              {/* CTA Button - HIDDEN ON SMALL SCREENS */}
               <Link
                 href="/auth?mode=signup"
-                className="px-5 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_15px_rgba(255,90,0,0.6)] transition-all no-underline flex-shrink-0"
+                className="hidden sm:block px-3 md:px-5 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_15px_rgba(255,91,35,0.6)] transition-all no-underline flex-shrink-0 whitespace-nowrap"
               >
                 Join Beta
               </Link>
+
+              {/* Mobile Menu Button */}
+              <motion.button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 text-white hover:text-orange-400 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </motion.button>
             </div>
           </div>
+
+          {/* MOBILE MENU */}
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                className="lg:hidden border-t border-orange-500/30 px-4 py-4"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="flex flex-col gap-3">
+                  <Link
+                    href="#founders"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-sm uppercase tracking-widest text-gray-300 hover:text-orange-400 transition-colors font-medium no-underline py-2"
+                  >
+                    {t('nav.founders')}
+                  </Link>
+                  <Link
+                    href="#international"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-sm uppercase tracking-widest text-gray-300 hover:text-orange-400 transition-colors font-medium no-underline py-2"
+                  >
+                    {t('nav.international')}
+                  </Link>
+                  <Link
+                    href="#how"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-sm uppercase tracking-widest text-gray-300 hover:text-orange-400 transition-colors font-medium no-underline py-2"
+                  >
+                    {t('nav.how')}
+                  </Link>
+                  <Link
+                    href="/survey"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-sm uppercase tracking-widest text-gray-300 hover:text-orange-400 transition-colors font-medium no-underline py-2"
+                  >
+                    Survey
+                  </Link>
+                  <Link
+                    href="/auth?mode=signup"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="mt-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all no-underline w-full text-center"
+                  >
+                    Join Beta
+                  </Link>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </motion.nav>
 
       {/* HERO */}
-      <section className="min-h-screen flex flex-col justify-center px-[4vw] pb-6 pt-24 relative overflow-hidden bg-black">
-        <div className="absolute inset-0 opacity-0 pointer-events-none bg-[linear-gradient(rgba(255,91,35,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,91,35,0.04)_1px,transparent_1px)] bg-[60px_60px] [mask-image:radial-gradient(ellipse_80%_70%_at_60%_40%,black_20%,transparent_100%)]"></div>
-        <div className="absolute top-0 right-0 w-[55vw] h-[55vw] max-w-[700px] max-h-[700px] bg-radial-[circle_at_center,rgba(255,91,35,0.18)_0%,transparent_70%] pointer-events-none"></div>
+      <section className="min-h-screen flex flex-col justify-center pt-32 md:pt-40 pb-6 relative overflow-hidden">
+        {/* Animated Background Gradient */}
+        <motion.div 
+          className="absolute inset-0 opacity-0 pointer-events-none"
+          animate={{ opacity: [0.05, 0.1, 0.05] }}
+          transition={{ duration: 4, repeat: Infinity }}
+        >
+          <div className="bg-[linear-gradient(rgba(255,91,35,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,91,35,0.04)_1px,transparent_1px)] bg-[60px_60px] w-full h-full [mask-image:radial-gradient(ellipse_80%_70%_at_60%_40%,black_20%,transparent_100%)]"></div>
+        </motion.div>
+        
+        {/* Radial Glow */}
+        <motion.div 
+          className="absolute top-0 right-0 w-[55vw] h-[55vw] max-w-[700px] max-h-[700px] bg-radial-[circle_at_center,rgba(255,91,35,0.18)_0%,transparent_70%] pointer-events-none"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 5, repeat: Infinity }}
+        ></motion.div>
 
-        <div className="relative z-10 max-w-4xl">
-          <motion.div
-            className="font-dm-sans text-orange-500 text-base font-medium uppercase tracking-wider mb-4"
-            {...fadeInUp}
-          >
-            Welcome to the future of founders
-          </motion.div>
-
-          <motion.h1
-            className="font-syne text-[4.5rem] md:text-[5.5rem] font-black leading-[1.1] mb-6 text-white"
-            {...fadeInUp}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            Build in the Gulf.<br/>
-            <span className="text-orange-500">Wired to the World.</span>
-          </motion.h1>
-
-          <motion.p
-            className="font-dm-sans text-xl text-gray-400 max-w-[600px] leading-8 mb-10"
-            {...fadeInUp}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            One platform. Every program, grant, free zone, accelerator, and investor across six GCC countries AI-powered, free for founders, built from inside the Gulf.
-          </motion.p>
-
-          <motion.div
-            className="flex items-center gap-4 flex-wrap mb-20"
-            {...fadeInUp}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <Link href="#beta" className="inline-flex items-center gap-2 bg-orange-500 text-white font-semibold px-8 py-4 hover:bg-orange-600 transition-all transform hover:scale-105 no-underline">
-              Get Early Access — Free
-
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </Link>
-            <Link href="#how" className="text-white text-base font-medium hover:text-orange-500 transition-colors no-underline">
-              See how it works 
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="inline ml-2"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </Link>
-          </motion.div>
-
-         <motion.div
-  className="grid grid-cols-4 gap-12 items-center"
-  variants={staggerContainer}
-  initial="initial"
-  animate="animate"
->
-            <motion.div variants={fadeInUp} className="border-l border-orange-500 pl-6">
-              <div className="font-syne text-4xl font-black text-orange-500 leading-none mb-2">63K+</div>
-              <div className="font-dm-sans text-base text-gray-400 uppercase tracking-wider">GCC Startups</div>
+        <div className="max-w-7xl mx-auto px-4 w-full">
+          <div className="relative z-10 max-w-4xl">
+            {/* Eyebrow */}
+            <motion.div 
+              className="font-dm-sans text-orange-500 text-sm font-medium uppercase tracking-wider mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0 }}
+            >
+              {t('hero.eyebrow')}
             </motion.div>
-            <motion.div variants={fadeInUp} className="border-l border-orange-500 pl-6">
-              <div className="font-syne text-4xl font-black text-orange-500 leading-none mb-2">400+</div>
-              <div className="font-dm-sans text-base text-gray-400 uppercase tracking-wider">Programs & Grants</div>
+
+            {/* Headline */}
+            <motion.h1
+              className="font-syne text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] mb-6 text-white"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+            >
+              {t('hero.headline1')}<br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
+                {t('hero.headline2')}
+              </span>
+            </motion.h1>
+
+            {/* Subheading */}
+            <motion.p
+              className="font-dm-sans text-base md:text-lg text-gray-300 max-w-[600px] leading-7 mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              {t('hero.sub')}
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              className="flex items-center gap-4 flex-wrap mb-16"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <Link href="#beta" className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold px-6 md:px-8 py-3 text-sm md:text-base hover:shadow-[0_0_30px_rgba(255,91,35,0.6)] transition-all transform hover:scale-105 no-underline rounded-lg">
+                {t('hero.cta_primary')}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </Link>
+              <Link href="#how" className="inline-flex items-center gap-2 text-white text-base font-medium hover:text-orange-400 transition-colors no-underline border border-gray-600 px-6 md:px-8 py-3 rounded-lg hover:border-orange-500">
+                {t('hero.cta_ghost')}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </Link>
             </motion.div>
-            <motion.div variants={fadeInUp} className="border-l border-orange-500 pl-6">
-              <div className="font-syne text-4xl font-black text-orange-500 leading-none mb-2">$4.5B</div>
-              <div className="font-dm-sans text-base text-gray-400 uppercase tracking-wider">Raised Q3 2025</div>
+
+            {/* Stats Grid */}
+            <motion.div
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 items-center"
+              variants={staggerContainer}
+              initial="initial"
+              animate="animate"
+            >
+            <motion.div variants={fadeInUp} className="border-l border-orange-500 pl-3">
+              <div className="font-syne text-lg font-black text-orange-500 leading-none mb-0.5">63K+</div>
+              <div className="font-dm-sans text-xs text-gray-400 uppercase tracking-wider">{t('hero.stat1')}</div>
             </motion.div>
-            <motion.div variants={fadeInUp} className="border-l border-orange-500 pl-6">
-              <div className="font-syne text-4xl font-black text-orange-500 leading-none mb-2">6</div>
-              <div className="font-dm-sans text-base text-gray-400 uppercase tracking-wider">Countries. One Platform.</div>
+            <motion.div variants={fadeInUp} className="border-l border-orange-500 pl-3">
+              <div className="font-syne text-lg font-black text-orange-500 leading-none mb-0.5">400+</div>
+              <div className="font-dm-sans text-xs text-gray-400 uppercase tracking-wider">{t('hero.stat2')}</div>
+            </motion.div>
+            <motion.div variants={fadeInUp} className="border-l border-orange-500 pl-3">
+              <div className="font-syne text-lg font-black text-orange-500 leading-none mb-0.5">$4.5B</div>
+              <div className="font-dm-sans text-xs text-gray-400 uppercase tracking-wider">{t('hero.stat3')}</div>
+            </motion.div>
+            <motion.div variants={fadeInUp} className="border-l border-orange-500 pl-3">
+              <div className="font-syne text-lg font-black text-orange-500 leading-none mb-0.5">6</div>
+              <div className="font-dm-sans text-xs text-gray-400 uppercase tracking-wider">{t('hero.stat4')}</div>
             </motion.div>
           </motion.div>
         </div>
+      </div>
       </section>
 
       {/* FOUNDER STORY */}
-<section className="py-12 lg:py-14 px-[4vw] bg-black border-t border-white/10 relative overflow-hidden">
+<section className="py-6 lg:py-8 px-[4vw] border-t border-white/10 relative overflow-hidden">
   <div className="max-w-7xl mx-auto">
     <motion.div
       className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start"
@@ -209,39 +331,39 @@ export default function LandingPage() {
           className="font-dm-sans text-orange-500 text-sm font-medium uppercase tracking-wider mb-3"
           {...fadeInUp}
         >
-          Why MFC Exists
+          {t('founder.label')}
         </motion.div>
 
         <motion.blockquote
-          className="font-syne text-2xl md:text-3xl font-black leading-tight mb-6 text-white"
+          className="font-syne text-base md:text-lg font-black leading-tight mb-4 text-white"
           {...fadeInUp}
           transition={{ delay: 0.1 }}
         >
-          "I built and failed in the UK. I arrived in Riyadh in 2022 — and saw everything that was missing."
+          {t('founder.quote')}
         </motion.blockquote>
 
         <motion.p
-          className="font-dm-sans text-gray-400 text-lg leading-7 mb-6"
+          className="font-dm-sans text-gray-400 text-sm leading-6 mb-4"
           {...fadeInUp}
           transition={{ delay: 0.2 }}
         >
-          Laws changing weekly. No single source of truth. Founders arriving with genuine ambition but zero map. And almost no women in the room.
+          {t('founder.body1')}
         </motion.p>
 
         <motion.p
-          className="font-dm-sans text-gray-400 text-lg leading-7 mb-6"
+          className="font-dm-sans text-gray-400 text-sm leading-6 mb-4"
           {...fadeInUp}
           transition={{ delay: 0.25 }}
         >
-          After building ventures in the UK — including ones that failed — Katerina Hayes landed in Saudi Arabia and saw the gap clearly. Founders were stuck. International companies were lost. Everyone needed a trusted, verified, always-on intelligence layer for the Gulf.
+          {t('founder.body2')}
         </motion.p>
 
         <motion.p
-          className="font-dm-sans text-gray-400 text-lg leading-7 mb-8"
+          className="font-dm-sans text-gray-400 text-sm leading-6 mb-6"
           {...fadeInUp}
           transition={{ delay: 0.3 }}
         >
-          MFC is the platform she wished existed. Not a directory. Not a matchmaker. The operating system for Gulf founders — free to use, impossible to replace.
+          {t('founder.body3')}
         </motion.p>
 
         {/* FOUNDER SIGNATURE BLOCK */}
@@ -256,10 +378,10 @@ export default function LandingPage() {
 
           <div>
             <div className="font-syne font-bold text-white text-base">
-              Katerina Hayes
+              {t('founder.name')}
             </div>
             <div className="font-dm-sans text-gray-400 text-xs">
-              Founder & CEO, MyFounders.Club · Riyadh, Saudi Arabia
+              {t('founder.title')}
             </div>
           </div>
         </motion.div>
@@ -279,7 +401,7 @@ export default function LandingPage() {
     px-5 py-3 text-xs backdrop-blur-md rounded-lg
     animate-float transition-transform duration-300 hover:scale-105 hover:border-orange-500/50 cursor-pointer">
       <div className="text-orange-500 font-bold text-lg">80%</div>
-      <div className="text-gray-400 text-[12px]">of Gulf founders build alone</div>
+      <div className="text-gray-400 text-[12px]">{t('founder.badge1')}</div>
     </div>
 
     {/* Left Center */}
@@ -287,21 +409,21 @@ export default function LandingPage() {
     px-5 py-3 text-xs backdrop-blur-md rounded-lg
     animate-float-slow transition-transform duration-300 hover:scale-105 hover:border-orange-500/50 cursor-pointer">
       <div className="text-orange-500 font-bold text-lg">1</div>
-      <div className="text-gray-400 text-[12px]">clear next step</div>
+      <div className="text-gray-400 text-[12px]">{t('founder.badge3')}</div>
     </div>
 
     {/* Bottom Right */}
     <div className="absolute bottom-10 right-16 bg-black/80 border border-white/10 
     px-5 py-3 text-xs backdrop-blur-md rounded-lg
     animate-float transition-transform duration-300 hover:scale-105 hover:border-orange-500/50 cursor-pointer">
-      <div className="text-orange-500 font-bold text-lg">Free</div>
-      <div className="text-gray-400 text-[12px]">for every founder</div>
+      <div className="text-orange-500 font-bold text-lg">{t('founder.badge2_num')}</div>
+      <div className="text-gray-400 text-[12px]">{t('founder.badge2_lbl')}</div>
     </div>
 
         {/* Main Card */}
-        <div className="relative bg-gradient-to-br from-orange-500/20 via-orange-500/5 to-transparent 
-border border-orange-500/20 h-[420px] lg:h-[480px] 
-px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
+  <div className="relative bg-gradient-to-br from-orange-500/20 via-orange-500/5 to-transparent 
+border border-orange-500/20 h-[300px] lg:h-[350px] 
+px-6 py-8 flex flex-col justify-between overflow-hidden rounded-xl">
 
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,115,0,0.3),_transparent_60%)] opacity-40"></div>
 
@@ -310,11 +432,11 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
               Founded in Riyadh, 2022
             </div>
 
-            <div className="font-syne text-2xl font-bold text-white mb-3">
+            <div className="font-syne text-lg font-bold text-white mb-2">
               MyFounders.Club
             </div>
 
-            <p className="text-gray-300 text-base leading-6">
+            <p className="text-gray-300 text-sm leading-5">
               The room that matters. Built in the Gulf. Wired to the world.
             </p>
           </div>
@@ -327,16 +449,16 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
 </section>
 
     {/* PROBLEMS */}
-<section className="py-20 px-[4vw] bg-black border-t border-white/10 relative">
+<section className="py-8 px-[4vw] border-t border-white/10 relative">
   <div className="max-w-6xl mx-auto">
 
     {/* Heading */}
-    <div className="mb-16">
-      <div className="text-orange-500 text-xs tracking-[0.25em] uppercase mb-4">
+    <div className="mb-6">
+      <div className="text-orange-500 text-xs tracking-[0.25em] uppercase mb-1.5">
         — The Problem We Solve
       </div>
 
-      <h2 className="font-syne text-2xl md:text-3xl lg:text-4xl font-bold leading-tight text-white max-w-3xl">
+      <h2 className="font-syne text-base md:text-lg font-bold leading-tight text-white max-w-3xl">
         The Gulf has the capital.
         <br />
         Founders just can’t find the door.
@@ -380,7 +502,7 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
       ].map((item, i) => (
         <div
           key={i}
-          className="group relative p-6 md:p-7 border-r border-b border-white/10 
+          className="group relative p-3 border-r border-b border-white/10 
           hover:bg-orange-500/5 transition-all duration-300 overflow-hidden"
         >
           {/* Top Hover Line */}
@@ -388,17 +510,17 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
           group-hover:w-full transition-all duration-300"></div>
 
           {/* Number */}
-          <div className="text-orange-500/40 text-2xl font-bold mb-4">
+          <div className="text-orange-500/40 text-base font-bold mb-1">
             {item.number}
           </div>
 
           {/* Title */}
-          <h3 className="text-white text-base font-semibold mb-2">
+          <h3 className="text-white text-xs font-semibold mb-1">
             {item.title}
           </h3>
 
           {/* Description */}
-          <p className="text-gray-400 text-sm leading-relaxed">
+          <p className="text-gray-400 text-xs leading-relaxed">
             {item.desc}
           </p>
         </div>
@@ -410,21 +532,20 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
 
 
       {/* AUDIENCE */}
-<section className="py-28 px-[4vw] bg-black border-t border-white/10" id="audience">
+<section className="py-6 px-[4vw] border-t border-white/10" id="audience">
   <div className="max-w-7xl mx-auto">
 
-    {/* Section Label */}
-    <div className="text-orange-500 text-xs tracking-[0.3em] uppercase mb-6">
+    <div className="text-orange-500 text-xs tracking-[0.3em] uppercase mb-2">
       — Who MFC Is Built For
     </div>
 
     {/* Main Heading */}
-    <h2 className="font-syne text-3xl md:text-5xl font-black leading-tight text-white mb-14 max-w-3xl">
+    <h2 className="font-syne text-base md:text-lg font-black leading-tight text-white mb-6 max-w-3xl">
       The right room for the right builder.
     </h2>
 
     {/* Tabs */}
-    <div className="flex gap-8 border-b border-white/10 mb-16">
+    <div className="flex gap-3 border-b border-white/10 mb-6">
       {[
         { key: "gulf", label: "Gulf Founders" },
         { key: "intl", label: "International Startups" },
@@ -445,13 +566,13 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
     </div>
 
     {/* Content Grid */}
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
       {/* LEFT CONTENT */}
       <div>
 
         {/* Dynamic Headline */}
-        <h3 className="font-syne text-2xl md:text-4xl font-bold text-white mb-6 leading-tight">
+        <h3 className="font-syne text-sm md:text-base font-bold text-white mb-3 leading-tight">
           {activeTab === "gulf" && (
             <>
               Local roots.<br />
@@ -476,7 +597,7 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
         </h3>
 
         {/* Description */}
-        <p className="text-gray-400 mb-8 max-w-xl">
+        <p className="text-gray-400 mb-4 max-w-xl text-xs">
           {activeTab === "gulf" &&
             "You're building something real in the Gulf. MFC helps you find the right program, investor, and network — without wasting cycles."}
 
@@ -488,7 +609,7 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
         </p>
 
         {/* Bullet Points */}
-        <div className="space-y-4 text-sm">
+        <div className="space-y-2 text-xs">
           {activeTab === "gulf" && (
             <>
               <p className="text-gray-300">→ AI Next-Step Engine</p>
@@ -522,17 +643,17 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
       </div>
 
       {/* RIGHT FEATURE CARDS */}
-      <div className="space-y-6">
+      <div className="space-y-3">
 
         {activeTab === "gulf" && (
           <>
             {["AI Next-Step Engine", "Grant & Program Matcher", "Investor Matching", "Global Expansion Corridors"].map((item, i) => (
               <div
                 key={i}
-                className="group border border-white/10 p-6 transition-all duration-300 hover:bg-orange-500/10 hover:border-orange-500/40"
+                className="group border border-white/10 p-3 transition-all duration-300 hover:bg-orange-500/10 hover:border-orange-500/40"
               >
-                <h4 className="text-white font-semibold mb-2">{item}</h4>
-                <p className="text-gray-400 text-sm">
+                <h4 className="text-white font-semibold mb-0.5 text-xs">{item}</h4>
+                <p className="text-gray-400 text-xs">
                   Clear, curated access aligned to your stage and ambition.
                 </p>
               </div>
@@ -545,10 +666,10 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
             {["Gulf Entry Navigator", "Regulatory Intelligence", "Trusted Supplier Network", "Local Founder Community"].map((item, i) => (
               <div
                 key={i}
-                className="group border border-white/10 p-6 transition-all duration-300 hover:bg-orange-500/10 hover:border-orange-500/40"
+                className="group border border-white/10 p-3 transition-all duration-300 hover:bg-orange-500/10 hover:border-orange-500/40"
               >
-                <h4 className="text-white font-semibold mb-2">{item}</h4>
-                <p className="text-gray-400 text-sm">
+                <h4 className="text-white font-semibold mb-0.5 text-xs">{item}</h4>
+                <p className="text-gray-400 text-xs">
                   Enter the Gulf ecosystem with confidence and clarity.
                 </p>
               </div>
@@ -561,10 +682,10 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
             {["AI-Scored Deal Flow", "Private Deal Rooms", "Due Diligence Packs", "Gulf Startup Pulse"].map((item, i) => (
               <div
                 key={i}
-                className="group border border-white/10 p-6 transition-all duration-300 hover:bg-orange-500/10 hover:border-orange-500/40"
+                className="group border border-white/10 p-3 transition-all duration-300 hover:bg-orange-500/10 hover:border-orange-500/40"
               >
-                <h4 className="text-white font-semibold mb-2">{item}</h4>
-                <p className="text-gray-400 text-sm">
+                <h4 className="text-white font-semibold mb-0.5 text-xs">{item}</h4>
+                <p className="text-gray-400 text-xs">
                   Curated visibility into the Gulf's most promising founders.
                 </p>
               </div>
@@ -581,23 +702,23 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
 
 {/* HOW IT WORKS */}
 
-<section className="py-28 px-[4vw] bg-black border-t border-white/10" id="how">
+<section className="py-6 px-[4vw] border-t border-white/10" id="how">
   <div className="max-w-7xl mx-auto">
 
     {/* Header */}
     <motion.div
-      className="mb-16"
+      className="mb-6"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
-      <div className="flex items-center gap-3 text-orange-500 text-sm uppercase tracking-[0.2em] mb-6">
+      <div className="flex items-center gap-3 text-orange-500 text-xs uppercase tracking-[0.2em] mb-2">
         <span className="w-8 h-[1px] bg-orange-500"></span>
         How it works
       </div>
 
-      <h2 className="text-[3rem] md:text-[4.5rem] font-black leading-[1.05] text-white max-w-4xl">
+      <h2 className="text-lg md:text-xl font-black leading-[1.05] text-white max-w-4xl">
         One platform.<br />
         One clear next step.
       </h2>
@@ -636,24 +757,24 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
         <motion.div
           key={i}
           variants={fadeInUp}
-          className="group p-8 bg-white/5 border border-white/10 
+          className="group p-3 bg-white/5 border border-white/10 
                      hover:bg-orange-500/10 transition-all duration-300 rounded-lg"
         >
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-2">
             <span className="text-xs tracking-widest text-orange-500 font-semibold">
               {item.step}
             </span>
 
-            <span className="text-white/40 text-sm transition-colors duration-300 group-hover:text-orange-500">
+            <span className="text-white/40 text-xs transition-colors duration-300 group-hover:text-orange-500">
               →
             </span>
           </div>
 
-          <h3 className="text-lg font-semibold text-white mb-4">
+          <h3 className="text-xs font-semibold text-white mb-1">
             {item.title}
           </h3>
 
-          <p className="text-gray-400 text-sm leading-6">
+          <p className="text-gray-400 text-xs leading-4">
             {item.desc}
           </p>
         </motion.div>
@@ -664,28 +785,28 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
 </section>
 
       {/* BETA FORM */}
-<section className="py-28 px-[4vw] bg-black border-t border-white/10 relative" id="beta">
+<section className="py-8 px-[4vw] border-t border-white/10 relative" id="beta">
   <div className="max-w-5xl mx-auto">
 
     {/* Header */}
     <motion.div
-      className="text-center mb-20"
+      className="text-center mb-8"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
       <div className="inline-flex items-center gap-2 border border-orange-500/40 text-orange-500 
-                      text-xs uppercase tracking-widest px-5 py-2 rounded-full mb-8">
+                      text-xs uppercase tracking-widest px-3 py-1 rounded-full mb-4">
         • Now accepting beta applications
       </div>
 
-      <h2 className="text-[3rem] md:text-[4.5rem] font-black leading-[1.05] text-white mb-6">
+      <h2 className="text-2xl md:text-3xl font-black leading-[1.05] text-white mb-3">
         Get early access.<br />
         Build with us.
       </h2>
 
-      <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+      <p className="text-gray-400 text-sm max-w-2xl mx-auto leading-relaxed">
         We're opening the platform to a first cohort of Gulf founders and
         international companies expanding to the Gulf. Free. No credit card. Just signal.
       </p>
@@ -693,7 +814,7 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
 
     {/* Form */}
     <motion.form
-      className="space-y-6 border border-white/10 p-10 md:p-14 bg-black"
+      className="space-y-4 border border-white/10 p-6 md:p-8"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -701,11 +822,11 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
     >
 
       {/* Name Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-1">
           <label className="text-xs uppercase tracking-wider text-gray-400">First Name</label>
           <input
-            className="w-full bg-transparent border border-white/10 text-white px-4 py-3 
+            className="w-full bg-transparent border border-white/10 text-white px-3 py-2 text-sm
                        focus:border-orange-500 outline-none transition-colors"
             type="text"
             placeholder="Katerina"
@@ -713,10 +834,10 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-1">
           <label className="text-xs uppercase tracking-wider text-gray-400">Last Name</label>
           <input
-            className="w-full bg-transparent border border-white/10 text-white px-4 py-3 
+            className="w-full bg-transparent border border-white/10 text-white px-3 py-2 text-sm
                        focus:border-orange-500 outline-none transition-colors"
             type="text"
             placeholder="Hayes"
@@ -726,10 +847,10 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
       </div>
 
       {/* Email */}
-      <div className="space-y-2">
+      <div className="space-y-1">
         <label className="text-xs uppercase tracking-wider text-gray-400">Email Address</label>
         <input
-          className="w-full bg-transparent border border-white/10 text-white px-4 py-3 
+          className="w-full bg-transparent border border-white/10 text-white px-3 py-2 text-sm
                      focus:border-orange-500 outline-none transition-colors"
           type="email"
           placeholder="you@company.com"
@@ -738,24 +859,25 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
       </div>
 
       {/* Company + Country */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-1">
           <label className="text-xs uppercase tracking-wider text-gray-400">Company / Startup Name</label>
           <input
-            className="w-full bg-transparent border border-white/10 text-white px-4 py-3 
+            className="w-full bg-transparent border border-white/10 text-white px-3 py-2 text-sm
                        focus:border-orange-500 outline-none transition-colors"
             type="text"
             placeholder="Your startup"
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-1">
           <label className="text-xs uppercase tracking-wider text-gray-400">Based In</label>
           <select
-            className="w-full bg-transparent border border-white/10 text-white px-4 py-3 
+            className="w-full bg-transparent border border-white/10 text-white px-3 py-2 text-sm
                        focus:border-orange-500 outline-none transition-colors cursor-pointer"
+            defaultValue=""
           >
-            <option value="" disabled selected>Select your country</option>
+            <option value="" disabled>Select your country</option>
             <option>UAE</option>
             <option>Saudi Arabia</option>
             <option>Qatar</option>
@@ -771,13 +893,14 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
       </div>
 
       {/* Stage */}
-      <div className="space-y-2">
+      <div className="space-y-1">
         <label className="text-xs uppercase tracking-wider text-gray-400">Startup Stage</label>
         <select
-          className="w-full bg-transparent border border-white/10 text-white px-4 py-3 
+          className="w-full bg-transparent border border-white/10 text-white px-3 py-2 text-sm
                      focus:border-orange-500 outline-none transition-colors cursor-pointer"
+          defaultValue=""
         >
-          <option value="" disabled selected>Select your stage</option>
+          <option value="" disabled>Select your stage</option>
           <option>Pre-idea</option>
           <option>Idea Stage</option>
           <option>MVP / Prototype</option>
@@ -787,13 +910,13 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
       </div>
 
       {/* Challenge */}
-      <div className="space-y-2">
+      <div className="space-y-1">
         <label className="text-xs uppercase tracking-wider text-gray-400">
           What's your biggest challenge right now? (Optional)
         </label>
         <textarea
-          rows={4}
-          className="w-full bg-transparent border border-white/10 text-white px-4 py-3 
+          rows={3}
+          className="w-full bg-transparent border border-white/10 text-white px-3 py-2 text-sm
                      focus:border-orange-500 outline-none transition-colors resize-none"
           placeholder="e.g. Finding the right free zone, connecting with Saudi investors..."
         />
@@ -803,12 +926,12 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
       <button
         type="submit"
         className="w-full bg-orange-500 hover:bg-orange-600 text-white 
-                   font-semibold uppercase tracking-wider py-4 transition-colors"
+                   font-semibold uppercase tracking-wider py-2 text-sm transition-colors"
       >
         Join the Beta — Free Access
       </button>
 
-      <p className="text-center text-xs text-gray-500 pt-4">
+      <p className="text-center text-xs text-gray-500 pt-2">
         By submitting you agree to our{' '}
         <Link href="/privacy" className="text-gray-400 hover:text-orange-500 transition-colors no-underline">
           Privacy Policy
@@ -825,29 +948,29 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
 </section>
 
       {/* NEWSLETTER */}
-      <section className="py-20 px-[4vw] bg-gradient-to-r from-teal-900/20 to-teal-800/20 border-t border-white/10">
+      <section className="py-8 px-[4vw] border-t border-white/10">
         <div className="max-w-6xl mx-auto">
           <motion.div
-            className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
             <div>
-              <div className="text-orange-500 text-sm font-medium uppercase tracking-wider mb-2">Weekly newsletter</div>
-              <h3 className="text-2xl font-bold text-white leading-tight mb-3">The Gulf Pulse</h3>
-              <p className="text-gray-400 text-sm">Weekly insights on regional startups, capital movements, and founder stories. Every Tuesday.</p>
+              <div className="text-orange-500 text-xs font-medium uppercase tracking-wider mb-1">Weekly newsletter</div>
+              <h3 className="text-lg font-bold text-white leading-tight mb-2">The Gulf Pulse</h3>
+              <p className="text-gray-400 text-xs">Weekly insights on regional startups, capital movements, and founder stories. Every Tuesday.</p>
             </div>
-            <form className="flex gap-3">
+            <form className="flex gap-2">
               <input
-                className="flex-1 bg-white/10 border border-white/20 text-white placeholder-gray-500 px-4 py-3 focus:border-orange-500 focus:bg-white/15 outline-none transition-colors"
+                className="flex-1 bg-white/10 border border-white/20 text-white placeholder-gray-500 px-3 py-2 text-sm focus:border-orange-500 focus:bg-white/15 outline-none transition-colors"
                 type="email"
                 placeholder="Enter your email"
                 required
               />
               <button
-                className="bg-orange-500 text-white font-semibold uppercase tracking-wider px-8 py-3 hover:bg-orange-600 transition-colors whitespace-nowrap"
+                className="bg-orange-500 text-white font-semibold uppercase tracking-wider px-5 py-2 text-sm hover:bg-orange-600 transition-colors whitespace-nowrap"
                 type="submit"
               >
                 Subscribe
@@ -858,17 +981,17 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-black border-t border-white/10 py-16 px-[4vw]">
+      <footer className="border-t border-white/10 py-8 px-[4vw]">
         <div className="max-w-6xl mx-auto">
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
             <div>
-              <a className="inline-flex items-center gap-3 font-bold text-lg text-white mb-6 no-underline" href="#">
+              <a className="inline-flex items-center gap-3 font-bold text-base text-white mb-3 no-underline" href="#">
                 <div className="grid place-items-center w-7 h-7">
                   <svg viewBox="0 0 28 28" fill="none" className="w-full h-full">
                     <path d="M14 4L24 10V18L14 24L4 18V10L14 4Z" fill="none" stroke="#FF5B23" strokeWidth="1.5"/>
@@ -878,87 +1001,63 @@ px-10 py-12 flex flex-col justify-between overflow-hidden rounded-xl">
                 </div>
                 MyFounders.Club
               </a>
-              <p className="text-gray-500 text-sm leading-6 mb-6">The Gulf's ecosystem operating system connecting founders, capital, and opportunity.</p>
-              <div className="flex gap-3">
-                <a className="w-10 h-10 border border-white/20 flex items-center justify-center text-gray-400 hover:border-orange-500 hover:text-orange-500 transition-colors text-sm" href="https://linkedin.com" target="_blank" rel="noopener">
+              <p className="text-gray-500 text-xs leading-5 mb-4">The Gulf's ecosystem operating system connecting founders, capital, and opportunity.</p>
+              <div className="flex gap-2">
+                <a className="w-8 h-8 border border-white/20 flex items-center justify-center text-gray-400 hover:border-orange-500 hover:text-orange-500 transition-colors text-xs" href="https://linkedin.com" target="_blank" rel="noopener">
                   in
                 </a>
-                <a className="w-10 h-10 border border-white/20 flex items-center justify-center text-gray-400 hover:border-orange-500 hover:text-orange-500 transition-colors" href="https://instagram.com" target="_blank" rel="noopener">
+                <a className="w-8 h-8 border border-white/20 flex items-center justify-center text-gray-400 hover:border-orange-500 hover:text-orange-500 transition-colors" href="https://instagram.com" target="_blank" rel="noopener">
                   📷
                 </a>
-                <a className="w-10 h-10 border border-white/20 flex items-center justify-center text-gray-400 hover:border-orange-500 hover:text-orange-500 transition-colors" href="https://x.com" target="_blank" rel="noopener">
+                <a className="w-8 h-8 border border-white/20 flex items-center justify-center text-gray-400 hover:border-orange-500 hover:text-orange-500 transition-colors" href="https://x.com" target="_blank" rel="noopener">
                   𝕏
                 </a>
-                <a className="w-10 h-10 border border-white/20 flex items-center justify-center text-gray-400 hover:border-orange-500 hover:text-orange-500 transition-colors" href="https://youtube.com" target="_blank" rel="noopener">
+                <a className="w-8 h-8 border border-white/20 flex items-center justify-center text-gray-400 hover:border-orange-500 hover:text-orange-500 transition-colors" href="https://youtube.com" target="_blank" rel="noopener">
                   ▶️
                 </a>
               </div>
             </div>
 
             <div>
-              <div className="text-xs uppercase tracking-wider text-white font-bold mb-6">Platform</div>
-              <ul className="space-y-3">
-                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-sm" href="#features">For Founders</a></li>
-                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-sm" href="#investors">For Investors</a></li>
-                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-sm" href="#programs">Programs</a></li>
-                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-sm" href="#community">Community</a></li>
+              <div className="text-xs uppercase tracking-wider text-white font-bold mb-3">Platform</div>
+              <ul className="space-y-2">
+                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-xs" href="#features">For Founders</a></li>
+                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-xs" href="#investors">For Investors</a></li>
+                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-xs" href="#programs">Programs</a></li>
+                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-xs" href="#community">Community</a></li>
               </ul>
             </div>
 
             <div>
-              <div className="text-xs uppercase tracking-wider text-white font-bold mb-6">Company</div>
-              <ul className="space-y-3">
-                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-sm" href="#about">About</a></li>
-                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-sm" href="#blog">Blog</a></li>
-                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-sm" href="#careers">Careers</a></li>
-                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-sm" href="#contact">Contact</a></li>
+              <div className="text-xs uppercase tracking-wider text-white font-bold mb-3">Company</div>
+              <ul className="space-y-2">
+                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-xs" href="#about">About</a></li>
+                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-xs" href="#blog">Blog</a></li>
+                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-xs" href="#careers">Careers</a></li>
+                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-xs" href="#contact">Contact</a></li>
               </ul>
             </div>
 
             <div>
-              <div className="text-xs uppercase tracking-wider text-white font-bold mb-6">Legal</div>
-              <ul className="space-y-3">
-                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-sm" href="/privacy">Privacy Policy</a></li>
-                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-sm" href="/terms">Terms of Service</a></li>
-                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-sm" href="#cookies">Cookie Policy</a></li>
+              <div className="text-xs uppercase tracking-wider text-white font-bold mb-3">Legal</div>
+              <ul className="space-y-2">
+                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-xs" href="/privacy">Privacy Policy</a></li>
+                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-xs" href="/terms">Terms of Service</a></li>
+                <li><a className="text-gray-500 hover:text-orange-500 transition-colors text-xs" href="#cookies">Cookie Policy</a></li>
               </ul>
             </div>
           </motion.div>
 
-          <div className="flex items-center justify-between flex-wrap gap-4 border-t border-white/10 pt-8">
-            <p className="text-gray-600 text-sm">© 2026 MyFounders.Club. All rights reserved.</p>
-            <div className="flex gap-6 flex-wrap">
-              <a className="text-gray-600 hover:text-orange-500 transition-colors text-sm" href="/privacy">Privacy</a>
-              <a className="text-gray-600 hover:text-orange-500 transition-colors text-sm" href="/terms">Terms</a>
+          <div className="flex items-center justify-between flex-wrap gap-2 border-t border-white/10 pt-4">
+            <p className="text-gray-600 text-xs">© 2026 MyFounders.Club. All rights reserved.</p>
+            <div className="flex gap-4 flex-wrap">
+              <a className="text-gray-600 hover:text-orange-500 transition-colors text-xs" href="/privacy">Privacy</a>
+              <a className="text-gray-600 hover:text-orange-500 transition-colors text-xs" href="/terms">Terms</a>
             </div>
           </div>
         </div>
       </footer>
-
-      {/* FLOATING CHAT WIDGET */}
-      <ChatWidget open={chatOpen} onClose={() => setChatOpen(false)} />
-
-      {/* FLOATING CHAT BUTTON */}
-      <motion.button
-        onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 bg-orange-500 hover:bg-orange-600 text-white rounded-full flex items-center justify-center shadow-2xl transition-all transform hover:scale-110"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        {chatOpen ? (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        ) : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-          </svg>
-        )}
-      </motion.button>
-    </>
+      </motion.div>
+    </AnimatePresence>
   )
 }

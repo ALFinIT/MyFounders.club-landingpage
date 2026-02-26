@@ -49,7 +49,7 @@ export function HeroSection() {
 
   <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex justify-center">
     <img 
-      src="/Full_logo_mfc.png" 
+      src="/images/App Icon Orange.svg"
       alt="MyFoundersClub Banner"
       className="w-64 sm:w-80 md:w-[600px] lg:w-[750px] h-auto object-contain"
     />

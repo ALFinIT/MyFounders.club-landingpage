@@ -52,7 +52,7 @@ export default function ComingSoonPage() {
         {/* Logo */}
         <motion.div variants={itemVariants} className="mb-4">
           <img 
-            src="/Full_logo_mfc.png" 
+            src="/App Icon Orange.svg" 
             alt="MyFoundersClub"
             className="w-36 sm:w-48 md:w-56 h-auto object-contain"
           />

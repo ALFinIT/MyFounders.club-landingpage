@@ -93,12 +93,12 @@ export default function SurveyPage() {
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               <h1 className="font-syne font-black text-[2.8rem] md:text-[3.8rem] leading-tight mb-6 text-white">
-                15 minutes.<br/>
-                <span className="text-orange-500">Three rewards.</span><br/>
-                Your story counts.
+                {t('survey.survey_title')}.<br/>
+                <span className="text-orange-500">{t('survey.survey_subtitle')}.</span><br/>
+                {t('survey.description')}
               </h1>
               <p className="font-dm-sans text-gray-400 text-lg max-w-2xl mx-auto mb-12">
-                Share your entrepreneurial journey across the Gulf — and walk away with verified investor introductions, curated programs matching your stage, and instant access to the founder community.
+                {t('survey.survey_description')}
               </p>
             </motion.div>
 

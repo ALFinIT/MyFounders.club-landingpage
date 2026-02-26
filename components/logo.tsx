@@ -16,7 +16,7 @@ export function Logo() {
         transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
       >
         <HighQualityImage
-          src="/App Icon Orange.svg"
+          src="/images/App Icon Orange.svg"
           alt="My Founders Club Logo"
           width={40}
           height={40}

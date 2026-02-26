@@ -3,7 +3,67 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  overflow: hidden;
+  background-color: #0f0f0f; /* Matte black */
+  position: relative;
+}
+
+/* PERFORMANCE SAFETY */
+@media (prefers-reduced-motion: reduce) {
+  .background-comets::before,
+  .background-comets::after {
+    animation: none;
+  }
+}
+
+/* ===== RTL SUPPORT ===== */
+html[dir="rtl"],
+html.rtl,
+html.arabic {
+  direction: rtl;
+}
+
+body[dir="rtl"],
+body.rtl,
+body.arabic {
+  direction: rtl;
+}
+
+/* RTL-specific utilities */
+.rtl .ltr-text {
+  direction: ltr;
+  unicode-bidi: bidi-override;
+}
+
+.rtl .flex-rtl {
+  flex-direction: row-reverse;
+}
+
+.rtl .mr-safe {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.rtl .ml-safe {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.rtl .pr-safe {
+  padding-right: auto;
+  padding-left: 0;
+}
+
+.rtl .pl-safe {
+  padding-left: auto;
+  padding-right: 0;
+}
+
+/* Fix scrollbar position in RTL */
+.rtl ::-webkit-scrollbar {
+  position: absolute;
+  right: 0;
 }
 
 @layer utilities {
@@ -91,21 +151,21 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-  
+
   /* Dropdown select styling */
   select {
     color-scheme: dark;
   }
-  
+
   select option {
     background-color: #000000;
     color: #ffffff;
   }
-  
+
   select option:hover {
     background-color: #1a1a1a;
   }
-  
+
   select option:checked {
     background: linear-gradient(to right, #ff9a56, #000000);
     background-color: #ff9a56;
