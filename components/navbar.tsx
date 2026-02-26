@@ -104,7 +104,7 @@ export function Navbar() {
           {/* Left: Logo + Text */}
           <a href="#hero" onClick={handleNavClick} className="inline-flex items-center gap-3 flex-shrink-0">
             <Logo />
-            <span className="hidden sm:inline font-bold text-white text-lg">MyFounders.Club</span>
+            <span className="hidden sm:inline font-bold text-white text-lg">My Founders Club</span>
           </a>
 
           {/* Right: Desktop Menu + Language + CTA */}

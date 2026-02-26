@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
+import { Logo } from './logo'
 
 export default function LandingPage() {
   const t = useTranslations()
@@ -30,6 +31,32 @@ export default function LandingPage() {
     setTimeout(() => {
       router.push(`/${newLocale}`)
     }, 150)
+  }
+
+  const handleNavClick = (e: any) => {
+    const href = e.currentTarget?.getAttribute('href') || ''
+    if (!href) return
+
+    // In-page hash links -> smooth scroll
+    if (href.startsWith('#')) {
+      e.preventDefault()
+      const el = document.querySelector(href)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      } else {
+        window.location.hash = href
+      }
+      setMobileMenuOpen(false)
+      return
+    }
+
+    // Internal page links -> navigate then smooth scroll to top
+    if (href.startsWith('/')) {
+      e.preventDefault()
+      setMobileMenuOpen(false)
+      router.push(href)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 
   // Handle navbar scroll effect
@@ -65,11 +92,10 @@ export default function LandingPage() {
   }
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div key={locale} {...pageTransition}>
-        {isTransitioning && (
-          <div className="fixed inset-0 bg-black/50 z-[99999] pointer-events-none" />
-        )}
+    <motion.div key={locale} {...pageTransition}>
+      {isTransitioning && (
+        <div className="fixed inset-0 bg-black/50 z-[99999] pointer-events-none" />
+      )}
         {/* NAV - FULL WIDTH AT TOP */}
         <motion.nav
           className={`fixed top-0 left-0 right-0 z-[9999] w-full px-4 py-4 transition-all duration-300 ${
@@ -79,8 +105,8 @@ export default function LandingPage() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-        {/* Hot Orange Neon Frame - Full Width Container */}
-        <div className={`mx-auto max-w-full rounded-2xl border transition-all duration-300 ${
+          {/* Hot Orange Neon Frame - Full Width Container */}
+          <div className={`mx-auto max-w-full rounded-2xl border transition-all duration-300 ${
           navbarScrolled
             ? 'bg-black/95 border-orange-500/50 shadow-[0_0_20px_rgba(255,91,35,0.4)]'
             : 'bg-black/90 border-orange-500/70 shadow-[0_0_40px_rgba(255,91,35,0.6),inset_0_0_20px_rgba(255,91,35,0.15)]'
@@ -282,7 +308,7 @@ export default function LandingPage() {
               </Link>
               <Link href="#how" className="inline-flex items-center gap-2 text-white text-base font-medium hover:text-orange-400 transition-colors no-underline border border-gray-600 px-6 md:px-8 py-3 rounded-lg hover:border-orange-500">
                 {t('hero.cta_ghost')}
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                {/* <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> */}
               </Link>
             </motion.div>
 
@@ -991,16 +1017,25 @@ px-6 py-8 flex flex-col justify-between overflow-hidden rounded-xl">
             transition={{ duration: 0.6 }}
           >
             <div>
-              <a className="inline-flex items-center gap-3 font-bold text-base text-white mb-3 no-underline" href="#">
-                <div className="grid place-items-center w-7 h-7">
-                  <svg viewBox="0 0 28 28" fill="none" className="w-full h-full">
-                    <path d="M14 4L24 10V18L14 24L4 18V10L14 4Z" fill="none" stroke="#FF5B23" strokeWidth="1.5"/>
-                    <path d="M8 12L14 8L20 12" stroke="#FF5B23" strokeWidth="1.5" strokeLinecap="round"/>
-                    <path d="M8 16L14 20L20 16" stroke="#FF5B23" strokeWidth="1.5" strokeLinecap="round"/>
-                  </svg>
-                </div>
-                MyFounders.Club
-              </a>
+              <a
+  href="#hero"
+  onClick={handleNavClick}
+  className="inline-flex items-center gap-3 flex-shrink-0"
+>
+  {/* Logo Image */}
+  <img
+    src="/App Icon Orange.svg"   // place your logo inside /public folder
+    alt="MyFounders.Club Logo"
+    className="h-8 w-auto"
+  />
+
+  {/* Text */}
+  <span className="hidden sm:inline font-bold text-white text-lg">
+    MyFounders.Club
+  </span>
+</a>
+
+
               <p className="text-gray-500 text-xs leading-5 mb-4">The Gulf's ecosystem operating system connecting founders, capital, and opportunity.</p>
               <div className="flex gap-2">
                 <a className="w-8 h-8 border border-white/20 flex items-center justify-center text-gray-400 hover:border-orange-500 hover:text-orange-500 transition-colors text-xs" href="https://linkedin.com" target="_blank" rel="noopener">
@@ -1058,6 +1093,5 @@ px-6 py-8 flex flex-col justify-between overflow-hidden rounded-xl">
         </div>
       </footer>
       </motion.div>
-    </AnimatePresence>
   )
 }
