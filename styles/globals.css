@@ -178,13 +178,13 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #0f0f0f; /* Matte black */
+  background-color: #0f0f0f !important; /* Matte black */
   /* Static dim orange grid */
-  background-image:
+  background-image: !important
     linear-gradient(rgba(255,106,0,0.12) 2px, transparent 2px),
     linear-gradient(90deg, rgba(255,106,0,0.12) 2px, transparent 2px);
-  background-size: 100px 100px;
-  background-position: -2px -2px;
+  background-size: 100px 100px !important;
+  background-position: -2px -2px !important;
   position: relative;
 }
 

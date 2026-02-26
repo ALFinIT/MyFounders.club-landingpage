@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
+import { usePathname } from '@/lib/i18n'
 import { Logo } from './logo'
 
 export default function LandingPage() {
@@ -26,10 +27,14 @@ export default function LandingPage() {
     }
   }, [locale, prevLocale])
 
+  const pathname = usePathname()
+
   const handleLanguageSwitch = (newLocale: string) => {
     setIsTransitioning(true)
     setTimeout(() => {
-      router.push(`/${newLocale}`)
+      // navigate to same path under chosen locale prefix
+      const target = `/${newLocale}${pathname}`
+      router.replace(target)
     }, 150)
   }
 
